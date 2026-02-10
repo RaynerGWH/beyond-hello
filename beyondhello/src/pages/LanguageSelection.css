@@ -1,0 +1,61 @@
+.language-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-6);
+  background: var(--gray-50);
+}
+
+.language-content {
+  width: 100%;
+  max-width: 480px;
+}
+
+.language-heading {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gray-900);
+  text-align: center;
+  margin: 0 0 var(--spacing-8) 0;
+}
+
+.language-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-8);
+}
+
+.language-card {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  padding: var(--spacing-5);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.language-card:hover {
+  border-color: var(--purple-600);
+  background: var(--gray-50);
+}
+
+.language-card.selected {
+  border: 2px solid var(--purple-600);
+  background: var(--purple-100);
+  padding: calc(var(--spacing-5) - 1px); /* Compensate for thicker border */
+}
+
+.language-flag {
+  font-size: 32px;
+}
+
+.language-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--gray-900);
+}

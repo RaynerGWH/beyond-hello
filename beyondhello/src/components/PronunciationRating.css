@@ -1,0 +1,31 @@
+.rating-display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.rating-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.dot.filled {
+  background: var(--purple-600);
+}
+
+.dot.empty {
+  background: var(--gray-200);
+}
+
+.rating-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-600);
+}

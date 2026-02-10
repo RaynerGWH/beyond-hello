@@ -1,0 +1,5 @@
+/* src/pages/Gameplay.css */
+.gameplay-page {
+  min-height: 100vh;
+  padding: var(--spacing-6);
+}

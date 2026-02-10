@@ -1,0 +1,5 @@
+/* src/pages/ScenarioHub.css */
+.scenario-hub-page {
+  min-height: 100vh;
+  padding: var(--spacing-6);
+}

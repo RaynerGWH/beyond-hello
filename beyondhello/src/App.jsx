@@ -1,0 +1,36 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './App.css';
+
+// Import pages
+import Landing from './pages/Landing';
+import SignUp from './pages/SignUp';
+import LanguageSelection from './pages/LanguageSelection';
+import ScenarioHub from './pages/ScenarioHub';
+import ScenarioBriefing from './pages/ScenarioBriefing';
+import Gameplay from './pages/Gameplay';
+import Feedback from './pages/Feedback';
+import Outcome from './pages/Outcome';
+import Dashboard from './pages/Dashboard';
+
+function App() {
+  return (
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/language" element={<LanguageSelection />} />
+          <Route path="/hub" element={<ScenarioHub />} />
+          <Route path="/briefing/:scenarioId" element={<ScenarioBriefing />} />
+          <Route path="/play/:scenarioId" element={<Gameplay />} />
+          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/outcome" element={<Outcome />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+export default App;

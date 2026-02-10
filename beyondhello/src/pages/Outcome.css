@@ -1,0 +1,5 @@
+/* src/pages/Outcome.css */
+.outcome-page {
+  min-height: 100vh;
+  padding: var(--spacing-6);
+}

@@ -1,0 +1,34 @@
+.video-container {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--gray-100);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.video-player {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-400);
+}
+
+.play-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.video-placeholder p {
+  font-size: 14px;
+  margin: 0;
+}

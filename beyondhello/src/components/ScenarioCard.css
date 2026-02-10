@@ -1,0 +1,109 @@
+.scenario-card {
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  width: 280px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.scenario-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.scenario-thumbnail {
+  width: 100%;
+  height: 160px;
+  background: var(--gray-100);
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.scenario-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbnail-placeholder {
+  color: var(--gray-400);
+  font-size: 14px;
+}
+
+.completed-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  background: var(--green-500);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.scenario-info {
+  padding: 16px;
+}
+
+.scenario-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin: 0 0 8px 0;
+}
+
+.scenario-meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.difficulty-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.difficulty-easy {
+  background: var(--green-100);
+  color: var(--green-800);
+}
+
+.difficulty-medium {
+  background: var(--amber-100);
+  color: var(--amber-900);
+}
+
+.difficulty-hard {
+  background: var(--red-100);
+  color: var(--red-900);
+}
+
+.duration {
+  font-size: 14px;
+  color: var(--gray-600);
+}
+
+.xp-reward {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  color: var(--purple-600);
+  font-size: 14px;
+}
