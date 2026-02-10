@@ -30,7 +30,7 @@
 
 .input:focus {
   outline: none;
-  border-color: var(--purple-600);
+  border-color: #3B82F6; /* Feather blue */
 }
 
 .input::placeholder {

@@ -14,12 +14,12 @@
 }
 
 .btn-primary {
-  background: var(--purple-600);
+  background: #3B82F6; /* Feather blue */
   color: white;
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: var(--purple-700);
+  background: #2563EB; /* Darker blue */
 }
 
 .btn-primary:disabled {

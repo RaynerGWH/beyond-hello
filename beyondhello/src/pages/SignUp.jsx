@@ -71,7 +71,7 @@ function SignUp() {
                   className="form-input"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="LYNN TAN"
+                  placeholder="GREG LEE"
                   required
                 />
               </div>
@@ -84,7 +84,7 @@ function SignUp() {
                   className="form-input"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="HELLO@LYNNTAN.COM"
+                  placeholder="HELLO@GREGLEE.COM"
                   required
                 />
               </div>

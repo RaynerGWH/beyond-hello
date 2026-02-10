@@ -16,7 +16,7 @@
 
 .level-label {
   font-weight: 600;
-  color: var(--purple-600);
+  color: #3B82F6; /* Feather blue */
 }
 
 .next-level {
@@ -34,6 +34,6 @@
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--purple-600), #8B5CF6);
+  background: linear-gradient(90deg, #3B82F6, #60A5FA); /* Blue gradient */
   transition: width 0.4s ease;
 }

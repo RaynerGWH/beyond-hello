@@ -40,13 +40,13 @@
 }
 
 .language-card:hover {
-  border-color: var(--purple-600);
+  border-color: #3B82F6; /* Feather blue */
   background: var(--gray-50);
 }
 
 .language-card.selected {
-  border: 2px solid var(--purple-600);
-  background: var(--purple-100);
+  border: 2px solid #3B82F6; /* Feather blue */
+  background: #DBEAFE; /* Light feather blue */
   padding: calc(var(--spacing-5) - 1px); /* Compensate for thicker border */
 }
 

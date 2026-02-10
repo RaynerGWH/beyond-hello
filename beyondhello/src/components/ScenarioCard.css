@@ -104,6 +104,6 @@
   align-items: center;
   gap: 4px;
   font-weight: 600;
-  color: var(--purple-600);
+  color: #3B82F6; /* Feather blue */
   font-size: 14px;
 }

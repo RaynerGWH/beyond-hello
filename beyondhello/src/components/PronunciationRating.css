@@ -17,7 +17,7 @@
 }
 
 .dot.filled {
-  background: var(--purple-600);
+  background: #3B82F6; /* Feather blue */
 }
 
 .dot.empty {

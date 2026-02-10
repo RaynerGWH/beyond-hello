@@ -94,6 +94,7 @@
   text-decoration: underline;
   cursor: pointer;
   transition: opacity 0.2s;
+  color: #3B82F6; /* Feather blue */
 }
 
 .link-text:hover {
@@ -142,6 +143,7 @@
 .form-input:focus {
   outline: none;
   border-width: 2px;
+  border-color: #3B82F6; /* Feather blue focus */
   padding: 13px 15px; /* Compensate for thicker border */
 }
 
@@ -153,7 +155,7 @@
 .submit-btn {
   margin-top: 16px;
   padding: 18px 24px;
-  background: #000;
+  background: #3B82F6; /* Feather blue */
   color: #fff;
   border: none;
   font-size: 14px;
@@ -169,7 +171,7 @@
 }
 
 .submit-btn:hover {
-  background: #333;
+  background: #2563EB; /* Darker blue on hover */
 }
 
 .submit-arrow {
