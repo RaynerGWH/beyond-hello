@@ -1,48 +1,79 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Landing.css';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./Landing.css";
 
 function Landing() {
   const navigate = useNavigate();
 
   return (
     <div className="landing-page">
-      <div className="container">
-        <div className="landing-content">
-          {/* Logo/Wordmark */}
-          <h1 className="logo">BeyondHello</h1>
-          
-          {/* Video Preview Placeholder */}
-          <div className="video-preview">
-            <div className="video-placeholder-box">
-              <p>Scenario Preview</p>
-              <p className="subtext">(AI-Generated Scene)</p>
+      {/* Top Nav Bar */}
+      <nav className="top-nav">
+        <div className="nav-logo">BEYONDHELLO</div>
+        <div className="nav-links">
+          <a href="#about">ABOUT</a>
+          <a href="#features">FEATURES</a>
+          <a href="/signup">LOGIN</a>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <div className="hero-section">
+        <div className="hero-content">
+          <h1 className="hero-title">
+            beyond
+            <br />
+            hello
+          </h1>
+
+          <p className="hero-description">
+            BEYONDHELLO IS A GENERATIVE
+            <br />
+            LANGUAGE LEARNING PLATFORM
+            <br />
+            PRODUCING AI-POWERED
+            <br />
+            UNIQUE SCENARIOS PER
+            <br />
+            MINUTE. ONE SCROLL.
+            <br />
+            UNLIMITED OUTPUT.
+          </p>
+        </div>
+
+        {/* Video/Animation - UPDATED */}
+        <div className="hero-visual">
+          <video className="hero-video" autoPlay loop muted playsInline>
+            {/* <source src="/videos/landing-preview.mp4" type="video/mp4" />
+            <div className="visual-placeholder">
+              [VIDEO NOT AVAILABLE]
             </div>
-          </div>
-          
-          {/* Value Propositions */}
-          <div className="value-props">
-            <div className="value-prop">
-              <span className="icon">🎤</span>
-              <span className="text">Speak to AI characters</span>
-            </div>
-            <div className="value-prop">
-              <span className="icon">🎯</span>
-              <span className="text">Make decisions that affect outcomes</span>
-            </div>
-            <div className="value-prop">
-              <span className="icon">🌍</span>
-              <span className="text">Learn through real-life scenarios</span>
-            </div>
-          </div>
-          
-          {/* Primary CTA */}
-          <button 
-            className="btn btn-primary btn-full"
-            onClick={() => navigate('/signup')}
-          >
-            Start Your First Quest
-          </button>
+          </video> */}
+            <source
+              src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+              type="video/mp4"
+            />
+          </video>
+        </div>
+      </div>
+
+      {/* Bottom Bar */}
+      <div className="bottom-bar">
+        <div className="stat-box">
+          <div className="stat-label">LANGUAGES</div>
+          <div className="stat-value">3</div>
+        </div>
+        <div className="stat-box">
+          <div className="stat-label">SCENARIOS</div>
+          <div className="stat-value">∞</div>
+        </div>
+        <div className="stat-box">
+          <div className="stat-label">FLUENCY</div>
+          <div className="stat-value">100%</div>
+        </div>
+        <div className="cta-box" onClick={() => navigate("/signup")}>
+          <div className="cta-text">START</div>
+          <div className="cta-label">ONBOARDING</div>
         </div>
       </div>
     </div>

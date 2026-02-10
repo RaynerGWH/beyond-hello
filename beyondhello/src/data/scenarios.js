@@ -16,7 +16,7 @@ export const scenariosData = [
     scenes: [
       {
         sceneId: 'cafe-scene-1',
-        videoUrl: null, // Placeholder
+        videoUrl: '/videos/cafe-scene-1.mp4',
         characterName: 'Pierre (Waiter)',
         characterDialogue: 'Bonjour! Que désirez-vous commander?',
         dialogueTranslation: 'Hello! What would you like to order?',
@@ -95,7 +95,7 @@ export const scenariosData = [
       
       {
         sceneId: 'cafe-scene-2a',
-        videoUrl: null,
+        videoUrl: '/videos/cafe-scene-2a.mp4',
         characterName: 'Pierre (Waiter)',
         characterDialogue: 'Un croissant! Excellent choix. Et pour boire?',
         dialogueTranslation: 'A croissant! Excellent choice. And to drink?',
