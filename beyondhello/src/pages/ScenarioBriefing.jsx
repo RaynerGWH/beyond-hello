@@ -63,9 +63,45 @@ function ScenarioBriefing() {
               </div>
               
               <div className="illustration-text">
-                <h3 className="illustration-heading">Illustration</h3>
-                <p className="illustration-description">{scenario.description}</p>
+                <h3 className="illustration-heading">Context</h3>
+                <p className="illustration-description">
+                  You're at the Shanghai Tech Innovation Summit networking reception. 
+                  You've been introduced to a senior AI venture capitalist who invests 
+                  in early-stage tech startups.
+                </p>
               </div>
+            </div>
+
+            {/* Objective Section */}
+            <div className="objective-section">
+              <h3 className="section-title">Your Objective</h3>
+              <ul className="objective-list">
+                <li>State your full name (中文 or English)</li>
+                <li>Identify your role and company/organization</li>
+                <li>Mention your field of work (AI/tech/industry)</li>
+                <li>Explain why you're attending this summit</li>
+                <li>Express interest in connecting further</li>
+              </ul>
+            </div>
+
+            {/* Tone Guidance */}
+            <div className="tone-section">
+              <h3 className="section-title">Tone</h3>
+              <p className="tone-description">
+                Semi-formal, confident, and concise. Use professional vocabulary 
+                where appropriate (工程师, 人工智能, 创业).
+              </p>
+            </div>
+
+            {/* Success Criteria */}
+            <div className="success-section">
+              <h3 className="section-title">Success Criteria</h3>
+              <ul className="success-list">
+                <li>Complete introduction in 3–5 sentences</li>
+                <li>Deliver under 30 seconds</li>
+                <li>Use at least one professional Chinese term</li>
+                <li>Maintain clear pronunciation and proper tone</li>
+              </ul>
             </div>
 
             {/* Characters Section */}

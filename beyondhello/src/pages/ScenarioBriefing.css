@@ -194,6 +194,35 @@
   color: #111827;
 }
 
+/* Objective Section */
+.objective-section,
+.tone-section,
+.success-section {
+  margin-bottom: 24px;
+}
+
+.objective-list,
+.success-list {
+  margin: 12px 0 0 0;
+  padding-left: 24px;
+  list-style: disc;
+}
+
+.objective-list li,
+.success-list li {
+  font-size: 14px;
+  color: #4B5563;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.tone-description {
+  font-size: 14px;
+  color: #4B5563;
+  line-height: 1.6;
+  margin: 12px 0 0 0;
+}
+
 /* Action Buttons */
 .briefing-actions {
   display: flex;

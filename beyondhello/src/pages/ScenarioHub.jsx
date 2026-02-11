@@ -10,6 +10,7 @@ function ScenarioHub() {
   const navigate = useNavigate();
   const [progress, setProgress] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [showPopup, setShowPopup] = useState(false);
   
   useEffect(() => {
     const userProgress = storage.getProgress();
@@ -17,7 +18,16 @@ function ScenarioHub() {
   }, []);
   
   const handleScenarioClick = (scenarioId) => {
-    navigate(`/briefing/${scenarioId}`);
+    // Only allow networking scenario
+    if (scenarioId === 'networking') {
+      navigate(`/briefing/${scenarioId}`);
+    } else {
+      setShowPopup(true);
+    }
+  };
+  
+  const handleGenerateClick = () => {
+    setShowPopup(true);
   };
   
   const scenariosPerPage = 3;
@@ -54,6 +64,12 @@ function ScenarioHub() {
             <p className="hub-subtitle">Select a mission to practice real-life language skills.</p>
           </div>
           <div className="hub-xp-display">
+            <button 
+              className="dashboard-link-btn"
+              onClick={() => navigate('/dashboard')}
+            >
+              View Progress Dashboard
+            </button>
             <span className="xp-text">XP: {progress?.totalXP || 0}</span>
             <div className="user-avatar">
               <svg viewBox="0 0 24 24" fill="currentColor">
@@ -130,7 +146,7 @@ function ScenarioHub() {
             <div className="scenario-card-wrapper">
               <div 
                 className="hub-scenario-card generate-card"
-                onClick={() => {/* Future: Navigate to scenario generator */}}
+                onClick={handleGenerateClick}
               >
                 <div className="card-image-placeholder generate-placeholder">
                   <div className="generate-icon">
@@ -216,6 +232,22 @@ function ScenarioHub() {
           </button>
         </div>
       </div>
+
+      {/* Locked Feature Popup */}
+      {showPopup && (
+        <div className="popup-overlay" onClick={() => setShowPopup(false)}>
+          <div className="popup-modal" onClick={(e) => e.stopPropagation()}>
+            <h3 className="popup-title">Coming Soon</h3>
+            <p className="popup-message">To be released after prototype</p>
+            <button 
+              className="popup-close-btn"
+              onClick={() => setShowPopup(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
