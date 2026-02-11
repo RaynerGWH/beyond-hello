@@ -1,5 +1,229 @@
 /* src/pages/Gameplay.css */
 .gameplay-page {
   min-height: 100vh;
-  padding: var(--spacing-6);
+  background: #FFFFFF;
+}
+
+/* Black Header Bar */
+.gameplay-header-bar {
+  width: 100%;
+  height: 60px;
+  background: #000000;
+  border-bottom: 2px solid #000000;
+}
+
+/* Main Container */
+.gameplay-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* Title Section */
+.gameplay-title-section {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.gameplay-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 8px 0;
+}
+
+.scenario-progress {
+  font-size: 14px;
+  color: #6B7280;
+}
+
+/* Scene Visual Container */
+.scene-visual-container {
+  margin-bottom: 32px;
+}
+
+.scene-visual {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  background: #F3F4F6;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid #E5E7EB;
+}
+
+.scene-illustration {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #F9FAFB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scene-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Interaction Section */
+.interaction-section {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.interaction-prompt {
+  text-align: center;
+  font-size: 16px;
+  color: #6B7280;
+  margin-bottom: 24px;
+}
+
+/* Interaction Controls */
+.interaction-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.help-btn {
+  background: #FFFFFF;
+  color: #6B7280;
+  border: 2px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.help-btn:hover {
+  background: #F9FAFB;
+  border-color: #3B82F6;
+  color: #3B82F6;
+}
+
+.mic-button {
+  width: 80px;
+  height: 80px;
+  background: #FFFFFF;
+  border: 3px solid #E5E7EB;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #6B7280;
+}
+
+.mic-button svg {
+  width: 36px;
+  height: 36px;
+}
+
+.mic-button:hover {
+  border-color: #3B82F6;
+  color: #3B82F6;
+  transform: scale(1.05);
+}
+
+.mic-button.recording {
+  background: #EF4444;
+  border-color: #EF4444;
+  color: #FFFFFF;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.skip-btn {
+  background: #FFFFFF;
+  color: #6B7280;
+  border: 2px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.skip-btn:hover {
+  background: #F9FAFB;
+  color: #111827;
+}
+
+/* Scene Progress */
+.scene-progress-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.scene-counter {
+  font-size: 14px;
+  color: #6B7280;
+}
+
+.progress-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.progress-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #E5E7EB;
+  transition: all 0.3s ease;
+}
+
+.progress-dot.active {
+  background: #3B82F6;
+  width: 24px;
+  border-radius: 5px;
+}
+
+.progress-dot.completed {
+  background: #22C55E;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .gameplay-container {
+    padding: 24px 16px;
+  }
+  
+  .gameplay-title {
+    font-size: 24px;
+  }
+  
+  .interaction-controls {
+    gap: 16px;
+  }
+  
+  .mic-button {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .mic-button svg {
+    width: 32px;
+    height: 32px;
+  }
 }
