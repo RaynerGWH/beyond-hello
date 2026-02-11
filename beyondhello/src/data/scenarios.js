@@ -2,21 +2,21 @@
 
 export const scenariosData = [
   {
-    id: 'cafe-order',
-    title: 'Ordering Food at Café',
+    id: 'restaurant-order',
+    title: 'Ordering Food at Restaurant',
     difficulty: 'Easy',
     duration: '5-10 min',
     xpReward: 30,
-    thumbnail: null, // Will use placeholder
-    description: "You're at a café in Paris. The waiter approaches and it's time to practice ordering in French. Can you order food and drinks successfully?",
+    thumbnail: '/images/chinese-restaurant.jpg',
+    description: "You're at a restaurant in China. The waiter approaches and it's time to practice ordering in Chinese. Can you order food and drinks successfully?",
     characters: [
       { name: 'Pierre', role: 'Waiter', personality: 'Friendly' },
-      { name: 'Marie', role: 'Café Patron', personality: 'Bystander' }
+      { name: 'Marie', role: 'Restaurant Patron', personality: 'Bystander' }
     ],
     scenes: [
       {
-        sceneId: 'cafe-scene-1',
-        videoUrl: '/videos/cafe-scene-1.mp4',
+        sceneId: 'restaurant-scene-1',
+        videoUrl: '/videos/restaurant-scene-1.mp4',
         characterName: 'Pierre (Waiter)',
         characterDialogue: 'Bonjour! Que désirez-vous commander?',
         dialogueTranslation: 'Hello! What would you like to order?',
@@ -24,11 +24,11 @@ export const scenariosData = [
         
         options: [
           {
-            id: 'cafe-1-a',
+            id: 'restaurant-1-a',
             textInTargetLang: 'Je voudrais un croissant.',
             textTranslation: "I'd like a croissant",
             pronunciationGuide: 'zhuh voo-dreh uhn kwah-sohn',
-            nextSceneId: 'cafe-scene-2a',
+            nextSceneId: 'restaurant-scene-2a',
             baseScore: 85,
             isOptimal: true,
             feedback: {
@@ -41,11 +41,11 @@ export const scenariosData = [
             }
           },
           {
-            id: 'cafe-1-b',
+            id: 'restaurant-1-b',
             textInTargetLang: "Un café, s'il vous plaît.",
             textTranslation: 'A coffee, please',
             pronunciationGuide: 'uhn ka-feh seel voo pleh',
-            nextSceneId: 'cafe-scene-2b',
+            nextSceneId: 'restaurant-scene-2b',
             baseScore: 90,
             isOptimal: true,
             feedback: {
@@ -57,11 +57,11 @@ export const scenariosData = [
             }
           },
           {
-            id: 'cafe-1-c',
+            id: 'restaurant-1-c',
             textInTargetLang: 'Pardon, je ne comprends pas.',
             textTranslation: "Sorry, I don't understand",
             pronunciationGuide: 'par-dohn zhuh nuh kohm-prohn pah',
-            nextSceneId: 'cafe-scene-2c',
+            nextSceneId: 'restaurant-scene-2c',
             baseScore: 70,
             isOptimal: false,
             feedback: {
@@ -74,11 +74,11 @@ export const scenariosData = [
             }
           },
           {
-            id: 'cafe-1-d',
+            id: 'restaurant-1-d',
             textInTargetLang: '[Point at menu silently]',
             textTranslation: 'Non-verbal communication',
             pronunciationGuide: null,
-            nextSceneId: 'cafe-scene-2d',
+            nextSceneId: 'restaurant-scene-2d',
             baseScore: 50,
             isOptimal: false,
             feedback: {
@@ -94,8 +94,8 @@ export const scenariosData = [
       },
       
       {
-        sceneId: 'cafe-scene-2a',
-        videoUrl: '/videos/cafe-scene-2a.mp4',
+        sceneId: 'restaurant-scene-2a',
+        videoUrl: '/videos/restaurant-scene-2a.mp4',
         characterName: 'Pierre (Waiter)',
         characterDialogue: 'Un croissant! Excellent choix. Et pour boire?',
         dialogueTranslation: 'A croissant! Excellent choice. And to drink?',
@@ -103,11 +103,11 @@ export const scenariosData = [
         
         options: [
           {
-            id: 'cafe-2a-a',
+            id: 'restaurant-2a-a',
             textInTargetLang: "Un café au lait, s'il vous plaît.",
             textTranslation: 'A latte, please',
             pronunciationGuide: 'uhn ka-feh oh leh seel voo pleh',
-            nextSceneId: 'cafe-scene-3',
+            nextSceneId: 'restaurant-scene-3',
             baseScore: 92,
             isOptimal: true,
             feedback: {
@@ -117,11 +117,11 @@ export const scenariosData = [
             }
           },
           {
-            id: 'cafe-2a-b',
+            id: 'restaurant-2a-b',
             textInTargetLang: 'Rien, merci.',
             textTranslation: 'Nothing, thank you',
             pronunciationGuide: 'ree-ahn mair-see',
-            nextSceneId: 'cafe-scene-3',
+            nextSceneId: 'restaurant-scene-3',
             baseScore: 88,
             isOptimal: true,
             feedback: {
@@ -136,7 +136,7 @@ export const scenariosData = [
       },
       
       {
-        sceneId: 'cafe-scene-2b',
+        sceneId: 'restaurant-scene-2b',
         videoUrl: null,
         characterName: 'Pierre (Waiter)',
         characterDialogue: 'Bien sûr! Petit ou grand?',
@@ -145,11 +145,11 @@ export const scenariosData = [
         
         options: [
           {
-            id: 'cafe-2b-a',
+            id: 'restaurant-2b-a',
             textInTargetLang: "Grand, s'il vous plaît.",
             textTranslation: 'Large, please',
             pronunciationGuide: 'grohn seel voo pleh',
-            nextSceneId: 'cafe-scene-3',
+            nextSceneId: 'restaurant-scene-3',
             baseScore: 90,
             isOptimal: true,
             feedback: {
@@ -159,11 +159,11 @@ export const scenariosData = [
             }
           },
           {
-            id: 'cafe-2b-b',
+            id: 'restaurant-2b-b',
             textInTargetLang: 'Petit.',
             textTranslation: 'Small',
             pronunciationGuide: 'puh-tee',
-            nextSceneId: 'cafe-scene-3',
+            nextSceneId: 'restaurant-scene-3',
             baseScore: 85,
             isOptimal: true,
             feedback: {
@@ -178,7 +178,7 @@ export const scenariosData = [
       },
       
       {
-        sceneId: 'cafe-scene-2c',
+        sceneId: 'restaurant-scene-2c',
         videoUrl: null,
         characterName: 'Pierre (Waiter)',
         characterDialogue: 'Ah, désolé. Je parle trop vite. Que... voulez... vous?',
@@ -187,11 +187,11 @@ export const scenariosData = [
         
         options: [
           {
-            id: 'cafe-2c-a',
+            id: 'restaurant-2c-a',
             textInTargetLang: 'Un café, merci.',
             textTranslation: 'A coffee, thank you',
             pronunciationGuide: 'uhn ka-feh mair-see',
-            nextSceneId: 'cafe-scene-3',
+            nextSceneId: 'restaurant-scene-3',
             baseScore: 78,
             isOptimal: true,
             feedback: {
@@ -203,18 +203,18 @@ export const scenariosData = [
             }
           },
           {
-            id: 'cafe-2c-b',
+            id: 'restaurant-2c-b',
             textInTargetLang: 'English, please?',
             textTranslation: 'English, please?',
             pronunciationGuide: null,
-            nextSceneId: 'cafe-scene-3',
+            nextSceneId: 'restaurant-scene-3',
             baseScore: 60,
             isOptimal: false,
             feedback: {
               positive: 'Communication succeeded!',
               improvements: [
-                'Try to stick with French - it builds confidence',
-                'Even broken French is better practice'
+                'Try to stick with Chinese - it builds confidence',
+                'Even broken Chinese is better practice'
               ],
               naturalPhrasing: 'Try: "Parlez-vous anglais?"'
             }
@@ -223,7 +223,7 @@ export const scenariosData = [
       },
       
       {
-        sceneId: 'cafe-scene-2d',
+        sceneId: 'restaurant-scene-2d',
         videoUrl: null,
         characterName: 'Pierre (Waiter)',
         characterDialogue: 'Ah... vous voulez ça? Très bien.',
@@ -232,11 +232,11 @@ export const scenariosData = [
         
         options: [
           {
-            id: 'cafe-2d-a',
+            id: 'restaurant-2d-a',
             textInTargetLang: 'Oui, merci.',
             textTranslation: 'Yes, thank you',
             pronunciationGuide: 'wee mair-see',
-            nextSceneId: 'cafe-scene-3',
+            nextSceneId: 'restaurant-scene-3',
             baseScore: 65,
             isOptimal: true,
             feedback: {
@@ -251,7 +251,7 @@ export const scenariosData = [
       },
       
       {
-        sceneId: 'cafe-scene-3',
+        sceneId: 'restaurant-scene-3',
         videoUrl: null,
         characterName: 'Pierre (Waiter)',
         characterDialogue: 'Parfait! Ça fait 8 euros.',
@@ -260,11 +260,11 @@ export const scenariosData = [
         
         options: [
           {
-            id: 'cafe-3-a',
+            id: 'restaurant-3-a',
             textInTargetLang: 'Voici. Merci beaucoup!',
             textTranslation: 'Here you go. Thank you very much!',
             pronunciationGuide: 'vwah-see mair-see bow-koo',
-            nextSceneId: 'cafe-complete',
+            nextSceneId: 'restaurant-complete',
             baseScore: 95,
             isOptimal: true,
             feedback: {
@@ -274,11 +274,11 @@ export const scenariosData = [
             }
           },
           {
-            id: 'cafe-3-b',
+            id: 'restaurant-3-b',
             textInTargetLang: 'Merci.',
             textTranslation: 'Thank you',
             pronunciationGuide: 'mair-see',
-            nextSceneId: 'cafe-complete',
+            nextSceneId: 'restaurant-complete',
             baseScore: 85,
             isOptimal: true,
             feedback: {
@@ -294,7 +294,7 @@ export const scenariosData = [
     ],
     
     completion: {
-      sceneId: 'cafe-complete',
+      sceneId: 'restaurant-complete',
       successMessage: 'You successfully ordered food and drinks!',
       characterQuote: 'Merci! Votre commande arrive.',
       characterQuoteTranslation: 'Thank you! Your order is coming.',
@@ -314,8 +314,8 @@ export const scenariosData = [
     difficulty: 'Medium',
     duration: '10-15 min',
     xpReward: 50,
-    thumbnail: null,
-    description: "You're at a business networking event in Paris. Make a good first impression by introducing yourself professionally in French.",
+    thumbnail: '/images/chinese-business.jpg',
+    description: "You're at a business networking event in China. Make a good first impression by introducing yourself professionally in Chinese.",
     characters: [
       { name: 'Thomas', role: 'Business Professional', personality: 'Formal' },
       { name: 'Sophie', role: 'Startup Founder', personality: 'Casual' }
@@ -371,7 +371,7 @@ export const scenariosData = [
             feedback: {
               positive: 'You communicated!',
               improvements: [
-                'Try French first - most professionals appreciate the effort',
+                'Try Chinese first - most professionals appreciate the effort',
                 "Learn: 'Parlez-vous anglais?'"
               ],
               naturalPhrasing: 'Try: "Bonjour! Parlez-vous anglais?"'
@@ -467,8 +467,8 @@ export const scenariosData = [
         sceneId: 'networking-scene-2c',
         videoUrl: null,
         characterName: 'Thomas',
-        characterDialogue: 'Yes, I do. But your French will improve faster if you try!',
-        dialogueTranslation: 'Yes, I do. But your French will improve faster if you try!',
+        characterDialogue: 'Yes, I do. But your Chinese will improve faster if you try!',
+        dialogueTranslation: 'Yes, I do. But your Chinese will improve faster if you try!',
         sceneContext: 'Thomas encourages you',
         
         options: [
