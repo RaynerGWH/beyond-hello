@@ -44,7 +44,7 @@ function Landing() {
             muted 
             playsInline
           >
-            <source src="/videos/landing-preview.mp4" type="video/mp4" />
+            <source src="/videos/chinese-man.mp4" type="video/mp4" />
             <div className="visual-placeholder">
               [VIDEO NOT AVAILABLE]
             </div>

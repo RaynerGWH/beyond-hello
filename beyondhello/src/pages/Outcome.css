@@ -1,5 +1,260 @@
 /* src/pages/Outcome.css */
 .outcome-page {
   min-height: 100vh;
-  padding: var(--spacing-6);
+  background: #FFFFFF;
+}
+
+/* Black Header Bar */
+.outcome-header-bar {
+  width: 100%;
+  height: 60px;
+  background: #000000;
+  border-bottom: 2px solid #000000;
+}
+
+/* Main Container */
+.outcome-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* Return Button */
+.return-btn {
+  background: #FFFFFF;
+  color: #6B7280;
+  border: 2px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 32px;
+}
+
+.return-btn:hover {
+  background: #F9FAFB;
+  border-color: #3B82F6;
+  color: #3B82F6;
+}
+
+/* Title Section */
+.outcome-title-section {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.outcome-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 12px 0;
+}
+
+.outcome-subtitle {
+  font-size: 18px;
+  color: #6B7280;
+  margin: 0;
+}
+
+/* Results Card */
+.results-card {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #F9FAFB;
+  border: 2px solid #E5E7EB;
+  border-radius: 16px;
+  padding: 32px;
+}
+
+/* Character Section */
+.character-section {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+  align-items: flex-start;
+}
+
+.character-image {
+  width: 150px;
+  height: 100px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #E5E7EB;
+}
+
+.character-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.character-info {
+  flex: 1;
+}
+
+.speech-bubble {
+  background: #FFFFFF;
+  border: 2px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-size: 16px;
+  color: #111827;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.character-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.character-traits {
+  font-size: 14px;
+  color: #6B7280;
+}
+
+/* XP Section */
+.xp-section {
+  border-top: 2px solid #E5E7EB;
+  padding-top: 24px;
+}
+
+.xp-earned {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.xp-total {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.xp-icon {
+  font-size: 24px;
+}
+
+.xp-breakdown {
+  margin-bottom: 24px;
+}
+
+.xp-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  color: #6B7280;
+  font-size: 14px;
+}
+
+.xp-plus {
+  font-size: 16px;
+  font-weight: 600;
+  color: #6B7280;
+}
+
+.xp-amount {
+  font-weight: 600;
+  color: #111827;
+  min-width: 60px;
+}
+
+.xp-label {
+  color: #6B7280;
+}
+
+/* Progress Bar */
+.xp-progress-section {
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 24px;
+  background: #E5E7EB;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3B82F6 0%, #2563EB 100%);
+  transition: width 0.5s ease;
+}
+
+.xp-display {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #FFFFFF;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  color: #111827;
+  font-size: 14px;
+  border: 2px solid #E5E7EB;
+}
+
+/* Skills Section */
+.skills-section {
+  border-top: 2px solid #E5E7EB;
+  padding-top: 24px;
+}
+
+.skills-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 16px 0;
+}
+
+.skills-list {
+  display: flex;
+  gap: 24px;
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #FFFFFF;
+  border: 2px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 12px 20px;
+  flex: 1;
+}
+
+.skill-icon {
+  width: 28px;
+  height: 28px;
+  color: #6B7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skill-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.skill-label {
+  font-size: 14px;
+  color: #4B5563;
+  flex: 1;
+}
+
+.skill-gain {
+  font-size: 16px;
+  font-weight: 600;
+  color: #22C55E;
 }

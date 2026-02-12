@@ -9,7 +9,7 @@ function LanguageSelection() {
   const [selectedLanguage, setSelectedLanguage] = useState('');
 
   const languages = [
-    { code: 'fr', name: 'French', flag: '🇫🇷' },
+    { code: 'zh', name: 'Chinese', flag: '🇨🇳' },
     { code: 'ja', name: 'Japanese', flag: '🇯🇵' },
     { code: 'ko', name: 'Korean', flag: '🇰🇷' }
   ];
