@@ -1,0 +1,210 @@
+.feedback-page {
+  min-height: 100vh;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 16px 120px 16px;
+}
+
+/* Header */
+.feedback-header {
+  text-align: center;
+  padding: 32px 0 16px 0;
+}
+
+.feedback-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 4px 0;
+}
+
+.feedback-subtitle {
+  font-size: 14px;
+  color: #6B7280;
+  margin-bottom: 2px;
+}
+
+.feedback-scene {
+  font-size: 13px;
+  color: #9CA3AF;
+}
+
+/* Score Banner */
+.score-banner {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+  padding: 24px 0;
+  border-top: 1px solid #F3F4F6;
+  border-bottom: 1px solid #F3F4F6;
+  margin-bottom: 24px;
+}
+
+.score-number {
+  font-size: 64px;
+  font-weight: 800;
+  color: #3B82F6;
+  line-height: 1;
+}
+
+.score-label {
+  font-size: 24px;
+  font-weight: 600;
+  color: #9CA3AF;
+}
+
+/* Content Sections */
+.feedback-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.feedback-section {
+  padding: 20px 0;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 12px 0;
+}
+
+/* Pronunciation Rating */
+.rating-display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rating-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #E5E7EB;
+}
+
+.dot.filled {
+  background: #3B82F6;
+}
+
+.rating-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6B7280;
+}
+
+/* What You Said */
+.user-response {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  background: #F9FAFB;
+  padding: 16px;
+  border-radius: 12px;
+  border-left: 4px solid #3B82F6;
+  line-height: 1.6;
+}
+
+/* Tips List */
+.tips-list {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #374151;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.tips-list ul {
+  margin-top: 6px;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Natural Phrasing */
+.phrasing-note {
+  font-size: 14px;
+  color: #6B7280;
+  margin: 0 0 12px 0;
+  line-height: 1.6;
+}
+
+.phrasing-example {
+  background: #F9FAFB;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.phrasing-chinese {
+  font-size: 17px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 6px;
+  line-height: 1.6;
+}
+
+.phrasing-note-small {
+  font-size: 13px;
+  color: #9CA3AF;
+  font-style: italic;
+}
+
+/* Action Buttons */
+.feedback-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid #E5E7EB;
+  background: white;
+  z-index: 100;
+}
+
+.retry-btn {
+  padding: 20px;
+  background: white;
+  color: #374151;
+  border: none;
+  border-right: 1px solid #E5E7EB;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.retry-btn:hover {
+  background: #F9FAFB;
+}
+
+.continue-btn {
+  padding: 20px;
+  background: #3B82F6;
+  color: white;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.continue-btn:hover {
+  background: #2563EB;
+}

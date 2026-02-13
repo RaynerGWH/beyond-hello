@@ -1,272 +1,179 @@
-// src/pages/Gameplay.jsx
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getScenarioById } from '../data/scenarios';
-import VideoPlayer from '../components/VideoPlayer';
 import './Gameplay.css';
+
+// Vocabulary cheat sheet data per scenario
+const VOCAB = {
+  networking: [
+    { chinese: '你好', pinyin: 'nǐ hǎo', english: 'Hello' },
+    { chinese: '我叫', pinyin: 'wǒ jiào', english: 'My name is' },
+    { chinese: '很高兴认识你', pinyin: 'hěn gāoxìng rènshi nǐ', english: 'Nice to meet you' },
+    { chinese: '我是工程师', pinyin: 'wǒ shì gōngchéngshī', english: 'I am an engineer' },
+    { chinese: '人工智能', pinyin: 'rén gōng zhì néng', english: 'Artificial Intelligence' },
+    { chinese: '很荣幸', pinyin: 'hěn róngxìng', english: 'It is an honour' },
+  ]
+};
 
 function Gameplay() {
   const navigate = useNavigate();
   const { scenarioId } = useParams();
-  const [scenario, setScenario] = useState(null);
+
+  // Flow states
+  const [phase, setPhase] = useState('ready'); // ready → playing → speaking → done
   const [isRecording, setIsRecording] = useState(false);
-  const [hasStarted, setHasStarted] = useState(false);
-  const [showFeedback, setShowFeedback] = useState(false);
-  const [recordingAttempts, setRecordingAttempts] = useState(0);
-  const audioRef = useRef(null);
+  const [showHelp, setShowHelp] = useState(false);
+
   const videoRef = useRef(null);
+  const audioRef = useRef(null);
 
-  useEffect(() => {
-    const scenarioData = getScenarioById(scenarioId);
-    if (scenarioData) {
-      setScenario(scenarioData);
-    } else {
-      navigate('/hub');
-    }
-  }, [scenarioId, navigate]);
+  // Derive vocab key from scenarioId
+  const vocabKey = scenarioId?.includes('networking') ? 'networking' : 'cafe';
+  const vocab = VOCAB[vocabKey] || [];
 
-  if (!scenario) {
-    return null;
-  }
-
-  const currentScene = scenario.scenes[0]; // Always use first scene
+  // --- Handlers ---
 
   const handlePlay = () => {
-    setHasStarted(true);
-    
-    // Play video
+    setPhase('playing');
     if (videoRef.current) {
-      videoRef.current.play().catch(err => console.log('Video play failed:', err));
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {});
     }
-    
-    // Play audio
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
-      audioRef.current.play().catch(err => console.log('Audio play failed:', err));
+      audioRef.current.play().catch(() => {});
+    }
+  };
+
+  const handleVideoEnded = () => {
+    // Video done → mic appears
+    setPhase('speaking');
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
     }
   };
 
   const handleMicClick = () => {
     if (!isRecording) {
-      // Start recording
       setIsRecording(true);
     } else {
-      // Stop recording
       setIsRecording(false);
-      
-      // First attempt: show feedback
-      // Second attempt: go to outcome
-      if (recordingAttempts === 0) {
-        setShowFeedback(true);
-        setRecordingAttempts(1);
-      } else {
-        navigate('/outcome');
-      }
+      setPhase('done');
+      navigate('/feedback');
     }
   };
 
-  const handleNeedHelp = () => {
-    // Future: Show dialogue options modal
-    alert('Help: Choose from dialogue options (coming soon)');
-  };
-
-  const handleRetry = () => {
-    // Hide feedback and replay
-    setShowFeedback(false);
-    setHasStarted(false);
-    
-    // Reset video and audio
+  const handleReplay = () => {
+    setPhase('playing');
+    setIsRecording(false);
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
-      videoRef.current.pause();
+      videoRef.current.play().catch(() => {});
     }
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
-      audioRef.current.pause();
+      audioRef.current.play().catch(() => {});
     }
   };
 
   return (
     <div className="gameplay-page">
-      {/* Black Header Bar */}
-      <div className="gameplay-header-bar"></div>
+      {/* Header */}
+      <div className="gameplay-header">
+        <h1 className="gameplay-title">Business Networking Event</h1>
+        <div className="scene-indicator">Scene 1 of 1</div>
+      </div>
 
-      {/* Main Content */}
-      <div className="gameplay-container">
-        {/* Title Section */}
-        <div className="gameplay-title-section">
-          <h1 className="gameplay-title">{scenario.title}</h1>
-        </div>
+      {/* Video */}
+      <div className="gameplay-video-container">
+        <video
+          ref={videoRef}
+          className="gameplay-video"
+          muted
+          playsInline
+          onEnded={handleVideoEnded}
+        >
+          <source src="/videos/chinese-man.mp4" type="video/mp4" />
+        </video>
+      </div>
 
-        {/* Scene Visual */}
-        <div className="scene-visual-container">
-          <div className="scene-visual">
-            {currentScene.videoUrl ? (
-              <VideoPlayer 
-                videoUrl={currentScene.videoUrl}
-                autoPlay={true}
-                showControls={false}
-              />
-            ) : (
-              <div className="scene-illustration">
-                <video 
-                  ref={videoRef}
-                  className="scene-video"
-                  muted 
-                  playsInline
-                  onEnded={() => {
-                    // Stop audio when video ends
-                    if (audioRef.current) {
-                      audioRef.current.pause();
-                      audioRef.current.currentTime = 0;
-                    }
-                  }}
-                >
-                  <source src="/videos/chinese-man.mp4" type="video/mp4" />
-                </video>
-              </div>
-            )}
+      {/* Hidden audio */}
+      <audio ref={audioRef} preload="auto">
+        <source src="/audios/chinese-man.wav" type="audio/wav" />
+        <source src="/audios/chinese-man.mp3" type="audio/mpeg" />
+      </audio>
+
+      {/* Interaction Section */}
+      <div className="interaction-section">
+
+        {/* PHASE: ready - show Play button only */}
+        {phase === 'ready' && (
+          <div className="phase-ready">
+            <p className="interaction-prompt">Press play to begin the scene</p>
+            <button className="play-btn" onClick={handlePlay}>
+              ▶ Play
+            </button>
           </div>
-        </div>
+        )}
 
-        {/* Feedback Modal Overlay */}
-        {showFeedback && (
-          <div className="feedback-overlay">
-            <div className="feedback-modal">
-              <div className="feedback-header">
-                <h2 className="feedback-title">Feedback</h2>
-                <div className="feedback-subtitle">{scenario.title}</div>
-                <div className="feedback-scene">Scene 1 of 1</div>
-              </div>
+        {/* PHASE: playing - video is running, show nothing/replay */}
+        {phase === 'playing' && (
+          <div className="phase-playing">
+            <p className="interaction-prompt">Listen carefully...</p>
+          </div>
+        )}
 
-              <div className="feedback-illustration">
-                <div className="scene-illustration">
-                  <video 
-                    className="scene-video"
-                    muted 
-                    playsInline
-                  >
-                    <source src="/videos/chinese-man.mp4" type="video/mp4" />
-                  </video>
-                </div>
-              </div>
+        {/* PHASE: speaking - mic appears after video ends */}
+        {phase === 'speaking' && (
+          <div className="phase-speaking">
+            <p className="interaction-prompt">
+              {isRecording ? '🔴 Recording... Press mic to stop' : '🎤 Your turn — speak in Chinese'}
+            </p>
+            <div className="controls-row">
+              <button className="help-btn" onClick={() => setShowHelp(true)}>
+                Need Help?
+              </button>
 
-              <div className="feedback-content">
-                <div className="pronunciation-section">
-                  <h3 className="section-title">Pronunciation Rating</h3>
-                  <div className="rating-display">
-                    <div className="rating-dots">
-                      <span className="dot filled"></span>
-                      <span className="dot filled"></span>
-                      <span className="dot filled"></span>
-                      <span className="dot"></span>
-                      <span className="dot"></span>
-                    </div>
-                    <span className="rating-label">Fair</span>
-                  </div>
-                </div>
+              <button
+                className={`mic-button ${isRecording ? 'recording' : ''}`}
+                onClick={handleMicClick}
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                  <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                </svg>
+              </button>
 
-                <div className="answer-feedback-section">
-                  <h3 className="section-title">Feedback on Your Answer</h3>
-                  <div className="feedback-text">
-                    <strong>你说：</strong><br />
-                    你好，我是Greg。很高兴认识你。我是一名AI工程师。
-                  </div>
-                  <div className="tips-header">🔹 Pronunciation Tips:</div>
-                  <ul className="feedback-tips">
-                    <li>Try to pronounce <strong>"你 (nǐ)"</strong> with a clear third tone (fall–rise), not flat like <em>nee</em>.</li>
-                    <li><strong>"好 (hǎo)"</strong> should also be third tone — don't say it like <em>how</em> in English; keep the dipping tone.</li>
-                    <li>In <strong>"我是 (wǒ shì)"</strong>, make sure:
-                      <ul>
-                        <li><strong>"我 (wǒ)"</strong> is third tone (low and slightly rising).</li>
-                        <li><strong>"是 (shì)"</strong> is fourth tone (sharp falling tone, like giving a firm answer).</li>
-                      </ul>
-                    </li>
-                    <li><strong>"认识 (rènshi)"</strong>
-                      <ul>
-                        <li>"rèn" is fourth tone (strong fall).</li>
-                        <li>"shi" is neutral tone (light and quick, not stressed).</li>
-                      </ul>
-                    </li>
-                    <li><strong>"工程师 (gōngchéngshī)"</strong>
-                      <ul>
-                        <li>gōng (1st tone – high and flat)</li>
-                        <li>chéng (2nd tone – rising)</li>
-                        <li>shī (1st tone – high and flat)</li>
-                      </ul>
-                      Make sure the tones are clear and not all flat.
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="natural-phrasing-section">
-                  <h3 className="section-title">Natural phrasing:</h3>
-                  <p className="phrasing-text">
-                    Your sentence is correct and natural 👍
-                  </p>
-                  <p className="phrasing-text">
-                    If you want to sound slightly more fluent or professional, you could say:
-                  </p>
-                  <p className="phrasing-example">
-                    <strong>你好，我叫Greg。很高兴认识你。我是一名人工智能工程师。</strong><br />
-                    <em>("人工智能工程师" sounds more formal than "AI工程师")</em>
-                  </p>
-                  <p className="phrasing-text">Or a smoother self-introduction:</p>
-                  <p className="phrasing-example">
-                    <strong>你好，我叫Greg，是一名人工智能工程师。很高兴认识你。</strong>
-                  </p>
-                </div>
-
-                <button className="retry-btn" onClick={handleRetry}>
-                  Retry
-                </button>
-              </div>
+              <button className="replay-btn" onClick={handleReplay}>
+                ↺ Replay
+              </button>
             </div>
           </div>
         )}
 
-        {/* Hidden Audio Element */}
-        <audio 
-          ref={audioRef} 
-          preload="auto"
-          onEnded={() => {
-            // Stop video when audio ends
-            if (videoRef.current) {
-              videoRef.current.pause();
-            }
-          }}
-        >
-          <source src="/audios/chinese-man.wav" type="audio/wav" />
-          <source src="/audios/chinese-man.mp3" type="audio/mpeg" />
-        </audio>
+      </div>
 
-        {/* Interaction Section */}
-        <div className="interaction-section">
-          <div className="interaction-prompt">
-            Speak your answer in Chinese...
-          </div>
-
-          <div className="interaction-controls">
-            <button className="help-btn" onClick={handleNeedHelp}>
-              Need Help?
-            </button>
-
-            <button 
-              className={`mic-button ${isRecording ? 'recording' : ''}`}
-              onClick={handleMicClick}
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
-                <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
-              </svg>
-            </button>
-
-            <button className="play-btn" onClick={handlePlay}>
-              Play
-            </button>
+      {/* Need Help - Slide Up Panel */}
+      {showHelp && (
+        <div className="help-overlay" onClick={() => setShowHelp(false)}>
+          <div className="help-panel" onClick={(e) => e.stopPropagation()}>
+            <div className="help-header">
+              <h3 className="help-title">Vocabulary Cheat Sheet</h3>
+              <button className="help-close" onClick={() => setShowHelp(false)}>✕</button>
+            </div>
+            <div className="help-vocab-list">
+              {vocab.map((item, index) => (
+                <div key={index} className="vocab-row">
+                  <span className="vocab-chinese">{item.chinese}</span>
+                  <span className="vocab-pinyin">{item.pinyin}</span>
+                  <span className="vocab-english">{item.english}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
