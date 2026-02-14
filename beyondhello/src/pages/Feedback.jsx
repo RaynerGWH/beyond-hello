@@ -1,49 +1,134 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { getScenarioById } from '../data/scenarios';
 import './Feedback.css';
+
+// Derive rating label + dot count from score
+function getRating(score) {
+  if (score >= 90) return { label: 'Excellent', filled: 6, color: '#22C55E' };
+  if (score >= 75) return { label: 'Good', filled: 4, color: '#3B82F6' };
+  if (score >= 60) return { label: 'Fair', filled: 3, color: '#FCD34D' };
+  return { label: 'Keep Practising', filled: 1, color: '#EF4444' };
+}
+
+// Derive outcome variant label from average score
+function getOutcomeVariant(avg) {
+  if (avg >= 90) return 'excellent';
+  if (avg >= 75) return 'good';
+  if (avg >= 60) return 'fair';
+  return 'struggled';
+}
 
 function Feedback() {
   const navigate = useNavigate();
+  const { state } = useLocation();
+
+  const scenarioId = state?.scenarioId || 'networking';
+  const sceneResults = state?.sceneResults || [];
+  const scenario = getScenarioById(scenarioId);
+
+  // Calculate overall score
+  const avgScore = sceneResults.length
+    ? Math.round(sceneResults.reduce((sum, r) => sum + r.score, 0) / sceneResults.length)
+    : 85;
+
+  const xpEarned = scenario ? Math.round((avgScore / 100) * scenario.xpReward) : 40;
+  const rating = getRating(avgScore);
+  const outcomeVariant = getOutcomeVariant(avgScore);
+  const outcomeMessage = scenario?.completion?.outcomeVariants?.[outcomeVariant] || 'Great effort!';
+  const characterQuote = scenario?.completion?.characterQuote || '';
+  const characterQuoteTranslation = scenario?.completion?.characterQuoteTranslation || '';
 
   return (
     <div className="feedback-page">
+
       {/* Header */}
       <div className="feedback-header">
-        <h1 className="feedback-title">Feedback</h1>
-        <div className="feedback-subtitle">Business Networking Event</div>
-        <div className="feedback-scene">Scene 1 of 1</div>
+        <h1 className="feedback-title">Scenario Complete!</h1>
+        <div className="feedback-subtitle">{scenario?.title || 'Business Networking Event'}</div>
       </div>
 
-      {/* Score Banner */}
+      {/* Overall Score Banner */}
       <div className="score-banner">
-        <div className="score-number">85</div>
+        <div className="score-number" style={{ color: rating.color }}>{avgScore}</div>
         <div className="score-label">/ 100</div>
       </div>
 
-      {/* Content */}
+      {/* XP + Outcome */}
+      <div className="outcome-summary">
+        <div className="xp-badge">+{xpEarned} XP</div>
+        <p className="outcome-message">{outcomeMessage}</p>
+        {characterQuote && (
+          <div className="character-quote">
+            <span className="quote-text">"{characterQuote}"</span>
+            <span className="quote-translation">{characterQuoteTranslation}</span>
+          </div>
+        )}
+      </div>
+
       <div className="feedback-content">
 
-        {/* Pronunciation Rating */}
+        {/* Per-Scene Breakdown */}
         <div className="feedback-section">
-          <h3 className="section-title">Pronunciation Rating</h3>
-          <div className="rating-display">
-            <div className="rating-dots">
-              <span className="dot filled"></span>
-              <span className="dot filled"></span>
-              <span className="dot filled"></span>
-              <span className="dot filled"></span>
-              <span className="dot"></span>
-              <span className="dot"></span>
-            </div>
-            <span className="rating-label">Good</span>
-          </div>
-        </div>
-
-        {/* What You Said */}
-        <div className="feedback-section">
-          <h3 className="section-title">What You Said</h3>
-          <div className="user-response">
-            你好，我是Greg。很高兴认识你。我是一名AI工程师。
+          <h3 className="section-title">Scene Breakdown</h3>
+          <div className="scene-breakdown">
+            {sceneResults.length > 0 ? sceneResults.map((result, index) => {
+              const r = getRating(result.score);
+              return (
+                <div key={index} className="scene-row">
+                  <div className="scene-row-header">
+                    <span className="scene-row-label">Scene {index + 1}</span>
+                    <span className="scene-row-score" style={{ color: r.color }}>
+                      {result.score}/100
+                    </span>
+                  </div>
+                  <div className="scene-row-dialogue">
+                    {result.characterDialogue}
+                    <span className="scene-row-translation"> — {result.dialogueTranslation}</span>
+                  </div>
+                  {result.selectedOption && (
+                    <div className="scene-row-response">
+                      <span className="response-label">You said: </span>
+                      <span className="response-text">{result.selectedOption.textInTargetLang}</span>
+                    </div>
+                  )}
+                  <div className="rating-display">
+                    <div className="rating-dots">
+                      {Array.from({ length: 6 }).map((_, i) => (
+                        <span
+                          key={i}
+                          className="dot"
+                          style={{ background: i < r.filled ? r.color : '#E5E7EB' }}
+                        />
+                      ))}
+                    </div>
+                    <span className="rating-label">{r.label}</span>
+                  </div>
+                </div>
+              );
+            }) : (
+              // Fallback mock if no results passed (e.g. navigated directly)
+              [85, 90, 78].map((score, index) => {
+                const r = getRating(score);
+                return (
+                  <div key={index} className="scene-row">
+                    <div className="scene-row-header">
+                      <span className="scene-row-label">Scene {index + 1}</span>
+                      <span className="scene-row-score" style={{ color: r.color }}>{score}/100</span>
+                    </div>
+                    <div className="rating-display">
+                      <div className="rating-dots">
+                        {Array.from({ length: 6 }).map((_, i) => (
+                          <span key={i} className="dot"
+                            style={{ background: i < r.filled ? r.color : '#E5E7EB' }} />
+                        ))}
+                      </div>
+                      <span className="rating-label">{r.label}</span>
+                    </div>
+                  </div>
+                );
+              })
+            )}
           </div>
         </div>
 
@@ -52,78 +137,62 @@ function Feedback() {
           <h3 className="section-title">🔹 Pronunciation Tips</h3>
           <ul className="tips-list">
             <li>
-              Try to pronounce <strong>你 (nǐ)</strong> with a clear third tone 
-              (fall–rise), not flat like <em>nee</em>.
+              <strong>您好 (nín hǎo)</strong> — use 您 instead of 你 with seniors.
+              nín is second tone (rising), hǎo is third tone (fall–rise).
             </li>
             <li>
-              <strong>好 (hǎo)</strong> should also be third tone — don't say it 
-              like <em>how</em> in English; keep the dipping tone.
-            </li>
-            <li>
-              In <strong>我是 (wǒ shì)</strong>:
+              <strong>人工智能 (rén gōng zhì néng)</strong>:
               <ul>
-                <li><strong>我 (wǒ)</strong> is third tone (low and slightly rising)</li>
-                <li><strong>是 (shì)</strong> is fourth tone (sharp falling)</li>
+                <li>rén — 2nd tone (rising)</li>
+                <li>gōng — 1st tone (flat high)</li>
+                <li>zhì — 4th tone (sharp fall)</li>
+                <li>néng — 2nd tone (rising)</li>
               </ul>
             </li>
             <li>
-              <strong>认识 (rènshi)</strong>:
-              <ul>
-                <li>rèn — fourth tone (strong fall)</li>
-                <li>shi — neutral tone (light and quick)</li>
-              </ul>
+              <strong>合作 (hézuò)</strong> — hé is 2nd tone, zuò is 4th tone.
+              Don't flatten either syllable.
             </li>
             <li>
-              <strong>工程师 (gōngchéngshī)</strong>:
-              <ul>
-                <li>gōng — 1st tone (high and flat)</li>
-                <li>chéng — 2nd tone (rising)</li>
-                <li>shī — 1st tone (high and flat)</li>
-              </ul>
+              <strong>期待 (qīdài)</strong> — qī is 1st tone (flat), dài is 4th tone (falling).
+              A natural, professional closing phrase.
             </li>
           </ul>
         </div>
 
         {/* Natural Phrasing */}
-        <div className="feedback-section">
-          <h3 className="section-title">💬 Natural Phrasing</h3>
-          <p className="phrasing-note">
-            Your sentence is correct and natural 👍 If you want to sound 
-            more professional, try:
-          </p>
-          <div className="phrasing-example">
-            <div className="phrasing-chinese">
-              你好，我叫Greg。很高兴认识你。我是一名人工智能工程师。
-            </div>
-            <div className="phrasing-note-small">
-              "人工智能工程师" sounds more formal than "AI工程师"
-            </div>
-          </div>
-          <div className="phrasing-example">
-            <div className="phrasing-chinese">
-              你好，我叫Greg，是一名人工智能工程师。很高兴认识你。
-            </div>
-            <div className="phrasing-note-small">
-              Smoother flow — introduce yourself before the pleasantry
+        {sceneResults[0]?.selectedOption?.feedback?.naturalPhrasing && (
+          <div className="feedback-section">
+            <h3 className="section-title">💬 Natural Phrasing</h3>
+            <p className="phrasing-note">
+              Here's how a native speaker might phrase your opening:
+            </p>
+            <div className="phrasing-example">
+              <div className="phrasing-chinese">
+                {sceneResults[0].selectedOption.feedback.naturalPhrasing}
+              </div>
+              <div className="phrasing-note-small">
+                From Scene 1 — your introduction
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
       </div>
 
       {/* Action Buttons */}
       <div className="feedback-actions">
-        <button 
+        <button
           className="retry-btn"
-          onClick={() => navigate('/play/networking/1')}
+          onClick={() => navigate(`/play/${scenarioId}`)}
         >
-          ↺ Retry
+          ↺ Play Again
         </button>
-        <button 
+        <button
           className="continue-btn"
-          onClick={() => navigate('/outcome')}
+          onClick={() => navigate('/hub')}
         >
-          Continue →
+          Back to Scenarios
         </button>
       </div>
 

@@ -21,7 +21,6 @@ export const scenariosData = [
         characterDialogue: 'Bonjour! Que désirez-vous commander?',
         dialogueTranslation: 'Hello! What would you like to order?',
         sceneContext: 'The waiter approaches your table with a notepad',
-        
         options: [
           {
             id: 'restaurant-1-a',
@@ -87,212 +86,12 @@ export const scenariosData = [
                 "Try using words next time - pointing doesn't build speaking skills",
                 "Even a simple 'Ça' (that) while pointing is better"
               ],
-              naturalPhrasing: "Je voudrais ça, s'il vous plaît. (I'd like that, please)"
-            }
-          }
-        ]
-      },
-      
-      {
-        sceneId: 'restaurant-scene-2a',
-        videoUrl: '/videos/restaurant-scene-2a.mp4',
-        characterName: 'Pierre (Waiter)',
-        characterDialogue: 'Un croissant! Excellent choix. Et pour boire?',
-        dialogueTranslation: 'A croissant! Excellent choice. And to drink?',
-        sceneContext: 'The waiter writes down your order',
-        
-        options: [
-          {
-            id: 'restaurant-2a-a',
-            textInTargetLang: "Un café au lait, s'il vous plaît.",
-            textTranslation: 'A latte, please',
-            pronunciationGuide: 'uhn ka-feh oh leh seel voo pleh',
-            nextSceneId: 'restaurant-scene-3',
-            baseScore: 92,
-            isOptimal: true,
-            feedback: {
-              positive: 'Perfect order! Natural and polite.',
-              improvements: [],
-              naturalPhrasing: 'Excellent!'
-            }
-          },
-          {
-            id: 'restaurant-2a-b',
-            textInTargetLang: 'Rien, merci.',
-            textTranslation: 'Nothing, thank you',
-            pronunciationGuide: 'ree-ahn mair-see',
-            nextSceneId: 'restaurant-scene-3',
-            baseScore: 88,
-            isOptimal: true,
-            feedback: {
-              positive: 'Good, polite response!',
-              improvements: [
-                "You could add 'pour moi' (for me) to be extra clear"
-              ],
-              naturalPhrasing: 'Rien pour moi, merci.'
-            }
-          }
-        ]
-      },
-      
-      {
-        sceneId: 'restaurant-scene-2b',
-        videoUrl: null,
-        characterName: 'Pierre (Waiter)',
-        characterDialogue: 'Bien sûr! Petit ou grand?',
-        dialogueTranslation: 'Of course! Small or large?',
-        sceneContext: 'The waiter asks about coffee size',
-        
-        options: [
-          {
-            id: 'restaurant-2b-a',
-            textInTargetLang: "Grand, s'il vous plaît.",
-            textTranslation: 'Large, please',
-            pronunciationGuide: 'grohn seel voo pleh',
-            nextSceneId: 'restaurant-scene-3',
-            baseScore: 90,
-            isOptimal: true,
-            feedback: {
-              positive: 'Clear and direct!',
-              improvements: [],
-              naturalPhrasing: 'Perfect!'
-            }
-          },
-          {
-            id: 'restaurant-2b-b',
-            textInTargetLang: 'Petit.',
-            textTranslation: 'Small',
-            pronunciationGuide: 'puh-tee',
-            nextSceneId: 'restaurant-scene-3',
-            baseScore: 85,
-            isOptimal: true,
-            feedback: {
-              positive: 'Good choice!',
-              improvements: [
-                "Adding 's'il vous plaît' makes it more polite"
-              ],
-              naturalPhrasing: "Petit, s'il vous plaît."
-            }
-          }
-        ]
-      },
-      
-      {
-        sceneId: 'restaurant-scene-2c',
-        videoUrl: null,
-        characterName: 'Pierre (Waiter)',
-        characterDialogue: 'Ah, désolé. Je parle trop vite. Que... voulez... vous?',
-        dialogueTranslation: 'Ah, sorry. I speak too fast. What... do... you... want?',
-        sceneContext: 'The waiter speaks more slowly',
-        
-        options: [
-          {
-            id: 'restaurant-2c-a',
-            textInTargetLang: 'Un café, merci.',
-            textTranslation: 'A coffee, thank you',
-            pronunciationGuide: 'uhn ka-feh mair-see',
-            nextSceneId: 'restaurant-scene-3',
-            baseScore: 78,
-            isOptimal: true,
-            feedback: {
-              positive: 'You recovered well!',
-              improvements: [
-                'Now you understand - great adaptation'
-              ],
-              naturalPhrasing: 'Good!'
-            }
-          },
-          {
-            id: 'restaurant-2c-b',
-            textInTargetLang: 'English, please?',
-            textTranslation: 'English, please?',
-            pronunciationGuide: null,
-            nextSceneId: 'restaurant-scene-3',
-            baseScore: 60,
-            isOptimal: false,
-            feedback: {
-              positive: 'Communication succeeded!',
-              improvements: [
-                'Try to stick with Chinese - it builds confidence',
-                'Even broken Chinese is better practice'
-              ],
-              naturalPhrasing: 'Try: "Parlez-vous anglais?"'
-            }
-          }
-        ]
-      },
-      
-      {
-        sceneId: 'restaurant-scene-2d',
-        videoUrl: null,
-        characterName: 'Pierre (Waiter)',
-        characterDialogue: 'Ah... vous voulez ça? Très bien.',
-        dialogueTranslation: 'Ah... you want this? Very good.',
-        sceneContext: 'The waiter looks slightly confused but understands',
-        
-        options: [
-          {
-            id: 'restaurant-2d-a',
-            textInTargetLang: 'Oui, merci.',
-            textTranslation: 'Yes, thank you',
-            pronunciationGuide: 'wee mair-see',
-            nextSceneId: 'restaurant-scene-3',
-            baseScore: 65,
-            isOptimal: true,
-            feedback: {
-              positive: 'You used words this time!',
-              improvements: [
-                'Next time, try to start with words instead of pointing'
-              ],
-              naturalPhrasing: 'Good recovery!'
-            }
-          }
-        ]
-      },
-      
-      {
-        sceneId: 'restaurant-scene-3',
-        videoUrl: null,
-        characterName: 'Pierre (Waiter)',
-        characterDialogue: 'Parfait! Ça fait 8 euros.',
-        dialogueTranslation: 'Perfect! That will be 8 euros.',
-        sceneContext: 'The waiter presents the bill',
-        
-        options: [
-          {
-            id: 'restaurant-3-a',
-            textInTargetLang: 'Voici. Merci beaucoup!',
-            textTranslation: 'Here you go. Thank you very much!',
-            pronunciationGuide: 'vwah-see mair-see bow-koo',
-            nextSceneId: 'restaurant-complete',
-            baseScore: 95,
-            isOptimal: true,
-            feedback: {
-              positive: 'Excellent closing! Very polite.',
-              improvements: [],
-              naturalPhrasing: 'Perfect!'
-            }
-          },
-          {
-            id: 'restaurant-3-b',
-            textInTargetLang: 'Merci.',
-            textTranslation: 'Thank you',
-            pronunciationGuide: 'mair-see',
-            nextSceneId: 'restaurant-complete',
-            baseScore: 85,
-            isOptimal: true,
-            feedback: {
-              positive: 'Good!',
-              improvements: [
-                "'Merci beaucoup' adds extra politeness"
-              ],
-              naturalPhrasing: 'Good enough!'
+              naturalPhrasing: "Je voudrais ça, s'il vous plaît."
             }
           }
         ]
       }
     ],
-    
     completion: {
       sceneId: 'restaurant-complete',
       successMessage: 'You successfully ordered food and drinks!',
@@ -306,8 +105,8 @@ export const scenariosData = [
       }
     }
   },
-  
-  // Scenario 2: Business Networking
+
+  // ─── Scenario 2: Business Networking (Chinese) ───────────────────────────────
   {
     id: 'networking',
     title: 'Business Networking Event',
@@ -315,267 +114,261 @@ export const scenariosData = [
     duration: '10-15 min',
     xpReward: 50,
     thumbnail: '/images/chinese-business.jpg',
-    description: "You're at a business networking event in China. Make a good first impression by introducing yourself professionally in Chinese.",
+    description: "You're at the Shanghai Tech Innovation Summit. A senior venture capitalist approaches you — make a strong first impression in Chinese.",
     characters: [
-      { name: 'Thomas', role: 'Business Professional', personality: 'Formal' },
+      { name: '王总', role: 'Venture Capitalist', personality: 'Formal' },
       { name: 'Sophie', role: 'Startup Founder', personality: 'Casual' }
     ],
+
+    // Linear: scene-1 → scene-2 → scene-3 → complete
+    // Replace videoUrl values with your actual CapCut exports when ready
     scenes: [
+      // ── Scene 1: Wang Zong approaches and asks your direction ──────────────
       {
         sceneId: 'networking-scene-1',
-        videoUrl: null,
-        characterName: 'Thomas (Business Professional)',
-        characterDialogue: 'Oh, bonjour! Vous êtes nouveau ici?',
-        dialogueTranslation: 'Oh, hello! Are you new here?',
-        sceneContext: 'A professional notices you at the networking event',
-        
+        videoUrl: '/videos/networking/scene-1.mp4',
+        characterName: '王总',
+        characterDialogue: '你好，我是王总。你是做哪个方向的？',
+        dialogueTranslation: 'Hello, I am Wang Zong. What field are you in?',
+        sceneContext: 'A senior VC at the Shanghai Tech Summit approaches you',
+
         options: [
           {
             id: 'network-1-a',
-            textInTargetLang: "Oui, je m'appelle [Name]. Enchanté!",
-            textTranslation: "Yes, I'm [Name]. Nice to meet you!",
-            pronunciationGuide: 'wee zhuh ma-pell ... ohn-shohn-tay',
-            nextSceneId: 'networking-scene-2a',
-            baseScore: 92,
+            textInTargetLang: '你好，王总。我叫 [Name]，我是做人工智能的。',
+            textTranslation: 'Hello, Wang Zong. My name is [Name], I work in AI.',
+            pronunciationGuide: 'nǐ hǎo, wáng zǒng. wǒ jiào ... wǒ shì zuò rén gōng zhì néng de.',
+            nextSceneId: 'networking-scene-2',
+            baseScore: 95,
             isOptimal: true,
             feedback: {
-              positive: 'Perfect introduction! Very professional.',
+              positive: 'Excellent! Professional address with 总 shows respect.',
               improvements: [],
-              naturalPhrasing: 'Excellent for business context!'
+              naturalPhrasing: '你好，王总。我叫 [Name]，我是做人工智能的，很高兴认识您。'
             }
           },
           {
             id: 'network-1-b',
-            textInTargetLang: "Salut! Oui, c'est mon premier événement.",
-            textTranslation: 'Hi! Yes, my first event.',
-            pronunciationGuide: 'sa-loo wee say mohn pruh-mee-ay ay-ven-mohn',
-            nextSceneId: 'networking-scene-2b',
-            baseScore: 85,
+            textInTargetLang: '您好！我是一名工程师，专注于 AI 创业。',
+            textTranslation: 'Hello! I am an engineer focused on AI startups.',
+            pronunciationGuide: 'nín hǎo! wǒ shì yī míng gōngchéngshī, zhuānzhù yú AI chuàngyè.',
+            nextSceneId: 'networking-scene-2',
+            baseScore: 90,
             isOptimal: true,
             feedback: {
-              positive: 'Friendly approach!',
+              positive: 'Great use of 您好 — very respectful in a formal setting.',
               improvements: [
-                "'Salut' is a bit casual for business - 'Bonjour' is safer"
+                'Introducing your name first is more natural in Chinese networking'
               ],
-              naturalPhrasing: "Consider: 'Bonjour! Oui, c'est mon premier événement.'"
+              naturalPhrasing: '您好！我叫 [Name]，是一名专注于 AI 创业的工程师。'
             }
           },
           {
             id: 'network-1-c',
-            textInTargetLang: 'Sorry, do you speak English?',
-            textTranslation: 'Sorry, do you speak English?',
-            pronunciationGuide: null,
-            nextSceneId: 'networking-scene-2c',
-            baseScore: 60,
+            textInTargetLang: '你好，我在科技行业工作。',
+            textTranslation: 'Hello, I work in the tech industry.',
+            pronunciationGuide: 'nǐ hǎo, wǒ zài kējì hángyè gōngzuò.',
+            nextSceneId: 'networking-scene-2',
+            baseScore: 75,
             isOptimal: false,
             feedback: {
-              positive: 'You communicated!',
+              positive: 'Clear and understandable!',
               improvements: [
-                'Try Chinese first - most professionals appreciate the effort',
-                "Learn: 'Parlez-vous anglais?'"
+                'Too vague for a business event — be specific about your role',
+                'Using 您 instead of 你 shows more respect to a senior'
               ],
-              naturalPhrasing: 'Try: "Bonjour! Parlez-vous anglais?"'
+              naturalPhrasing: '您好，我在人工智能行业工作，专注于早期创业。'
             }
           },
           {
             id: 'network-1-d',
-            textInTargetLang: '[Smile and nod]',
-            textTranslation: 'Non-verbal',
-            pronunciationGuide: null,
-            nextSceneId: 'networking-scene-2d',
-            baseScore: 50,
+            textInTargetLang: '你好，我是学生，来这里学习的。',
+            textTranslation: 'Hello, I am a student here to learn.',
+            pronunciationGuide: 'nǐ hǎo, wǒ shì xuéshēng, lái zhèlǐ xuéxí de.',
+            nextSceneId: 'networking-scene-2',
+            baseScore: 60,
             isOptimal: false,
             feedback: {
-              positive: 'Body language matters!',
+              positive: 'Honest and humble — that can work!',
               improvements: [
-                'But words are essential for networking',
-                'Even a simple "Bonjour" is better'
+                'At a professional summit, frame yourself as an aspiring professional',
+                'Add what you study or your interest area'
               ],
-              naturalPhrasing: 'Try: "Bonjour!" with a smile'
+              naturalPhrasing: '您好，我是计算机专业的学生，对 AI 创业非常感兴趣。'
             }
           }
         ]
       },
-      
+
+      // ── Scene 2: Wang Zong shows interest, asks about your project ──────────
       {
-        sceneId: 'networking-scene-2a',
-        videoUrl: null,
-        characterName: 'Thomas',
-        characterDialogue: "Enchanté aussi. Je m'appelle Thomas. Vous travaillez dans quel domaine?",
-        dialogueTranslation: "Nice to meet you too. I'm Thomas. What field do you work in?",
-        sceneContext: 'Thomas asks about your professional background',
-        
+        sceneId: 'networking-scene-2',
+        videoUrl: '/videos/networking/scene-2.mp4',
+        characterName: '王总',
+        characterDialogue: '哦，人工智能？很有意思。你们公司现在在做什么项目？',
+        dialogueTranslation: 'Oh, AI? Very interesting. What project is your company working on now?',
+        sceneContext: 'Wang Zong leans in, visibly engaged',
+
         options: [
           {
-            id: 'network-2a-a',
-            textInTargetLang: 'Je travaille dans la technologie.',
-            textTranslation: 'I work in technology',
-            pronunciationGuide: 'zhuh trah-vye dohn la tek-noh-loh-zhee',
+            id: 'network-2-a',
+            textInTargetLang: '我们在开发一个用 AI 帮助人们学语言的平台。',
+            textTranslation: 'We are developing an AI platform to help people learn languages.',
+            pronunciationGuide: 'wǒmen zài kāifā yīgè yòng AI bāngzhù rénmen xué yǔyán de píngtái.',
+            nextSceneId: 'networking-scene-3',
+            baseScore: 95,
+            isOptimal: true,
+            feedback: {
+              positive: 'Perfect pitch in Chinese — concise and clear!',
+              improvements: [],
+              naturalPhrasing: '我们在开发一个 AI 语言学习平台，帮助用户通过真实场景练习口语。'
+            }
+          },
+          {
+            id: 'network-2-b',
+            textInTargetLang: '我们做的是语音识别技术，用于教育领域。',
+            textTranslation: 'We work on speech recognition technology for education.',
+            pronunciationGuide: 'wǒmen zuò de shì yǔyīn shíbié jìshù, yòng yú jiàoyù lǐngyù.',
             nextSceneId: 'networking-scene-3',
             baseScore: 90,
             isOptimal: true,
             feedback: {
-              positive: 'Clear and professional!',
-              improvements: [],
-              naturalPhrasing: 'Perfect!'
+              positive: 'Technically strong answer!',
+              improvements: [
+                'Could mention the user benefit, not just the technology'
+              ],
+              naturalPhrasing: '我们做语音识别技术，专门用于教育领域，帮助学习者提高发音。'
             }
           },
           {
-            id: 'network-2a-b',
-            textInTargetLang: 'Je suis étudiant en commerce.',
-            textTranslation: 'I am a business student',
-            pronunciationGuide: 'zhuh swee ay-too-dee-ohn ohn ko-mairs',
+            id: 'network-2-c',
+            textInTargetLang: '我们的项目还在早期阶段，不方便透露。',
+            textTranslation: 'Our project is still early stage, not convenient to disclose.',
+            pronunciationGuide: 'wǒmen de xiàngmù hái zài zǎoqī jiēduàn, bù fāngbiàn tòulù.',
             nextSceneId: 'networking-scene-3',
-            baseScore: 88,
-            isOptimal: true,
+            baseScore: 55,
+            isOptimal: false,
             feedback: {
-              positive: 'Great response!',
-              improvements: [],
-              naturalPhrasing: 'Natural!'
-            }
-          }
-        ]
-      },
-      
-      {
-        sceneId: 'networking-scene-2b',
-        videoUrl: null,
-        characterName: 'Sophie (Startup Founder)',
-        characterDialogue: 'Cool! Bienvenue. Tu fais quoi comme travail?',
-        dialogueTranslation: 'Cool! Welcome. What do you do for work?',
-        sceneContext: 'Sophie responds casually',
-        
-        options: [
-          {
-            id: 'network-2b-a',
-            textInTargetLang: 'Je travaille en tech.',
-            textTranslation: 'I work in tech',
-            pronunciationGuide: 'zhuh trah-vye ohn tek',
-            nextSceneId: 'networking-scene-3',
-            baseScore: 85,
-            isOptimal: true,
-            feedback: {
-              positive: 'Casual and natural!',
-              improvements: [],
-              naturalPhrasing: 'Good match for informal setting!'
-            }
-          }
-        ]
-      },
-      
-      {
-        sceneId: 'networking-scene-2c',
-        videoUrl: null,
-        characterName: 'Thomas',
-        characterDialogue: 'Yes, I do. But your Chinese will improve faster if you try!',
-        dialogueTranslation: 'Yes, I do. But your Chinese will improve faster if you try!',
-        sceneContext: 'Thomas encourages you',
-        
-        options: [
-          {
-            id: 'network-2c-a',
-            textInTargetLang: "D'accord. Je m'appelle [Name].",
-            textTranslation: "Okay. I'm [Name].",
-            pronunciationGuide: 'da-kor zhuh ma-pell',
-            nextSceneId: 'networking-scene-3',
-            baseScore: 72,
-            isOptimal: true,
-            feedback: {
-              positive: 'You tried again - great!',
-              improvements: [],
-              naturalPhrasing: 'Good recovery!'
-            }
-          }
-        ]
-      },
-      
-      {
-        sceneId: 'networking-scene-2d',
-        videoUrl: null,
-        characterName: 'Thomas',
-        characterDialogue: '[Looks confused] Um... bonjour?',
-        dialogueTranslation: '[Looks confused] Um... hello?',
-        sceneContext: 'Thomas waits for you to speak',
-        
-        options: [
-          {
-            id: 'network-2d-a',
-            textInTargetLang: 'Bonjour!',
-            textTranslation: 'Hello!',
-            pronunciationGuide: 'bohn-zhoor',
-            nextSceneId: 'networking-scene-3',
-            baseScore: 68,
-            isOptimal: true,
-            feedback: {
-              positive: 'You spoke!',
+              positive: 'Grammatically correct!',
               improvements: [
-                'Add your name next time'
+                'This closes the conversation — VCs want to hear your vision',
+                'Share a high-level direction at minimum'
               ],
-              naturalPhrasing: "Try: 'Bonjour, je m'appelle...'"
+              naturalPhrasing: '我们还在早期，但核心方向是用 AI 解决语言学习中的口语问题。'
+            }
+          },
+          {
+            id: 'network-2-d',
+            textInTargetLang: '对不起，我的中文不太好，可以说英文吗？',
+            textTranslation: "Sorry, my Chinese isn't great, can I speak English?",
+            pronunciationGuide: 'duìbuqǐ, wǒ de zhōngwén bú tài hǎo, kěyǐ shuō yīngwén ma?',
+            nextSceneId: 'networking-scene-3',
+            baseScore: 50,
+            isOptimal: false,
+            feedback: {
+              positive: 'The sentence itself is good Chinese!',
+              improvements: [
+                'You made it this far — keep going in Chinese',
+                'Even imperfect Chinese shows effort and earns respect'
+              ],
+              naturalPhrasing: '我的中文还在学习中，但我尽量用中文介绍。我们在做 AI 语言学习。'
             }
           }
         ]
       },
-      
+
+      // ── Scene 3: Wang Zong offers his card ───────────────────────────────────
       {
         sceneId: 'networking-scene-3',
-        videoUrl: null,
-        characterName: 'Thomas/Sophie',
-        characterDialogue: 'Super! Voici ma carte de visite.',
-        dialogueTranslation: 'Great! Here is my business card.',
-        sceneContext: 'They offer their business card',
-        
+        videoUrl: '/videos/networking/scene-3.mp4',
+        characterName: '王总',
+        characterDialogue: '我觉得我们可以合作。我们保持联系吧。',
+        dialogueTranslation: "I think we can collaborate. Let's keep in touch.",
+        sceneContext: 'Wang Zong reaches into his suit and offers his business card',
+
         options: [
           {
             id: 'network-3-a',
-            textInTargetLang: 'Merci beaucoup. Voici la mienne.',
-            textTranslation: 'Thank you very much. Here is mine.',
-            pronunciationGuide: 'mair-see bow-koo vwah-see la mee-en',
+            textInTargetLang: '太好了！这是我的名片，期待和您合作。',
+            textTranslation: 'Wonderful! Here is my card, looking forward to working with you.',
+            pronunciationGuide: 'tài hǎo le! zhè shì wǒ de míngpiàn, qīdài hé nín hézuò.',
             nextSceneId: 'networking-complete',
-            baseScore: 95,
+            baseScore: 98,
             isOptimal: true,
             feedback: {
-              positive: 'Perfect professional exchange!',
+              positive: 'Outstanding closing! 期待 is natural professional Chinese.',
               improvements: [],
-              naturalPhrasing: 'Excellent!'
+              naturalPhrasing: '太好了，谢谢王总！这是我的名片，期待和您进一步合作。'
             }
           },
           {
             id: 'network-3-b',
-            textInTargetLang: 'Merci!',
-            textTranslation: 'Thank you!',
-            pronunciationGuide: 'mair-see',
+            textInTargetLang: '谢谢！我也很期待。这是我的联系方式。',
+            textTranslation: 'Thank you! I look forward to it too. Here is my contact.',
+            pronunciationGuide: 'xièxiè! wǒ yě hěn qīdài. zhè shì wǒ de liánxì fāngshì.',
             nextSceneId: 'networking-complete',
-            baseScore: 82,
+            baseScore: 92,
             isOptimal: true,
             feedback: {
-              positive: 'Good!',
+              positive: 'Warm and professional close!',
+              improvements: [],
+              naturalPhrasing: 'Great!'
+            }
+          },
+          {
+            id: 'network-3-c',
+            textInTargetLang: '谢谢王总，我学到了很多。',
+            textTranslation: 'Thank you Wang Zong, I learned a lot.',
+            pronunciationGuide: 'xièxiè wáng zǒng, wǒ xué dào le hěn duō.',
+            nextSceneId: 'networking-complete',
+            baseScore: 75,
+            isOptimal: false,
+            feedback: {
+              positive: 'Polite and respectful!',
               improvements: [
-                "Offer your card too: 'Voici la mienne'"
+                'Sounds more like a student than a peer — offer your card',
+                'Position yourself as a potential collaborator'
               ],
-              naturalPhrasing: 'Functional but could be smoother'
+              naturalPhrasing: '谢谢王总！很高兴认识您，希望以后有机会合作。'
+            }
+          },
+          {
+            id: 'network-3-d',
+            textInTargetLang: '好的，谢谢。再见！',
+            textTranslation: 'Okay, thank you. Goodbye!',
+            pronunciationGuide: 'hǎo de, xièxiè. zàijiàn!',
+            nextSceneId: 'networking-complete',
+            baseScore: 65,
+            isOptimal: false,
+            feedback: {
+              positive: 'Clean exit!',
+              improvements: [
+                'You missed the chance to exchange contact info',
+                'Always offer your card when a VC offers theirs'
+              ],
+              naturalPhrasing: '谢谢王总！可以加一下您的微信吗？'
             }
           }
         ]
       }
     ],
-    
+
     completion: {
       sceneId: 'networking-complete',
-      successMessage: 'You made a professional connection!',
-      characterQuote: 'Ravi de vous avoir rencontré. À bientôt!',
-      characterQuoteTranslation: 'Pleased to have met you. See you soon!',
+      successMessage: 'You made a professional connection at the summit!',
+      characterQuote: '很高兴认识你。期待我们的合作！',
+      characterQuoteTranslation: 'Great to meet you. Looking forward to our collaboration!',
       outcomeVariants: {
-        excellent: 'You networked like a pro!',
-        good: 'You made a solid connection!',
-        fair: 'You introduced yourself successfully!',
-        struggled: 'You participated - keep practicing!'
+        excellent: 'You networked like a seasoned professional!',
+        good: 'You made a solid impression on Wang Zong!',
+        fair: 'You introduced yourself and held the conversation!',
+        struggled: 'You participated — keep practicing your Chinese!'
       }
     }
   }
 ];
 
-// Helper functions
+// ─── Helper functions ─────────────────────────────────────────────────────────
 
 export function getScenarioById(id) {
   return scenariosData.find(s => s.id === id);
@@ -585,6 +378,12 @@ export function getSceneById(scenarioId, sceneId) {
   const scenario = getScenarioById(scenarioId);
   if (!scenario) return null;
   return scenario.scenes.find(s => s.sceneId === sceneId);
+}
+
+export function getFirstSceneId(scenarioId) {
+  const scenario = getScenarioById(scenarioId);
+  if (!scenario || !scenario.scenes.length) return null;
+  return scenario.scenes[0].sceneId;
 }
 
 export function getOptionById(scenarioId, sceneId, optionId) {

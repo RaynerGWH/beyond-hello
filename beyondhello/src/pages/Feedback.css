@@ -208,3 +208,127 @@
 .continue-btn:hover {
   background: #2563EB;
 }
+
+/* ============================================
+   APPEND THESE TO THE BOTTOM OF Feedback.css
+   ============================================ */
+
+/* XP Badge + Outcome Summary */
+.outcome-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 0 24px 0;
+  border-bottom: 1px solid #F3F4F6;
+  margin-bottom: 8px;
+}
+
+.xp-badge {
+  background: #FFF7ED;
+  border: 2px solid #F97316;
+  color: #F97316;
+  font-size: 18px;
+  font-weight: 800;
+  border-radius: 9999px;
+  padding: 6px 20px;
+}
+
+.outcome-message {
+  font-size: 15px;
+  font-weight: 600;
+  color: #374151;
+  text-align: center;
+  margin: 0;
+}
+
+.character-quote {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: #F9FAFB;
+  border-radius: 12px;
+  padding: 12px 20px;
+  margin-top: 4px;
+  text-align: center;
+}
+
+.quote-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.quote-translation {
+  font-size: 13px;
+  color: #6B7280;
+  font-style: italic;
+}
+
+/* Scene Breakdown */
+.scene-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.scene-row {
+  background: #F9FAFB;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scene-row-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.scene-row-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.scene-row-score {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.scene-row-dialogue {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.5;
+}
+
+.scene-row-translation {
+  font-weight: 400;
+  color: #9CA3AF;
+  font-style: italic;
+}
+
+.scene-row-response {
+  font-size: 13px;
+  color: #374151;
+  background: white;
+  border-left: 3px solid #3B82F6;
+  padding: 8px 12px;
+  border-radius: 0 8px 8px 0;
+}
+
+.response-label {
+  color: #9CA3AF;
+  font-weight: 500;
+}
+
+.response-text {
+  font-weight: 600;
+  color: #111827;
+}
