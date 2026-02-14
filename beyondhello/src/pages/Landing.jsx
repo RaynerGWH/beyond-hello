@@ -13,7 +13,8 @@ function Landing() {
         <div className="nav-links">
           <a href="#about">ABOUT</a>
           <a href="#features">FEATURES</a>
-          <a href="/signup" className="nav-login">LOGIN</a>
+          {/* <a href="/signup" className="nav-login">LOGIN</a> */}
+          <a href="#login">LOGIN</a>
         </div>
       </nav>
 
