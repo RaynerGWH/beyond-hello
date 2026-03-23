@@ -1,6 +1,6 @@
 // src/pages/ScenarioBriefing.jsx
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { getScenarioById } from '../data/scenarios';
 import './ScenarioBriefing.css';
 
@@ -8,44 +8,112 @@ function ScenarioBriefing() {
   const navigate = useNavigate();
   const { scenarioId } = useParams();
   const [scenario, setScenario] = useState(null);
+  const [isCheatSheetOpen, setIsCheatSheetOpen] = useState(false);
 
   useEffect(() => {
     const scenarioData = getScenarioById(scenarioId);
     if (scenarioData) {
       setScenario(scenarioData);
     } else {
-      // If scenario not found, redirect back to hub
       navigate('/hub');
     }
   }, [scenarioId, navigate]);
 
-  const handleStartScenario = () => {
-    navigate(`/play/${scenarioId}`);
+  // Map scenario to a relevant warm-up topic
+  const warmupTopicMap = {
+    'networking': 'introductions',
+    'restaurant-order': 'ordering'
   };
+  const warmupTopic = warmupTopicMap[scenarioId] || 'greetings';
 
-  const handleBack = () => {
-    navigate('/hub');
-  };
+  const handleStartScenario = () => navigate(`/play/${scenarioId}`);
+  const handleBack = () => navigate('/hub');
 
-  if (!scenario) {
-    return null;
-  }
+  if (!scenario) return null;
+
+  // Pull phrases from first scene options for the cheat sheet
+  const firstSceneOptions = scenario.scenes?.[0]?.options ?? [];
 
   return (
     <div className="scenario-briefing-page">
-      {/* Black Header Bar */}
-      <div className="briefing-header-bar"></div>
-
-      {/* Main Content */}
       <div className="briefing-container">
+
+        {/* Back button — top-left */}
+        <button className="briefing-back-btn" onClick={handleBack}>← Back</button>
+
         <h1 className="briefing-page-title">Mission Briefing</h1>
 
         <div className="briefing-card">
           <h2 className="scenario-title">{scenario.title}</h2>
           <p className="scenario-description">{scenario.description}</p>
 
+          {/* ── Cheat Sheet panel ──────────────────────────────────── */}
+          <div className="cheatsheet-block">
+
+            {/* Toggle row */}
+            <div
+              className="cheatsheet-header"
+              onClick={() => setIsCheatSheetOpen(!isCheatSheetOpen)}
+            >
+              <div className="cheatsheet-header-left">
+                <svg className="cheatsheet-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+                </svg>
+                <span className="cheatsheet-label">Key Phrases</span>
+              </div>
+              <svg
+                className={`cheatsheet-chevron ${isCheatSheetOpen ? 'open' : ''}`}
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M7 10l5 5 5-5z"/>
+              </svg>
+            </div>
+
+            {/* Warm-up nudge — always visible, grouped with cheat sheet */}
+            <p className="cheatsheet-warmup-nudge">
+              Need more practice first?{' '}
+              <Link to={`/practice?topic=${warmupTopic}`} className="cheatsheet-warmup-link">
+                Try Phrase Warm-Up →
+              </Link>
+            </p>
+
+            {/* Expanded content */}
+            {isCheatSheetOpen && (
+              <div className="cheatsheet-content">
+                <div className="cheatsheet-grid">
+                  {firstSceneOptions.map((option) => (
+                    <div key={option.id} className="cheatsheet-phrase-card">
+                      <span className="csp-chinese">
+                        {option.cheatSheet?.phrase ?? option.textInTargetLang}
+                      </span>
+                      {(option.cheatSheet?.pinyin ?? option.pronunciationGuide) && (
+                        <span className="csp-pinyin">
+                          {option.cheatSheet?.pinyin ?? option.pronunciationGuide}
+                        </span>
+                      )}
+                      <span className="csp-english">
+                        {option.cheatSheet?.translation ?? option.textTranslation}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <div className="cheatsheet-footer">
+                  <button
+                    className="got-it-btn"
+                    onClick={() => setIsCheatSheetOpen(false)}
+                  >
+                    ✓ Got it
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* ── Briefing content ───────────────────────────────────── */}
           <div className="briefing-content">
-            {/* Illustration Section */}
+
+            {/* Context */}
             <div className="illustration-section">
               <div className="illustration-box">
                 <div className="illustration-image">
@@ -61,18 +129,17 @@ function ScenarioBriefing() {
                   )}
                 </div>
               </div>
-              
               <div className="illustration-text">
                 <h3 className="illustration-heading">Context</h3>
                 <p className="illustration-description">
-                  You're at the Shanghai Tech Innovation Summit networking reception. 
-                  You've been introduced to a senior AI venture capitalist who invests 
+                  You're at the Shanghai Tech Innovation Summit networking reception.
+                  You've been introduced to a senior AI venture capitalist who invests
                   in early-stage tech startups.
                 </p>
               </div>
             </div>
 
-            {/* Objective Section */}
+            {/* Objective */}
             <div className="objective-section">
               <h3 className="section-title">Your Objective</h3>
               <ul className="objective-list">
@@ -84,11 +151,11 @@ function ScenarioBriefing() {
               </ul>
             </div>
 
-            {/* Tone Guidance */}
+            {/* Tone */}
             <div className="tone-section">
               <h3 className="section-title">Tone</h3>
               <p className="tone-description">
-                Semi-formal, confident, and concise. Use professional vocabulary 
+                Semi-formal, confident, and concise. Use professional vocabulary
                 where appropriate (工程师, 人工智能, 创业).
               </p>
             </div>
@@ -104,7 +171,7 @@ function ScenarioBriefing() {
               </ul>
             </div>
 
-            {/* Characters Section */}
+            {/* Characters */}
             <div className="characters-section">
               <h3 className="section-title">Characters</h3>
               <div className="characters-list">
@@ -117,7 +184,7 @@ function ScenarioBriefing() {
                     </div>
                     <div className="character-info">
                       <span className="character-name">{character.name}</span>
-                      <span className="character-role"> - {character.personality}</span>
+                      <span className="character-role"> — {character.personality}</span>
                     </div>
                   </div>
                 ))}
@@ -132,7 +199,7 @@ function ScenarioBriefing() {
             </div>
           </div>
 
-          {/* Action Buttons */}
+          {/* ── Action Buttons ─────────────────────────────────────── */}
           <div className="briefing-actions">
             <button className="start-scenario-btn" onClick={handleStartScenario}>
               Start Scenario
