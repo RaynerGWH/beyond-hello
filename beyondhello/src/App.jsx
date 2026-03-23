@@ -12,6 +12,7 @@ import Gameplay from "./pages/Gameplay";
 import Feedback from "./pages/Feedback";
 import Outcome from "./pages/Outcome";
 import Dashboard from "./pages/Dashboard";
+import PhraseWarmUp from "./pages/PhraseWarmUp";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/hub" element={<ScenarioHub />} />
           <Route path="/briefing/:scenarioId" element={<ScenarioBriefing />} />
           <Route path="/play/:scenarioId" element={<Gameplay />} />
+          <Route path="/practice" element={<PhraseWarmUp />} />
           <Route path="/feedback" element={<Feedback />} />
           <Route path="/outcome" element={<Outcome />} />
           <Route path="/dashboard" element={<Dashboard />} />

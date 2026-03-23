@@ -1,59 +1,193 @@
 /* src/pages/Dashboard.css */
-.dashboard-page {
+
+/* ── Shell ──────────────────────────────────────────────────────────────── */
+
+.dashboard-shell {
+  display: flex;
   min-height: 100vh;
+  background: #FAFAFA;
+}
+
+/* ── Sidebar (mirrors ScenarioHub sidebar exactly) ──────────────────────── */
+
+.hub-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
   background: #FFFFFF;
+  border-right: 0.5px solid #E5E7EB;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 0 0 0;
+  z-index: 10;
 }
 
-/* Black Header Bar */
-.dashboard-header-bar {
-  width: 100%;
-  height: 60px;
-  background: #000000;
-  border-bottom: 2px solid #000000;
+.sidebar-logo {
+  padding: 0 20px 28px 20px;
+  font-size: 20px;
+  letter-spacing: -0.3px;
+  border-bottom: 0.5px solid #F3F4F6;
 }
 
-/* Main Container */
-.dashboard-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 48px 24px;
+.logo-beyond {
+  font-weight: 400;
+  color: #111827;
 }
 
-/* Header Section */
+.logo-hello {
+  font-weight: 700;
+  color: #3B82F6;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #4B5563;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  user-select: none;
+}
+
+.nav-item:hover {
+  background: #F9FAFB;
+  color: #111827;
+}
+
+.nav-item-active {
+  background: #EFF6FF;
+  color: #3B82F6;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.nav-item-green:hover {
+  background: #F0FDF4;
+  color: #16A34A;
+}
+
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.nav-item-active .nav-icon {
+  opacity: 1;
+}
+
+.nav-divider {
+  height: 0.5px;
+  background: #E5E7EB;
+  margin: 8px 4px;
+}
+
+.sidebar-user-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 16px 24px 16px;
+  border-top: 0.5px solid #E5E7EB;
+}
+
+.user-initials-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #EFF6FF;
+  color: #3B82F6;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.user-pill-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.user-pill-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-pill-xp {
+  font-size: 12px;
+  color: #6B7280;
+}
+
+/* ── Main content ───────────────────────────────────────────────────────── */
+
+.dashboard-main {
+  margin-left: 220px;
+  flex: 1;
+  padding: 48px 52px 80px 52px;
+  min-height: 100vh;
+}
+
+/* Header */
 .dashboard-header-section {
-  text-align: center;
-  margin-bottom: 48px;
+  margin-bottom: 40px;
 }
 
 .dashboard-title {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
   color: #111827;
-  margin: 0 0 12px 0;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.4px;
 }
 
 .dashboard-subtitle {
-  font-size: 16px;
+  font-size: 15px;
   color: #6B7280;
   margin: 0;
 }
 
-/* Card Base Styles */
+/* ── Card base ──────────────────────────────────────────────────────────── */
+
 .dashboard-card {
   background: #FFFFFF;
-  border: 2px solid #E5E7EB;
+  border: 1.5px solid #E5E7EB;
   border-radius: 16px;
   padding: 24px;
 }
 
 .card-title {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: #111827;
   margin: 0 0 20px 0;
 }
 
-/* Top Row */
+/* ── Top row ────────────────────────────────────────────────────────────── */
+
 .dashboard-top-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -61,7 +195,7 @@
   margin-bottom: 24px;
 }
 
-/* Completed Scenarios Card */
+/* Completed scenarios card */
 .scenarios-card {
   display: flex;
   flex-direction: column;
@@ -70,7 +204,7 @@
 .scenarios-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   margin-bottom: 16px;
   flex: 1;
 }
@@ -79,75 +213,90 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px;
+  padding: 10px 12px;
   background: #F9FAFB;
   border: 1px solid #E5E7EB;
-  border-radius: 12px;
+  border-radius: 10px;
 }
 
 .scenario-icon {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 22px;
   background: #FFFFFF;
   border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.scenario-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
 }
 
 .scenario-info {
   flex: 1;
+  min-width: 0;
 }
 
 .scenario-name {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: #111827;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .scenario-xp {
-  font-size: 12px;
+  font-size: 11px;
   color: #6B7280;
   background: #FFFFFF;
-  padding: 4px 8px;
+  padding: 2px 7px;
   border-radius: 6px;
   display: inline-block;
+  border: 1px solid #E5E7EB;
 }
 
 .completion-badge {
-  width: 24px;
-  height: 24px;
-  background: #E5E7EB;
+  width: 22px;
+  height: 22px;
+  background: #DCFCE7;
+  color: #16A34A;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
-  color: #6B7280;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
 }
 
 .view-all-btn {
   width: 100%;
   background: #FFFFFF;
   color: #6B7280;
-  border: 2px solid #E5E7EB;
+  border: 1.5px solid #E5E7EB;
   border-radius: 8px;
-  padding: 12px;
-  font-size: 14px;
+  padding: 10px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s;
 }
 
 .view-all-btn:hover {
-  background: #F9FAFB;
   border-color: #3B82F6;
   color: #3B82F6;
 }
 
-/* Speaking Accuracy Card */
+/* Speaking accuracy card */
 .accuracy-card {
   display: flex;
   flex-direction: column;
@@ -161,7 +310,7 @@
 
 .chart-area {
   flex: 1;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .line-chart {
@@ -172,24 +321,25 @@
 .chart-labels {
   display: flex;
   justify-content: space-around;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .day-label {
-  font-size: 12px;
-  color: #6B7280;
+  font-size: 11px;
+  color: #9CA3AF;
   font-weight: 500;
 }
 
 .average-accuracy {
-  font-size: 14px;
+  font-size: 13px;
   color: #4B5563;
   text-align: center;
-  padding-top: 16px;
-  border-top: 1px solid #E5E7EB;
+  padding-top: 14px;
+  border-top: 1px solid #F3F4F6;
 }
 
-/* Bottom Row */
+/* ── Bottom row ─────────────────────────────────────────────────────────── */
+
 .dashboard-bottom-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -197,7 +347,7 @@
   margin-bottom: 32px;
 }
 
-/* Streak Card */
+/* Streak card */
 .streak-card {
   display: flex;
   align-items: center;
@@ -205,7 +355,8 @@
 }
 
 .streak-icon {
-  font-size: 48px;
+  font-size: 44px;
+  line-height: 1;
 }
 
 .streak-info {
@@ -213,18 +364,18 @@
 }
 
 .streak-title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   color: #111827;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 
 .streak-subtitle {
-  font-size: 14px;
+  font-size: 13px;
   color: #6B7280;
 }
 
-/* Level Card */
+/* Level card */
 .level-card {
   display: flex;
   align-items: center;
@@ -232,15 +383,17 @@
 }
 
 .level-icon {
-  font-size: 48px;
+  font-size: 44px;
+  line-height: 1;
 }
 
 .level-info {
   flex: 1;
+  min-width: 0;
 }
 
 .level-title {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: #111827;
   margin-bottom: 8px;
@@ -248,16 +401,17 @@
 
 .level-progress-bar {
   width: 100%;
-  height: 12px;
+  height: 10px;
   background: #E5E7EB;
-  border-radius: 6px;
+  border-radius: 9999px;
   overflow: hidden;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .level-progress-fill {
   height: 100%;
   background: linear-gradient(90deg, #3B82F6 0%, #2563EB 100%);
+  border-radius: 9999px;
   transition: width 0.5s ease;
 }
 
@@ -266,25 +420,76 @@
   color: #6B7280;
 }
 
-/* Actions */
+/* ── Empty states ───────────────────────────────────────────────────────── */
+
+.empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 0;
+  text-align: center;
+  gap: 14px;
+}
+
+.empty-state-text {
+  font-size: 14px;
+  color: #9CA3AF;
+  margin: 0;
+}
+
+.empty-state-cta {
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #3B82F6;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s;
+}
+
+.empty-state-cta:hover {
+  color: #2563EB;
+}
+
+/* ── CTA ────────────────────────────────────────────────────────────────── */
+
 .dashboard-actions {
   text-align: center;
 }
 
 .continue-learning-btn {
-  background: #FFFFFF;
-  color: #111827;
-  border: 2px solid #E5E7EB;
-  border-radius: 8px;
-  padding: 14px 48px;
-  font-size: 16px;
-  font-weight: 600;
+  background: #3B82F6;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 9999px;
+  padding: 14px 52px;
+  font-size: 15px;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.15s;
 }
 
 .continue-learning-btn:hover {
-  background: #F9FAFB;
-  border-color: #3B82F6;
-  color: #3B82F6;
+  background: #2563EB;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .hub-sidebar {
+    display: none;
+  }
+
+  .dashboard-main {
+    margin-left: 0;
+    padding: 28px 20px 60px 20px;
+  }
+
+  .dashboard-top-row,
+  .dashboard-bottom-row {
+    grid-template-columns: 1fr;
+  }
 }

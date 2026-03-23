@@ -1,0 +1,445 @@
+/* PhraseWarmUp.css — Feather Blue design system */
+
+.warmup-page {
+  min-height: 100vh;
+  background: #FFFFFF;
+}
+
+/* Black header bar — matches ScenarioHub / Dashboard */
+.warmup-header-bar {
+  width: 100%;
+  height: 60px;
+  background: #000000;
+}
+
+.warmup-container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 32px 24px 64px 24px;
+}
+
+/* ── Page header ─────────────────────────────────────────────────────────── */
+
+.warmup-page-header {
+  margin-bottom: 32px;
+}
+
+.warmup-back-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: #6B7280;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.15s;
+}
+
+.warmup-back-btn:hover {
+  color: #111827;
+}
+
+.warmup-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 8px 0;
+}
+
+.warmup-subtitle {
+  font-size: 15px;
+  color: #6B7280;
+  margin: 0;
+}
+
+/* ── Topic tabs ──────────────────────────────────────────────────────────── */
+
+.topic-tabs-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 32px;
+  /* hide scrollbar visually */
+  scrollbar-width: none;
+}
+
+.topic-tabs-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.topic-tabs {
+  display: flex;
+  gap: 10px;
+  /* prevent wrapping so it scrolls on small screens */
+  width: max-content;
+}
+
+.topic-tab {
+  padding: 9px 20px;
+  border-radius: 9999px;
+  border: 2px solid #E5E7EB;
+  background: #FFFFFF;
+  color: #4B5563;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.topic-tab:hover {
+  border-color: #93C5FD;
+  color: #3B82F6;
+}
+
+.topic-tab.active {
+  border-color: #3B82F6;
+  background: #3B82F6;
+  color: #FFFFFF;
+}
+
+/* ── Phrase card ─────────────────────────────────────────────────────────── */
+
+.phrase-card {
+  background: #F9FAFB;
+  border: 2px solid #E5E7EB;
+  border-radius: 20px;
+  padding: 36px 28px;
+  text-align: center;
+  margin-bottom: 28px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  animation: cardFadeIn 0.2s ease-out;
+}
+
+@keyframes cardFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.phrase-target-lang {
+  font-size: 40px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.2;
+}
+
+.phrase-pinyin {
+  font-size: 18px;
+  color: #3B82F6;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.phrase-translation {
+  font-size: 15px;
+  color: #6B7280;
+}
+
+.phrase-tip {
+  margin-top: 12px;
+  background: #EFF6FF;
+  border: 1px solid #DBEAFE;
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+  width: 100%;
+}
+
+.tip-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #3B82F6;
+}
+
+.tip-text {
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.5;
+}
+
+/* ── Navigation controls ─────────────────────────────────────────────────── */
+
+.phrase-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.phrase-nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #E5E7EB;
+  background: #FFFFFF;
+  font-size: 20px;
+  color: #374151;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  line-height: 1;
+}
+
+.phrase-nav-btn:hover:not(:disabled) {
+  border-color: #3B82F6;
+  color: #3B82F6;
+}
+
+.phrase-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.phrase-progress {
+  font-size: 15px;
+  font-weight: 600;
+  color: #6B7280;
+  min-width: 48px;
+  text-align: center;
+}
+
+/* ── Mic section ─────────────────────────────────────────────────────────── */
+
+.warmup-mic-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.warmup-mic-prompt {
+  font-size: 15px;
+  color: #4B5563;
+  margin: 0;
+}
+
+/* Reuse the exact mic button pattern from Gameplay.css */
+.mic-button {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 2px solid #E5E7EB;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.mic-button svg {
+  width: 32px;
+  height: 32px;
+  color: #374151;
+}
+
+.mic-button:hover {
+  border-color: #3B82F6;
+}
+
+.mic-button.recording {
+  border-color: #EF4444;
+  background: #FEE2E2;
+  animation: pulse 1.2s infinite;
+}
+
+.mic-button.recording svg {
+  color: #EF4444;
+}
+
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  70%  { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+/* Finish Recording button */
+.finish-recording-btn {
+  padding: 11px 28px;
+  background: #EF4444;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+  animation: fadeInUp 0.2s ease-out;
+}
+
+.finish-recording-btn:hover {
+  background: #DC2626;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Feedback panel ──────────────────────────────────────────────────────── */
+
+.warmup-feedback-panel {
+  background: #F0FDF4;
+  border: 2px solid #BBF7D0;
+  border-radius: 20px;
+  padding: 28px 24px;
+  text-align: center;
+  margin-bottom: 48px;
+  animation: popIn 0.2s ease-out;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Score row */
+.feedback-score-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.feedback-score-number {
+  font-size: 48px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1;
+}
+
+.feedback-score-denom {
+  font-size: 20px;
+  font-weight: 500;
+  color: #6B7280;
+}
+
+.feedback-phrase-block {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.feedback-target-lang {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.feedback-pinyin {
+  font-size: 16px;
+  color: #3B82F6;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.feedback-tip-text {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.6;
+  margin: 0 0 24px 0;
+}
+
+.feedback-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.try-again-btn {
+  padding: 11px 24px;
+  background: #FFFFFF;
+  color: #374151;
+  border: 2px solid #E5E7EB;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.try-again-btn:hover {
+  border-color: #3B82F6;
+  color: #3B82F6;
+}
+
+.next-phrase-btn {
+  padding: 11px 28px;
+  background: #3B82F6;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.next-phrase-btn:hover:not(:disabled) {
+  background: #2563EB;
+}
+
+.next-phrase-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Footer CTA ──────────────────────────────────────────────────────────── */
+
+.warmup-footer {
+  text-align: center;
+  padding-top: 16px;
+  border-top: 2px solid #E5E7EB;
+}
+
+.warmup-hub-cta {
+  background: #FFFFFF;
+  color: #3B82F6;
+  border: 2px solid #3B82F6;
+  border-radius: 9999px;
+  padding: 14px 32px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.warmup-hub-cta:hover {
+  background: #3B82F6;
+  color: #FFFFFF;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .phrase-target-lang {
+    font-size: 32px;
+  }
+
+  .warmup-container {
+    padding: 24px 16px 64px 16px;
+  }
+
+  .phrase-card {
+    padding: 28px 20px;
+  }
+}

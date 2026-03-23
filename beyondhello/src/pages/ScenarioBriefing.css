@@ -1,67 +1,240 @@
 /* src/pages/ScenarioBriefing.css */
+
 .scenario-briefing-page {
   min-height: 100vh;
-  background: #FFFFFF;
+  background: #FAFAFA;
 }
 
-/* Black Header Bar */
-.briefing-header-bar {
-  width: 100%;
-  height: 60px;
-  background: #000000;
-  border-bottom: 2px solid #000000;
-}
+/* ── Container ──────────────────────────────────────────────────────────── */
 
-/* Main Container */
 .briefing-container {
-  max-width: 900px;
+  max-width: 760px;
   margin: 0 auto;
-  padding: 48px 24px;
+  padding: 36px 24px 80px 24px;
+}
+
+/* Back button — top-left */
+.briefing-back-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: #6B7280;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.15s;
+}
+
+.briefing-back-btn:hover {
+  color: #111827;
 }
 
 .briefing-page-title {
-  font-size: 28px;
-  font-weight: 600;
-  color: #6B7280;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: #9CA3AF;
   text-align: center;
-  margin: 0 0 32px 0;
+  margin: 0 0 24px 0;
 }
 
-/* Briefing Card */
+/* ── Card ───────────────────────────────────────────────────────────────── */
+
 .briefing-card {
   background: #FFFFFF;
-  border: 2px solid #E5E7EB;
-  border-radius: 16px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 20px;
   padding: 40px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
 .scenario-title {
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 700;
   color: #111827;
   text-align: center;
-  margin: 0 0 16px 0;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.3px;
 }
 
 .scenario-description {
-  font-size: 16px;
+  font-size: 15px;
   color: #4B5563;
   text-align: center;
-  line-height: 1.6;
-  margin: 0 0 32px 0;
+  line-height: 1.65;
+  margin: 0 0 28px 0;
 }
 
-/* Briefing Content */
+/* ── Cheat Sheet block ──────────────────────────────────────────────────── */
+
+.cheatsheet-block {
+  background: #EFF6FF;
+  border: 1.5px solid #BFDBFE;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+
+/* Toggle row */
+.cheatsheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s;
+}
+
+.cheatsheet-header:hover {
+  background: #DBEAFE;
+}
+
+.cheatsheet-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cheatsheet-icon {
+  width: 18px;
+  height: 18px;
+  color: #3B82F6;
+  flex-shrink: 0;
+}
+
+.cheatsheet-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1D4ED8;
+}
+
+.cheatsheet-chevron {
+  width: 20px;
+  height: 20px;
+  color: #3B82F6;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.cheatsheet-chevron.open {
+  transform: rotate(180deg);
+}
+
+/* Warm-up nudge — sits below toggle row */
+.cheatsheet-warmup-nudge {
+  margin: 0;
+  padding: 0 18px 12px 18px;
+  font-size: 12px;
+  color: #6B7280;
+}
+
+.cheatsheet-warmup-link {
+  color: #3B82F6;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.cheatsheet-warmup-link:hover {
+  color: #1D4ED8;
+  text-decoration: underline;
+}
+
+/* Expanded content */
+.cheatsheet-content {
+  padding: 4px 16px 16px 16px;
+  border-top: 1px solid #BFDBFE;
+  animation: csExpand 0.2s ease-out;
+}
+
+@keyframes csExpand {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Phrase grid — 2 columns desktop, 1 mobile */
+.cheatsheet-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+@media (max-width: 520px) {
+  .cheatsheet-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cheatsheet-phrase-card {
+  background: #FFFFFF;
+  border: 1px solid #DBEAFE;
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.csp-chinese {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1E40AF;
+  line-height: 1.3;
+}
+
+.csp-pinyin {
+  font-size: 12px;
+  color: #6B7280;
+  font-style: italic;
+}
+
+.csp-english {
+  font-size: 11px;
+  color: #9CA3AF;
+  margin-top: 2px;
+}
+
+/* Got it button */
+.cheatsheet-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.got-it-btn {
+  font-size: 13px;
+  font-weight: 600;
+  color: #3B82F6;
+  background: #FFFFFF;
+  border: 1.5px solid #BFDBFE;
+  border-radius: 9999px;
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.got-it-btn:hover {
+  background: #EFF6FF;
+  border-color: #93C5FD;
+}
+
+/* ── Briefing content block ─────────────────────────────────────────────── */
+
 .briefing-content {
   background: #F9FAFB;
-  border: 2px solid #E5E7EB;
+  border: 1.5px solid #E5E7EB;
   border-radius: 12px;
   padding: 24px;
   margin-bottom: 32px;
 }
 
-/* Illustration Section */
+/* Illustration */
 .illustration-section {
   display: flex;
   gap: 20px;
@@ -76,7 +249,7 @@
   width: 150px;
   height: 100px;
   background: #F3F4F6;
-  border: 2px solid #E5E7EB;
+  border: 1.5px solid #E5E7EB;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -101,7 +274,7 @@
 }
 
 .illustration-heading {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: #111827;
   margin: 0 0 8px 0;
@@ -110,34 +283,63 @@
 .illustration-description {
   font-size: 14px;
   color: #4B5563;
-  line-height: 1.6;
+  line-height: 1.65;
   margin: 0;
 }
 
-/* Characters Section */
-.characters-section {
-  padding-top: 24px;
-  border-top: 2px solid #E5E7EB;
+/* Sections */
+.objective-section,
+.tone-section,
+.success-section {
+  margin-bottom: 24px;
 }
 
 .section-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: #111827;
-  margin: 0 0 16px 0;
+  margin: 0 0 10px 0;
+}
+
+.objective-list,
+.success-list {
+  margin: 0;
+  padding-left: 20px;
+  list-style: disc;
+}
+
+.objective-list li,
+.success-list li {
+  font-size: 14px;
+  color: #4B5563;
+  line-height: 1.65;
+  margin-bottom: 6px;
+}
+
+.tone-description {
+  font-size: 14px;
+  color: #4B5563;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* Characters */
+.characters-section {
+  padding-top: 24px;
+  border-top: 1.5px solid #E5E7EB;
 }
 
 .characters-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   margin-bottom: 16px;
 }
 
 .character-item {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .character-avatar {
@@ -176,77 +378,48 @@
   align-items: center;
   gap: 8px;
   background: #FFFFFF;
-  border: 2px solid #E5E7EB;
+  border: 1.5px solid #E5E7EB;
   border-radius: 8px;
-  padding: 8px 16px;
+  padding: 8px 14px;
   margin-top: 8px;
 }
 
 .lock-icon {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   color: #6B7280;
 }
 
 .xp-text {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: #111827;
 }
 
-/* Objective Section */
-.objective-section,
-.tone-section,
-.success-section {
-  margin-bottom: 24px;
-}
+/* ── Action buttons ─────────────────────────────────────────────────────── */
 
-.objective-list,
-.success-list {
-  margin: 12px 0 0 0;
-  padding-left: 24px;
-  list-style: disc;
-}
-
-.objective-list li,
-.success-list li {
-  font-size: 14px;
-  color: #4B5563;
-  line-height: 1.6;
-  margin-bottom: 8px;
-}
-
-.tone-description {
-  font-size: 14px;
-  color: #4B5563;
-  line-height: 1.6;
-  margin: 12px 0 0 0;
-}
-
-/* Action Buttons */
 .briefing-actions {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 
 .start-scenario-btn {
-  background: #FFFFFF;
-  color: #111827;
-  border: 2px solid #E5E7EB;
-  border-radius: 8px;
-  padding: 14px 48px;
+  background: #3B82F6;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 9999px;
+  padding: 14px 52px;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.15s;
+  letter-spacing: 0.01em;
 }
 
 .start-scenario-btn:hover {
-  background: #F9FAFB;
-  border-color: #3B82F6;
-  color: #3B82F6;
+  background: #2563EB;
 }
 
 .back-btn {
@@ -259,34 +432,35 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 8px 16px;
-  transition: color 0.2s ease;
+  padding: 6px 12px;
+  transition: color 0.15s;
 }
 
 .back-btn:hover {
-  color: #3B82F6;
+  color: #111827;
 }
 
 .back-arrow {
   font-size: 16px;
 }
 
-/* Responsive */
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+
 @media (max-width: 768px) {
   .briefing-card {
-    padding: 24px;
+    padding: 24px 20px;
   }
-  
+
   .briefing-content {
     padding: 16px;
   }
-  
+
   .illustration-section {
     flex-direction: column;
   }
-  
+
   .illustration-image {
     width: 100%;
-    height: 150px;
+    height: 140px;
   }
 }

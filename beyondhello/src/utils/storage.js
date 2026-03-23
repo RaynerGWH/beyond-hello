@@ -40,6 +40,43 @@ const initialSession = {
 };
 
 // Storage utility object
+// ─── Demo seed ───────────────────────────────────────────────────────────────
+// Writes realistic demo data the first time the dashboard is visited.
+// Never runs if the user has already completed at least one scenario.
+export function seedDemoDataIfEmpty() {
+  const progress = storage.getProgress();
+
+  if (progress.completedScenarios && progress.completedScenarios.length > 0) {
+    return; // real data exists — leave it untouched
+  }
+
+  const now = Date.now();
+  const DAY = 86400000;
+
+  storage.setProgress({
+    totalXP: 245,
+    currentLevel: 3,
+    completedScenarios: ['networking'],
+    skills: { pronunciation: 12, fluency: 8, vocabulary: 6, grammar: 4 },
+    streak: 4,
+    lastActiveDate: new Date(now - DAY).toISOString(),
+    accuracyHistory: [
+      { date: new Date(now - 5 * DAY).toISOString(), score: 75 },
+      { date: new Date(now - 4 * DAY).toISOString(), score: 78 },
+      { date: new Date(now - 3 * DAY).toISOString(), score: 82 },
+      { date: new Date(now - 2 * DAY).toISOString(), score: 88 },
+      { date: new Date(now - DAY).toISOString(), score: 90 },
+      { date: new Date(now).toISOString(), score: 95 },
+    ]
+  });
+
+  const user = storage.getUser();
+  if (!user.name) {
+    storage.setUser({ ...user, name: 'Alex', targetLanguage: 'zh-CN' });
+  }
+}
+
+// ─── Storage utilities ────────────────────────────────────────────────────────
 export const storage = {
   // User methods
   getUser: () => {
