@@ -13,6 +13,7 @@ import Feedback from "./pages/Feedback";
 import Outcome from "./pages/Outcome";
 import Dashboard from "./pages/Dashboard";
 import PhraseWarmUp from "./pages/PhraseWarmUp";
+import SubscriptionPlans from "./pages/SubscriptionPlans";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/feedback" element={<Feedback />} />
           <Route path="/outcome" element={<Outcome />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/plans" element={<SubscriptionPlans />} />
           <Route path="/play/networking/1" element={<Gameplay />} />
           <Route path="/play/:scenarioId" element={<Gameplay />} />
         </Routes>

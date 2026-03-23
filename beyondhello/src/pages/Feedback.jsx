@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getScenarioById } from '../data/scenarios';
+import { storage } from '../utils/storage';
 import './Feedback.css';
 
 // Derive rating label + dot count from score
@@ -26,6 +27,24 @@ function Feedback() {
   const scenarioId = state?.scenarioId || 'networking';
   const sceneResults = state?.sceneResults || [];
   const scenario = getScenarioById(scenarioId);
+  const didCompleteScenario = sceneResults.length > 0;
+
+  useEffect(() => {
+    if (!didCompleteScenario) return;
+
+    const progress = storage.getProgress();
+    const tokenLimit = Math.max(progress.tokenLimit ?? 20, 1);
+    const currentTokens = Math.min(Math.max(progress.tokensRemaining ?? tokenLimit, 0), tokenLimit);
+    const nextTokensRemaining = Math.max(10, currentTokens - 10);
+
+    if (nextTokensRemaining !== currentTokens) {
+      storage.setProgress({
+        ...progress,
+        tokenLimit,
+        tokensRemaining: nextTokensRemaining
+      });
+    }
+  }, [didCompleteScenario]);
 
   // Calculate overall score
   const avgScore = sceneResults.length

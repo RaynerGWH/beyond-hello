@@ -12,11 +12,31 @@ function Dashboard() {
   const navigate = useNavigate();
   const [progress, setProgress] = useState(null);
   const [user, setUser] = useState(null);
+  const [showTokenPopup, setShowTokenPopup] = useState(false);
 
   useEffect(() => {
     seedDemoDataIfEmpty();
-    setProgress(storage.getProgress());
+    const currentProgress = storage.getProgress();
+    const normalizedProgress = {
+      ...currentProgress,
+      lowTokenPopupShown: currentProgress.lowTokenPopupShown ?? false
+    };
+    setProgress(normalizedProgress);
     setUser(storage.getUser());
+
+    const limit = Math.max(normalizedProgress.tokenLimit ?? 20, 1);
+    const remaining = Math.min(Math.max(normalizedProgress.tokensRemaining ?? limit, 0), limit);
+    const shouldShowLowTokenPopup = remaining <= 10 && !normalizedProgress.lowTokenPopupShown;
+
+    if (shouldShowLowTokenPopup) {
+      setShowTokenPopup(true);
+      const updatedProgress = {
+        ...normalizedProgress,
+        lowTokenPopupShown: true
+      };
+      storage.setProgress(updatedProgress);
+      setProgress(updatedProgress);
+    }
   }, []);
 
   if (!progress) return null;
@@ -27,6 +47,10 @@ function Dashboard() {
   const currentXP = progress.totalXP ?? 0;
   const streak = progress.streak ?? 0;
   const xpForNextLevel = LEVEL_XP_CAPS[currentLevel - 1] ?? 1500;
+  const tokenLimit = Math.max(progress.tokenLimit ?? 20, 1);
+  const tokensRemaining = Math.min(Math.max(progress.tokensRemaining ?? 6, 0), tokenLimit);
+  const tokenPercent = Math.round((tokensRemaining / tokenLimit) * 100);
+  const isLowTokens = tokensRemaining <= 10;
 
   // Cross-reference completed scenario IDs with static scenario data
   const completedScenarios = (progress.completedScenarios ?? [])
@@ -90,12 +114,46 @@ function Dashboard() {
           </div>
         </nav>
 
-        <div className="sidebar-user-pill">
+        <div
+          className={`sidebar-user-pill sidebar-user-pill-clickable ${isLowTokens ? 'sidebar-user-pill-urgent' : ''}`}
+          onClick={() => navigate('/plans')}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              navigate('/plans');
+            }
+          }}
+        >
           <div className="user-initials-circle">{initials}</div>
           <div className="user-pill-info">
             <span className="user-pill-name">{userName || 'Learner'}</span>
             <span className="user-pill-xp">{currentXP} XP</span>
           </div>
+        </div>
+
+        <div className="sidebar-token-widget" aria-label="Token usage">
+          <div className="token-top-row">
+            <span className="token-label">Tokens</span>
+            <span className="token-count">{tokensRemaining}/{tokenLimit}</span>
+          </div>
+          <div className="token-bar" role="progressbar" aria-valuemin={0} aria-valuemax={tokenLimit} aria-valuenow={tokensRemaining}>
+            <div
+              className={`token-bar-fill ${isLowTokens ? 'token-bar-fill-low' : ''}`}
+              style={{ width: `${tokenPercent}%` }}
+            />
+          </div>
+          {isLowTokens ? (
+            <div className="token-warning" role="status" aria-live="polite">
+              <svg className="token-warning-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 4L21 20H3L12 4Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+                <path d="M12 9V13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                <circle cx="12" cy="16.5" r="1" fill="currentColor" />
+              </svg>
+              <span>Low tokens - top up in plans</span>
+            </div>
+          ) : null}
         </div>
       </aside>
 
@@ -229,6 +287,32 @@ function Dashboard() {
         </div>
 
       </main>
+
+      {showTokenPopup ? (
+        <div className="token-alert-overlay" onClick={() => setShowTokenPopup(false)}>
+          <div className="token-alert-modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="Low token warning">
+            <div className="token-alert-title-row">
+              <svg className="token-alert-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 4L21 20H3L12 4Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+                <path d="M12 9V13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                <circle cx="12" cy="16.5" r="1" fill="currentColor" />
+              </svg>
+              <h3 className="token-alert-title">Token Limit Reached</h3>
+            </div>
+            <p className="token-alert-text">
+              You are at {tokensRemaining}/{tokenLimit} tokens. Upgrade your plan to unlock more usage.
+            </p>
+            <div className="token-alert-actions">
+              <button className="token-alert-btn token-alert-btn-secondary" onClick={() => setShowTokenPopup(false)}>
+                Later
+              </button>
+              <button className="token-alert-btn token-alert-btn-primary" onClick={() => navigate('/plans')}>
+                View Plans
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
