@@ -49,13 +49,13 @@ function PhraseWarmUp() {
   };
 
   const handleMicClick = () => {
-    setIsRecording(true);
-    setShowFeedback(false);
-  };
-
-  const handleFinishRecording = () => {
-    setIsRecording(false);
-    setShowFeedback(true);
+    if (!isRecording) {
+      setIsRecording(true);
+      setShowFeedback(false);
+    } else {
+      setIsRecording(false);
+      setShowFeedback(true);
+    }
   };
 
   const handleTryAgain = () => {
@@ -151,23 +151,17 @@ function PhraseWarmUp() {
             <button
               className={`mic-button ${isRecording ? 'recording' : ''}`}
               onClick={handleMicClick}
-              disabled={isRecording}
-              aria-label={isRecording ? 'Recording in progress' : 'Start recording'}
+              aria-label={isRecording ? 'Stop recording' : 'Start recording'}
             >
               <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
                 <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
               </svg>
             </button>
-            {isRecording && (
-              <button className="finish-recording-btn" onClick={handleFinishRecording}>
-                Finish Recording
-              </button>
-            )}
           </div>
         )}
 
-        {/* Feedback panel — appears after user clicks Finish Recording */}
+        {/* Feedback panel — appears after user stops recording */}
         {showFeedback && (
           <div className="warmup-feedback-panel">
             <div className="feedback-score-row">
