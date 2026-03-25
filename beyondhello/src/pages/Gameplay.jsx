@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getScenarioById } from '../data/scenarios';
+import { trackEvent } from '../utils/analytics';
 import './Gameplay.css';
 
 function Gameplay() {
@@ -45,13 +46,21 @@ function Gameplay() {
   };
 
   const handleVideoEnded = () => {
+    trackEvent('scene_video_watched', { scene: sceneIndex });
     setPhase('options');
     setSelectedOption(null);
   };
 
-  const handleSelectOption = (option) => setSelectedOption(option);
+  const handleSelectOption = (option) => {
+    const optionIndex = currentScene.options.findIndex(opt => opt.id === option.id);
+    trackEvent('dialogue_option_selected', { scene: sceneIndex, option: optionIndex });
+    setSelectedOption(option);
+  };
 
-  const handleSpeakNow = () => setPhase('speaking');
+  const handleSpeakNow = () => {
+    trackEvent('pronunciation_attempted', { scene: sceneIndex });
+    setPhase('speaking');
+  };
 
   const handleMicClick = () => {
     if (!isRecording) {

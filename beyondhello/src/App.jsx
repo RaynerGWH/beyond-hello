@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
+import { trackEvent } from "./utils/analytics";
 
 // Import pages
 import Landing from "./pages/Landing";
@@ -16,6 +17,13 @@ import PhraseWarmUp from "./pages/PhraseWarmUp";
 import SubscriptionPlans from "./pages/SubscriptionPlans";
 
 function App() {
+  useEffect(() => {
+    // Track session start on mount
+    const userJson = localStorage.getItem('beyondhello_user');
+    const userId = userJson ? JSON.parse(userJson)?.email || null : null;
+    trackEvent('session_start', { userId });
+  }, []);
+
   return (
     <Router>
       <div className="App">

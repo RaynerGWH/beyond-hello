@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getScenarioById } from '../data/scenarios';
 import { storage } from '../utils/storage';
+import { trackEvent } from '../utils/analytics';
 import './Feedback.css';
 
 // Derive rating label + dot count from score
@@ -32,6 +33,12 @@ function Feedback() {
   useEffect(() => {
     if (!didCompleteScenario) return;
 
+    // Track scenario completion
+    const avgScore = sceneResults.length
+      ? Math.round(sceneResults.reduce((sum, r) => sum + r.score, 0) / sceneResults.length)
+      : 85;
+    trackEvent('scenario_completed', { score: avgScore });
+
     const progress = storage.getProgress();
     const tokenLimit = Math.max(progress.tokenLimit ?? 20, 1);
     const currentTokens = Math.min(Math.max(progress.tokensRemaining ?? tokenLimit, 0), tokenLimit);
@@ -44,7 +51,7 @@ function Feedback() {
         tokensRemaining: nextTokensRemaining
       });
     }
-  }, [didCompleteScenario]);
+  }, [didCompleteScenario, sceneResults]);
 
   // Calculate overall score
   const avgScore = sceneResults.length
