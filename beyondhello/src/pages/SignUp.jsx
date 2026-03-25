@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { storage } from '../utils/storage';
+import { trackEvent } from '../utils/analytics';
 import './SignUp.css';
 
 function SignUp() {
@@ -20,17 +21,20 @@ function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     // Save user data
     storage.setUser({
       name: formData.name,
       email: formData.email,
       createdAt: new Date().toISOString()
     });
-    
+
     // Initialize progress
     storage.initializeProgress();
-    
+
+    // Track signup completion
+    trackEvent('signup_completed');
+
     // Navigate to language selection
     navigate('/language');
   };

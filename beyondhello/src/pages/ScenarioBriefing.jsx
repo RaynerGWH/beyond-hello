@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { getScenarioById } from '../data/scenarios';
+import { trackEvent } from '../utils/analytics';
 import './ScenarioBriefing.css';
 
 function ScenarioBriefing() {
@@ -26,7 +27,10 @@ function ScenarioBriefing() {
   };
   const warmupTopic = warmupTopicMap[scenarioId] || 'greetings';
 
-  const handleStartScenario = () => navigate(`/play/${scenarioId}`);
+  const handleStartScenario = () => {
+    trackEvent('scenario_started', { scenario: scenario?.title || scenarioId });
+    navigate(`/play/${scenarioId}`);
+  };
   const handleBack = () => navigate('/hub');
 
   if (!scenario) return null;

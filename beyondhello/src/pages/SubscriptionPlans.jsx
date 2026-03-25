@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { trackEvent } from '../utils/analytics';
 import './SubscriptionPlans.css';
 
 const plans = [
@@ -54,6 +55,10 @@ const plans = [
 function SubscriptionPlans() {
   const navigate = useNavigate();
 
+  const handlePlanClick = (planId) => {
+    trackEvent('plan_selected', { plan: planId });
+  };
+
   return (
     <div className="plans-page">
       <header className="plans-header">
@@ -91,7 +96,10 @@ function SubscriptionPlans() {
               ))}
             </ul>
 
-            <button className={`plan-cta ${plan.highlighted ? 'plan-cta-highlighted' : ''}`}>
+            <button
+              className={`plan-cta ${plan.highlighted ? 'plan-cta-highlighted' : ''}`}
+              onClick={() => handlePlanClick(plan.id)}
+            >
               {plan.cta}
             </button>
           </article>
