@@ -1,0 +1,299 @@
+/* src/pages/Settings.css */
+
+/* ── Shell ──────────────────────────────────────────────────────────────── */
+
+.settings-shell {
+  display: flex;
+  min-height: 100vh;
+  background: #FAFAFA;
+}
+
+/* ── Main content ───────────────────────────────────────────────────────── */
+
+.settings-main {
+  margin-left: 220px;
+  flex: 1;
+  padding: 48px 52px 80px 52px;
+  min-height: 100vh;
+  max-width: 800px;
+}
+
+/* Header */
+.settings-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.settings-header-icon {
+  width: 32px;
+  height: 32px;
+  color: #3B82F6;
+  flex-shrink: 0;
+}
+
+.settings-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.4px;
+}
+
+.settings-subtitle {
+  font-size: 15px;
+  color: #6B7280;
+  margin: 0;
+}
+
+/* ── Sections ───────────────────────────────────────────────────────────── */
+
+.settings-section {
+  margin-bottom: 32px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.section-icon {
+  width: 20px;
+  height: 20px;
+  color: #3B82F6;
+  flex-shrink: 0;
+}
+
+.section-icon-danger {
+  color: #EF4444;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.section-title-danger {
+  color: #EF4444;
+}
+
+/* ── Cards ──────────────────────────────────────────────────────────────── */
+
+.settings-card {
+  background: #FFFFFF;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.danger-card {
+  border-color: #FECACA;
+  background: #FEF2F2;
+}
+
+.danger-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.danger-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 6px 0;
+}
+
+.danger-card-text {
+  font-size: 14px;
+  color: #6B7280;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.danger-button {
+  background: #EF4444;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.danger-button:hover {
+  background: #DC2626;
+}
+
+/* ── Form elements ──────────────────────────────────────────────────────── */
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: #111827;
+  background: #FFFFFF;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 8px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  font-family: inherit;
+}
+
+.form-input:focus,
+.form-select:focus {
+  outline: none;
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-input[readonly] {
+  background: #F9FAFB;
+  color: #6B7280;
+  cursor: not-allowed;
+}
+
+.form-hint {
+  font-size: 12px;
+  color: #9CA3AF;
+  margin: 6px 0 0 0;
+}
+
+/* ── Footnote ───────────────────────────────────────────────────────────── */
+
+.settings-footnote {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid #E5E7EB;
+  font-size: 13px;
+  color: #6B7280;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* ── Modal ──────────────────────────────────────────────────────────────── */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 60;
+  padding: 16px;
+}
+
+.modal-content {
+  width: min(450px, 100%);
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 1.5px solid #E5E7EB;
+  box-shadow: 0 18px 36px rgba(2, 6, 23, 0.25);
+  padding: 28px;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.modal-icon-danger {
+  width: 24px;
+  height: 24px;
+  color: #EF4444;
+  flex-shrink: 0;
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.modal-text {
+  font-size: 14px;
+  color: #6B7280;
+  line-height: 1.6;
+  margin: 0 0 24px 0;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.modal-button-secondary {
+  background: #F3F4F6;
+  color: #374151;
+}
+
+.modal-button-secondary:hover {
+  background: #E5E7EB;
+}
+
+.modal-button-danger {
+  background: #EF4444;
+  color: #FFFFFF;
+}
+
+.modal-button-danger:hover {
+  background: #DC2626;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .settings-main {
+    margin-left: 0;
+    padding: 28px 20px 60px 20px;
+  }
+
+  .danger-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .danger-button {
+    width: 100%;
+  }
+}

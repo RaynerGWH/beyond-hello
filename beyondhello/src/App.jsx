@@ -15,6 +15,9 @@ import Outcome from "./pages/Outcome";
 import Dashboard from "./pages/Dashboard";
 import PhraseWarmUp from "./pages/PhraseWarmUp";
 import SubscriptionPlans from "./pages/SubscriptionPlans";
+import Settings from "./pages/Settings";
+import Support from "./pages/Support";
+import AccountDeleted from "./pages/AccountDeleted";
 
 function App() {
   useEffect(() => {
@@ -39,6 +42,9 @@ function App() {
           <Route path="/outcome" element={<Outcome />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/plans" element={<SubscriptionPlans />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/support" element={<Support />} />
+          <Route path="/account-deleted" element={<AccountDeleted />} />
           <Route path="/play/networking/1" element={<Gameplay />} />
           <Route path="/play/:scenarioId" element={<Gameplay />} />
         </Routes>

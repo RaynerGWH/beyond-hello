@@ -1,0 +1,77 @@
+/* src/pages/AccountDeleted.css */
+
+.account-deleted-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #FAFAFA;
+  padding: 24px;
+}
+
+.account-deleted-content {
+  text-align: center;
+  max-width: 480px;
+  background: #FFFFFF;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 16px;
+  padding: 48px 40px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.deleted-icon {
+  width: 64px;
+  height: 64px;
+  color: #22C55E;
+  margin: 0 auto 24px;
+}
+
+.deleted-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.4px;
+}
+
+.deleted-text {
+  font-size: 16px;
+  color: #6B7280;
+  line-height: 1.6;
+  margin: 0 0 32px 0;
+}
+
+.return-home-button {
+  background: #3B82F6;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 9999px;
+  padding: 14px 32px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.return-home-button:hover {
+  background: #2563EB;
+}
+
+@media (max-width: 640px) {
+  .account-deleted-content {
+    padding: 36px 28px;
+  }
+
+  .deleted-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .deleted-title {
+    font-size: 24px;
+  }
+
+  .deleted-text {
+    font-size: 15px;
+  }
+}
