@@ -4,7 +4,8 @@ const STORAGE_KEYS = {
   USER: 'beyondhello_user',
   PROGRESS: 'beyondhello_progress',
   SESSION: 'beyondhello_session',
-  SCENARIOS: 'beyondhello_scenarios'
+  SCENARIOS: 'beyondhello_scenarios',
+  TEMPORARY_SCENARIO: 'beyondhello_temporary_scenario'
 };
 
 // Initial data structures
@@ -117,6 +118,20 @@ export const storage = {
   clearSession: () => {
     localStorage.removeItem(STORAGE_KEYS.SESSION);
   },
+
+  // Temporary AI scenario methods
+  getTemporaryScenario: () => {
+    const data = sessionStorage.getItem(STORAGE_KEYS.TEMPORARY_SCENARIO);
+    return data ? JSON.parse(data) : null;
+  },
+
+  setTemporaryScenario: (scenario) => {
+    sessionStorage.setItem(STORAGE_KEYS.TEMPORARY_SCENARIO, JSON.stringify(scenario));
+  },
+
+  clearTemporaryScenario: () => {
+    sessionStorage.removeItem(STORAGE_KEYS.TEMPORARY_SCENARIO);
+  },
   
   // Scenarios methods
   getScenarios: () => {
@@ -144,6 +159,7 @@ export const storage = {
   // Initialize progress (called on signup)
   initializeProgress: () => {
     storage.setProgress(initialProgress);
+    storage.clearTemporaryScenario();
   }
 };
 

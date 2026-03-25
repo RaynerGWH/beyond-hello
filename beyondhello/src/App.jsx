@@ -16,6 +16,7 @@ import Dashboard from "./pages/Dashboard";
 import PhraseWarmUp from "./pages/PhraseWarmUp";
 import SubscriptionPlans from "./pages/SubscriptionPlans";
 import AIMode from "./pages/AIMode";
+import AIGameplay from "./pages/AIGameplay";
 import Settings from "./pages/Settings";
 import Support from "./pages/Support";
 import AccountDeleted from "./pages/AccountDeleted";
@@ -37,6 +38,7 @@ function App() {
           <Route path="/language" element={<LanguageSelection />} />
           <Route path="/hub" element={<ScenarioHub />} />
           <Route path="/ai-mode" element={<AIMode />} />
+          <Route path="/ai-gameplay" element={<AIGameplay />} />
           <Route path="/briefing/:scenarioId" element={<ScenarioBriefing />} />
           <Route path="/play/:scenarioId" element={<Gameplay />} />
           <Route path="/practice" element={<PhraseWarmUp />} />

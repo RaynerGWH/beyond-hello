@@ -25,9 +25,10 @@ function Feedback() {
   const navigate = useNavigate();
   const { state } = useLocation();
 
+  const generatedScenario = state?.generatedScenario || null;
   const scenarioId = state?.scenarioId || 'networking';
   const sceneResults = state?.sceneResults || [];
-  const scenario = getScenarioById(scenarioId);
+  const scenario = generatedScenario || getScenarioById(scenarioId);
   const didCompleteScenario = sceneResults.length > 0;
 
   useEffect(() => {
@@ -210,7 +211,19 @@ function Feedback() {
       <div className="feedback-actions">
         <button
           className="retry-btn"
-          onClick={() => navigate(`/play/${scenarioId}`)}
+          onClick={() => {
+            if (generatedScenario) {
+              navigate('/ai-gameplay', {
+                state: {
+                  generatedScenario,
+                  scenarioTitle: generatedScenario.title,
+                }
+              });
+              return;
+            }
+
+            navigate(`/play/${scenarioId}`);
+          }}
         >
           ↺ Play Again
         </button>

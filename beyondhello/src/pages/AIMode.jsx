@@ -5,10 +5,177 @@ import { trackEvent } from '../utils/analytics';
 import { storage } from '../utils/storage';
 import './AIMode.css';
 
+const elevatorScenarioTemplate = {
+  id: 'ai-session-scenario',
+  title: 'Elevator Conversation',
+  difficulty: 'Custom',
+  duration: '5-8 min',
+  xpReward: 40,
+  thumbnail: '/images/elevator-talk.jpg',
+  description: 'You just stepped into an elevator and a friendly colleague starts a conversation. Practice casual Chinese small talk.',
+  characters: [
+    { name: 'Colleague', role: 'Elevator Colleague', personality: 'Friendly' }
+  ],
+  scenes: [
+    {
+      sceneId: 'ai-elev-scene-1',
+      videoUrl: '/videos/networking/scene-1.mp4',
+      characterName: 'Colleague',
+      characterDialogue: '你好！我可以问一下你的名字吗？',
+      dialogueTranslation: 'Hi! May I ask your name?',
+      sceneContext: 'You just stepped into an elevator and a friendly colleague starts a conversation.',
+      options: [
+        {
+          id: 'ai-elev-1-a',
+          textInTargetLang: '你好，我叫[名字]。',
+          textTranslation: "Hi, I'm [Name].",
+          pronunciationGuide: 'Nǐ hǎo, wǒ jiào [míngzì].',
+          sentiment: 'friendly',
+          baseScore: 92,
+          isOptimal: true,
+        },
+        {
+          id: 'ai-elev-1-b',
+          textInTargetLang: '我是[名字]，你呢？',
+          textTranslation: "I'm [Name], you?",
+          pronunciationGuide: 'Wǒ shì [Name], nǐ ne?',
+          sentiment: 'engaging',
+          baseScore: 88,
+          isOptimal: true,
+        },
+        {
+          id: 'ai-elev-1-c',
+          textInTargetLang: '我叫[名字]。',
+          textTranslation: 'My name is [Name].',
+          pronunciationGuide: 'Wǒ jiào [míngzì].',
+          sentiment: 'neutral',
+          baseScore: 75,
+          isOptimal: false,
+        },
+        {
+          id: 'ai-elev-1-d',
+          textInTargetLang: '我是[名字]，今天好热!',
+          textTranslation: "I'm [Name], it's so hot today!",
+          pronunciationGuide: 'Wǒ shì [míngzì], jīntiān hǎo rè!',
+          sentiment: 'chatty',
+          baseScore: 58,
+          isOptimal: false,
+        },
+      ]
+    },
+    {
+      sceneId: 'ai-elev-scene-2',
+      videoUrl: '/videos/networking/scene-2.mp4',
+      characterName: 'Colleague',
+      characterDialogue: '你要去几楼？',
+      dialogueTranslation: 'Which floor are you heading to?',
+      sceneContext: 'The elevator starts moving, and the person continues the conversation.',
+      options: [
+        {
+          id: 'ai-elev-2-a',
+          textInTargetLang: '我去十楼，你呢？',
+          textTranslation: '10th floor, you?',
+          pronunciationGuide: 'Wǒ qù shí lóu, nǐ ne?',
+          sentiment: 'engaging',
+          baseScore: 90,
+          isOptimal: true,
+        },
+        {
+          id: 'ai-elev-2-b',
+          textInTargetLang: '我去十楼，上班。',
+          textTranslation: '10th floor, for work.',
+          pronunciationGuide: 'Wǒ qù shí lóu, shàngbān.',
+          sentiment: 'casual',
+          baseScore: 87,
+          isOptimal: true,
+        },
+        {
+          id: 'ai-elev-2-c',
+          textInTargetLang: '十楼。',
+          textTranslation: '10th floor.',
+          pronunciationGuide: 'Shí lóu.',
+          sentiment: 'brief',
+          baseScore: 72,
+          isOptimal: false,
+        },
+        {
+          id: 'ai-elev-2-d',
+          textInTargetLang: '不知道。',
+          textTranslation: "I don't know.",
+          pronunciationGuide: 'Bù zhīdào.',
+          sentiment: 'confused',
+          baseScore: 55,
+          isOptimal: false,
+        },
+      ]
+    },
+    {
+      sceneId: 'ai-elev-scene-3',
+      videoUrl: '/videos/networking/scene-3.mp4',
+      characterName: 'Colleague',
+      characterDialogue: '好啦，这是我的楼层，下次见！',
+      dialogueTranslation: 'Alright, this is my stop. See you next time!',
+      sceneContext: 'The elevator reaches their floor and they are about to leave.',
+      options: [
+        {
+          id: 'ai-elev-3-a',
+          textInTargetLang: '很高兴认识你，再见！',
+          textTranslation: 'Nice meeting you, bye!',
+          pronunciationGuide: 'Hěn gāoxìng rènshi nǐ, zàijiàn!',
+          sentiment: 'warm',
+          baseScore: 93,
+          isOptimal: true,
+        },
+        {
+          id: 'ai-elev-3-b',
+          textInTargetLang: '再见，祝你愉快！',
+          textTranslation: 'Bye, have a nice day!',
+          pronunciationGuide: 'Zàijiàn, zhù nǐ yúkuài!',
+          sentiment: 'positive',
+          baseScore: 89,
+          isOptimal: true,
+        },
+        {
+          id: 'ai-elev-3-c',
+          textInTargetLang: '好，再见。',
+          textTranslation: 'Ok, bye.',
+          pronunciationGuide: 'Hǎo, zàijiàn.',
+          sentiment: 'neutral',
+          baseScore: 74,
+          isOptimal: false,
+        },
+        {
+          id: 'ai-elev-3-d',
+          textInTargetLang: '嗯。',
+          textTranslation: 'Hmm.',
+          pronunciationGuide: 'Ńg.',
+          sentiment: 'indifferent',
+          baseScore: 52,
+          isOptimal: false,
+        },
+      ]
+    },
+  ],
+  completion: {
+    sceneId: 'ai-elev-complete',
+    successMessage: 'You had a great elevator conversation!',
+    characterQuote: '很高兴认识你！',
+    characterQuoteTranslation: 'Great to meet you!',
+    outcomeVariants: {
+      excellent: 'You chatted naturally like a local!',
+      good: 'You held a solid small-talk conversation!',
+      fair: 'You got through the conversation — keep practicing!',
+      struggled: 'You participated — small talk takes practice!'
+    }
+  }
+};
+
 function AIMode() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [user, setUser] = useState(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generationProgress, setGenerationProgress] = useState(0);
   
   // Step 1: Scenario description
   const [scenarioInput, setScenarioInput] = useState('');
@@ -51,6 +218,38 @@ function AIMode() {
     setUser(storage.getUser());
   }, []);
 
+  useEffect(() => {
+    if (!isGenerating) {
+      setGenerationProgress(0);
+      return;
+    }
+
+    const durationMs = 23000;
+    const startedAt = Date.now();
+
+    const intervalId = window.setInterval(() => {
+      const elapsed = Date.now() - startedAt;
+      const nextProgress = Math.min((elapsed / durationMs) * 100, 100);
+      setGenerationProgress(nextProgress);
+    }, 100);
+
+    const timeoutId = window.setTimeout(() => {
+      const generatedScenario = {
+        ...elevatorScenarioTemplate,
+        isTemporary: true,
+      };
+
+      storage.setTemporaryScenario(generatedScenario);
+      setGenerationProgress(100);
+      navigate('/hub');
+    }, durationMs);
+
+    return () => {
+      window.clearInterval(intervalId);
+      window.clearTimeout(timeoutId);
+    };
+  }, [isGenerating, navigate]);
+
   const handleScenarioInput = (value) => {
     if (value.length <= 500) {
       setScenarioInput(value);
@@ -84,15 +283,8 @@ function AIMode() {
       scenario: scenarioInput,
       persona: selectedPersona.name
     });
-    
-    // Navigate to gameplay with custom scenario data
-    // For now, navigate to a placeholder
-    navigate('/play/ai-custom', {
-      state: {
-        scenarioTitle: scenarioInput,
-        selectedPersona: selectedPersona,
-      }
-    });
+
+    setIsGenerating(true);
   };
 
   const handleBack = () => {
@@ -174,6 +366,37 @@ function AIMode() {
 
       {/* ── Main content ──────────────────────────────────────────────────── */}
       <main className="ai-main">
+        {isGenerating ? (
+          <div className="ai-generating-screen">
+            <div className="ai-generating-card">
+              <div className="ai-generating-pulse" aria-hidden="true" />
+              <p className="ai-generating-eyebrow">AI scenario builder</p>
+              <h1 className="ai-generating-title">Crafting your conversation simulation</h1>
+              <p className="ai-generating-subtitle">
+                Structuring scenes, tuning difficulty, and shaping responses for a more realistic practice run.
+              </p>
+
+              <div className="ai-generating-progress-wrap">
+                <div className="ai-generating-progress-bar" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(generationProgress)}>
+                  <div
+                    className="ai-generating-progress-fill"
+                    style={{ width: `${generationProgress}%` }}
+                  />
+                </div>
+                <div className="ai-generating-progress-meta">
+                  <span>Generating scenario...</span>
+                  <span>{Math.round(generationProgress)}%</span>
+                </div>
+              </div>
+
+              <div className="ai-generating-notes">
+                <span>Scenario: {scenarioInput}</span>
+                <span>Persona: {selectedPersona?.name}</span>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <>
         {/* Page header */}
         <div className="ai-page-header">
           <button className="ai-back-btn" onClick={handleBack}>← Back</button>
@@ -195,7 +418,7 @@ function AIMode() {
           <div className={`step-line ${step > 2 ? 'active' : ''}`}></div>
           <div className={`step-marker ${step >= 3 ? 'active' : ''}`}>
             <span className="step-number">3</span>
-            <span className="step-label">Start Practicing</span>
+            <span className="step-label">Generate Scenario</span>
           </div>
         </div>
 
@@ -270,7 +493,7 @@ function AIMode() {
           </div>
         )}
 
-        {/* Step 3: Start Practicing */}
+        {/* Step 3: Generate Scenario */}
         {step === 3 && (
           <div className="ai-step-content ai-review">
             <div className="review-card">
@@ -293,9 +516,11 @@ function AIMode() {
               className="form-button form-button-primary"
               onClick={handleStartPractice}
             >
-              Start Practicing →
+              Generate Scenario →
             </button>
           </div>
+        )}
+          </>
         )}
       </main>
     </div>
