@@ -15,6 +15,7 @@ import Outcome from "./pages/Outcome";
 import Dashboard from "./pages/Dashboard";
 import PhraseWarmUp from "./pages/PhraseWarmUp";
 import SubscriptionPlans from "./pages/SubscriptionPlans";
+import AIMode from "./pages/AIMode";
 
 function App() {
   useEffect(() => {
@@ -32,6 +33,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/language" element={<LanguageSelection />} />
           <Route path="/hub" element={<ScenarioHub />} />
+          <Route path="/ai-mode" element={<AIMode />} />
           <Route path="/briefing/:scenarioId" element={<ScenarioBriefing />} />
           <Route path="/play/:scenarioId" element={<Gameplay />} />
           <Route path="/practice" element={<PhraseWarmUp />} />

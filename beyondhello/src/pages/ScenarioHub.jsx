@@ -10,7 +10,6 @@ function ScenarioHub() {
   const [progress, setProgress] = useState(null);
   const [user, setUser] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [showPopup, setShowPopup] = useState(false);
   const [showTokenPopup, setShowTokenPopup] = useState(false);
 
   useEffect(() => {
@@ -45,7 +44,7 @@ function ScenarioHub() {
     }
   };
 
-  const handleGenerateClick = () => setShowPopup(true);
+  const handleGenerateClick = () => navigate('/ai-mode');
 
   const scenariosPerPage = 3;
   const totalPages = Math.ceil(scenariosData.length / scenariosPerPage);
@@ -307,18 +306,7 @@ function ScenarioHub() {
 
       </main>
 
-      {/* Coming Soon popup */}
-      {showPopup && (
-        <div className="popup-overlay" onClick={() => setShowPopup(false)}>
-          <div className="popup-modal" onClick={(e) => e.stopPropagation()}>
-            <h3 className="popup-title">Coming Soon</h3>
-            <p className="popup-message">To be released after prototype</p>
-            <button className="popup-close-btn" onClick={() => setShowPopup(false)}>
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Coming Soon popup - removed, now navigates to AI Mode */}
 
       {showTokenPopup ? (
         <div className="token-alert-overlay" onClick={() => setShowTokenPopup(false)}>
