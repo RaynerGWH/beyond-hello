@@ -18,6 +18,9 @@ const initialUser = {
 const initialProgress = {
   totalXP: 0,
   currentLevel: 1,
+  tokenLimit: 20,
+  tokensRemaining: 20,
+  lowTokenPopupShown: false,
   completedScenarios: [],
   skills: {
     pronunciation: 0,
@@ -56,6 +59,9 @@ export function seedDemoDataIfEmpty() {
   storage.setProgress({
     totalXP: 245,
     currentLevel: 3,
+    tokenLimit: 20,
+    tokensRemaining: 10,
+    lowTokenPopupShown: false,
     completedScenarios: ['networking'],
     skills: { pronunciation: 12, fluency: 8, vocabulary: 6, grammar: 4 },
     streak: 4,

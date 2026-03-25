@@ -19,10 +19,15 @@ function Outcome() {
       const accuracyXP = 10;
       const dailyBonusXP = 20;
       const totalXP = scenarioXP + accuracyXP + dailyBonusXP;
+      const tokenLimit = Math.max(progressData.tokenLimit ?? 20, 1);
+      const currentTokens = Math.min(Math.max(progressData.tokensRemaining ?? tokenLimit, 0), tokenLimit);
+      const nextTokensRemaining = Math.max(10, currentTokens - 10);
       
       const updatedProgress = {
         ...progressData,
         totalXP: progressData.totalXP + totalXP,
+        tokenLimit,
+        tokensRemaining: nextTokensRemaining,
         skills: {
           ...progressData.skills,
           pronunciation: (progressData.skills?.pronunciation || 0) + 2,
