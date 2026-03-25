@@ -173,6 +173,11 @@ function Gameplay() {
                   className={`option-card ${selectedOption?.id === option.id ? 'selected' : ''}`}
                   onClick={() => handleSelectOption(option)}
                 >
+                  {option.sentiment && (
+                    <span className={`sentiment-badge sentiment-${option.sentiment}`}>
+                      {option.sentiment}
+                    </span>
+                  )}
                   <span className="option-chinese">{option.textInTargetLang}</span>
                   <span className="option-pinyin">{option.pronunciationGuide}</span>
                   <span className="option-english">{option.textTranslation}</span>
