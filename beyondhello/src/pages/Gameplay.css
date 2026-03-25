@@ -267,7 +267,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 4px;
-  padding: 14px 16px;
+  padding: 14px 72px 14px 16px;
   background: white;
   border: 2px solid #E5E7EB;
   border-radius: 16px;
@@ -305,26 +305,85 @@
 .sentiment-formal {
   background: #DBEAFE;
   color: #1E40AF;
+  border: 1.5px solid #93C5FD;
 }
 
 .sentiment-warm {
   background: #FEF3C7;
   color: #92400E;
+  border: 1.5px solid #FCD34D;
 }
 
 .sentiment-casual {
   background: #D1FAE5;
   color: #065F46;
+  border: 1.5px solid #6EE7B7;
 }
 
 .sentiment-confident {
   background: #E9D5FF;
   color: #6B21A8;
+  border: 1.5px solid #C4B5FD;
 }
 
 .sentiment-neutral {
   background: #F3F4F6;
   color: #4B5563;
+  border: 1.5px solid #D1D5DB;
+}
+
+.sentiment-friendly {
+  background: #FEF3C7;
+  color: #92400E;
+  border: 1.5px solid #FCD34D;
+}
+
+.sentiment-curious {
+  background: #E0E7FF;
+  color: #3730A3;
+  border: 1.5px solid #A5B4FC;
+}
+
+.sentiment-cautious {
+  background: #FEE2E2;
+  color: #991B1B;
+  border: 1.5px solid #FCA5A5;
+}
+
+.sentiment-engaging {
+  background: #FEF9C3;
+  color: #A16207;
+  border: 1.5px solid #FDE047;
+}
+
+.sentiment-chatty {
+  background: #EDE9FE;
+  color: #6D28D9;
+  border: 1.5px solid #C4B5FD;
+}
+
+.sentiment-brief {
+  background: #E0F2FE;
+  color: #0369A1;
+  border: 1.5px solid #7DD3FC;
+}
+
+.sentiment-confused {
+  background: #FFEDD5;
+  color: #C2410C;
+  border: 1.5px solid #FDBA74;
+}
+
+.sentiment-positive {
+  background: #D1FAE5;
+  color: #065F46;
+  border: 1.5px solid #6EE7B7;
+}
+
+.sentiment-indifferent {
+  background: #F1F5F9;
+  color: #64748B;
+  border: 1.5px solid #CBD5E1;
 }
 
 .option-chinese {
