@@ -21,6 +21,7 @@ function Gameplay() {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const [countdown, setCountdown] = useState(null); // 3, 2, 1, or "Speak!"
 
   // Accumulate results across scenes: [{ scene, option, score }]
   const [sceneResults, setSceneResults] = useState([]);
@@ -33,6 +34,7 @@ function Gameplay() {
     setPhase('ready');
     setSelectedOption(null);
     setIsRecording(false);
+    setCountdown(null);
   }, [currentScene]);
 
   // ── Handlers ──────────────────────────────────────────────────────────────
@@ -59,30 +61,48 @@ function Gameplay() {
 
   const handleSpeakNow = () => {
     trackEvent('pronunciation_attempted', { scene: sceneIndex });
-    setPhase('speaking');
+    // Start countdown: 3 → 2 → 1 → "Speak!" → recording
+    setCountdown(3);
   };
 
-  const handleMicClick = () => {
-    if (!isRecording) {
-      setIsRecording(true);
-    } else {
-      setIsRecording(false);
+  // Countdown effect
+  useEffect(() => {
+    if (countdown === null) return;
 
-      // Save this scene's result
-      const result = {
-        sceneIndex,
-        sceneId: currentScene.sceneId,
-        characterDialogue: currentScene.characterDialogue,
-        dialogueTranslation: currentScene.dialogueTranslation,
-        selectedOption,
-        score: selectedOption?.baseScore ?? 80,
-      };
-      const updatedResults = [...sceneResults, result];
-      setSceneResults(updatedResults);
-
-      setPhase('result');
-      setTimeout(() => advanceScene(updatedResults), 1500);
+    if (countdown === 0) {
+      // Show "Speak!" briefly then start recording
+      const timer = setTimeout(() => {
+        setCountdown(null);
+        setIsRecording(true);
+      }, 600);
+      return () => clearTimeout(timer);
     }
+
+    if (countdown > 0) {
+      const timer = setTimeout(() => {
+        setCountdown(countdown - 1);
+      }, 800);
+      return () => clearTimeout(timer);
+    }
+  }, [countdown]);
+
+  const handleStopRecording = () => {
+    setIsRecording(false);
+
+    // Save this scene's result
+    const result = {
+      sceneIndex,
+      sceneId: currentScene.sceneId,
+      characterDialogue: currentScene.characterDialogue,
+      dialogueTranslation: currentScene.dialogueTranslation,
+      selectedOption,
+      score: selectedOption?.baseScore ?? 80,
+    };
+    const updatedResults = [...sceneResults, result];
+    setSceneResults(updatedResults);
+
+    setPhase('result');
+    setTimeout(() => advanceScene(updatedResults), 1500);
   };
 
   const advanceScene = (results) => {
@@ -165,57 +185,73 @@ function Gameplay() {
 
         {phase === 'options' && (
           <div className="phase-options">
-            <p className="interaction-prompt">Choose your response</p>
-            <div className="options-grid">
-              {currentScene.options.map((option) => (
-                <button
-                  key={option.id}
-                  className={`option-card ${selectedOption?.id === option.id ? 'selected' : ''}`}
-                  onClick={() => handleSelectOption(option)}
-                >
-                  {option.sentiment && (
-                    <span className={`sentiment-badge sentiment-${option.sentiment}`}>
-                      {option.sentiment}
-                    </span>
-                  )}
-                  <span className="option-chinese">{option.textInTargetLang}</span>
-                  <span className="option-pinyin">{option.pronunciationGuide}</span>
-                  <span className="option-english">{option.textTranslation}</span>
-                </button>
-              ))}
-            </div>
-            {selectedOption && (
-              <button className="speak-now-btn" onClick={handleSpeakNow}>
-                🎤 Speak Now
-              </button>
+            {countdown === null && !isRecording ? (
+              <>
+                <p className="interaction-prompt">Choose your response</p>
+                <div className="options-grid">
+                  {currentScene.options.map((option) => (
+                    <button
+                      key={option.id}
+                      className={`option-card ${selectedOption?.id === option.id ? 'selected' : ''}`}
+                      onClick={() => handleSelectOption(option)}
+                    >
+                      {option.sentiment && (
+                        <span className={`sentiment-badge sentiment-${option.sentiment}`}>
+                          {option.sentiment}
+                        </span>
+                      )}
+                      <span className="option-chinese">{option.textInTargetLang}</span>
+                      <span className="option-pinyin">{option.pronunciationGuide}</span>
+                      <span className="option-english">{option.textTranslation}</span>
+                    </button>
+                  ))}
+                </div>
+                {selectedOption && (
+                  <button className="speak-now-btn" onClick={handleSpeakNow}>
+                    🎤 Speak Now
+                  </button>
+                )}
+              </>
+            ) : countdown !== null ? (
+              <>
+                {selectedOption && (
+                  <div className="speaking-prompt-card">
+                    <span className="speaking-prompt-chinese">{selectedOption.textInTargetLang}</span>
+                    <span className="speaking-prompt-pinyin">{selectedOption.pronunciationGuide}</span>
+                  </div>
+                )}
+                <div className="countdown-display">
+                  <div className="countdown-number">
+                    {countdown === 0 ? 'Speak!' : countdown}
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                {selectedOption && (
+                  <div className="speaking-prompt-card">
+                    <span className="speaking-prompt-chinese">{selectedOption.textInTargetLang}</span>
+                    <span className="speaking-prompt-pinyin">{selectedOption.pronunciationGuide}</span>
+                  </div>
+                )}
+                <p className="interaction-prompt recording-prompt">
+                  🔴 Recording... Tap mic to stop
+                </p>
+                <div className="controls-row">
+                  <button className="help-btn" onClick={() => setShowHelp(true)}>Need Help?</button>
+                  <button
+                    className="mic-button recording"
+                    onClick={handleStopRecording}
+                  >
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                      <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                    </svg>
+                  </button>
+                  <button className="replay-btn" onClick={handleReplay}>↺ Replay</button>
+                </div>
+              </>
             )}
-          </div>
-        )}
-
-        {phase === 'speaking' && (
-          <div className="phase-speaking">
-            {selectedOption && (
-              <div className="speaking-prompt-card">
-                <span className="speaking-prompt-chinese">{selectedOption.textInTargetLang}</span>
-                <span className="speaking-prompt-pinyin">{selectedOption.pronunciationGuide}</span>
-              </div>
-            )}
-            <p className="interaction-prompt">
-              {isRecording ? '🔴 Recording... Press mic to stop' : '🎤 Say it out loud'}
-            </p>
-            <div className="controls-row">
-              <button className="help-btn" onClick={() => setShowHelp(true)}>Need Help?</button>
-              <button
-                className={`mic-button ${isRecording ? 'recording' : ''}`}
-                onClick={handleMicClick}
-              >
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
-                  <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
-                </svg>
-              </button>
-              <button className="replay-btn" onClick={handleReplay}>↺ Replay</button>
-            </div>
           </div>
         )}
 

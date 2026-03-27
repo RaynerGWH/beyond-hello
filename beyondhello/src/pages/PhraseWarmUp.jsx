@@ -17,6 +17,7 @@ function PhraseWarmUp() {
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [isRecording, setIsRecording] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [countdown, setCountdown] = useState(null); // 3, 2, 1, or "Speak!"
 
   const activeTopic = practiceTopics.find(t => t.id === activeTopicId);
   const currentPhrase = activeTopic.phrases[phraseIndex];
@@ -27,7 +28,29 @@ function PhraseWarmUp() {
     setPhraseIndex(0);
     setIsRecording(false);
     setShowFeedback(false);
+    setCountdown(null);
   }, [activeTopicId]);
+
+  // Countdown effect
+  useEffect(() => {
+    if (countdown === null) return;
+
+    if (countdown === 0) {
+      // Show "Speak!" briefly then start recording
+      const timer = setTimeout(() => {
+        setCountdown(null);
+        setIsRecording(true);
+      }, 600);
+      return () => clearTimeout(timer);
+    }
+
+    if (countdown > 0) {
+      const timer = setTimeout(() => {
+        setCountdown(countdown - 1);
+      }, 800);
+      return () => clearTimeout(timer);
+    }
+  }, [countdown]);
 
   const handleTopicSelect = (topicId) => {
     if (topicId === activeTopicId) return;
@@ -39,6 +62,7 @@ function PhraseWarmUp() {
     setPhraseIndex(phraseIndex - 1);
     setIsRecording(false);
     setShowFeedback(false);
+    setCountdown(null);
   };
 
   const handleNext = () => {
@@ -46,13 +70,16 @@ function PhraseWarmUp() {
     setPhraseIndex(phraseIndex + 1);
     setIsRecording(false);
     setShowFeedback(false);
+    setCountdown(null);
   };
 
   const handleMicClick = () => {
-    if (!isRecording) {
-      setIsRecording(true);
+    if (!isRecording && countdown === null) {
+      // Start countdown
+      setCountdown(3);
       setShowFeedback(false);
-    } else {
+    } else if (isRecording) {
+      // Stop recording and show feedback
       setIsRecording(false);
       setShowFeedback(true);
     }
@@ -61,6 +88,7 @@ function PhraseWarmUp() {
   const handleTryAgain = () => {
     setShowFeedback(false);
     setIsRecording(false);
+    setCountdown(null);
   };
 
   const handleNextPhrase = () => {
@@ -69,6 +97,7 @@ function PhraseWarmUp() {
     }
     setShowFeedback(false);
     setIsRecording(false);
+    setCountdown(null);
   };
 
   return (
@@ -145,19 +174,29 @@ function PhraseWarmUp() {
         {/* Mic section — hidden while feedback is showing */}
         {!showFeedback && (
           <div className="warmup-mic-section">
-            <p className="warmup-mic-prompt">
-              {isRecording ? '🔴 Recording…' : '🎤 Say it out loud'}
-            </p>
-            <button
-              className={`mic-button ${isRecording ? 'recording' : ''}`}
-              onClick={handleMicClick}
-              aria-label={isRecording ? 'Stop recording' : 'Start recording'}
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
-                <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
-              </svg>
-            </button>
+            {countdown !== null ? (
+              <div className="countdown-display">
+                <div className="countdown-number">
+                  {countdown === 0 ? 'Speak!' : countdown}
+                </div>
+              </div>
+            ) : (
+              <>
+                <p className="warmup-mic-prompt">
+                  {isRecording ? '🔴 Recording…' : '🎤 Say it out loud'}
+                </p>
+                <button
+                  className={`mic-button ${isRecording ? 'recording' : ''}`}
+                  onClick={handleMicClick}
+                  aria-label={isRecording ? 'Stop recording' : 'Start recording'}
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                    <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                  </svg>
+                </button>
+              </>
+            )}
           </div>
         )}
 
