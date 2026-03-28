@@ -19,7 +19,7 @@ const elevatorScenarioTemplate = {
   scenes: [
     {
       sceneId: 'ai-elev-scene-1',
-      videoUrl: '/videos/networking/scene-1.mp4',
+      videoUrl: '/videos/elevator/Elevator-1.mp4',
       characterName: 'Colleague',
       characterDialogue: '你好！我可以问一下你的名字吗？',
       dialogueTranslation: 'Hi! May I ask your name?',
@@ -36,9 +36,9 @@ const elevatorScenarioTemplate = {
         },
         {
           id: 'ai-elev-1-b',
-          textInTargetLang: '我是[名字]，你呢？',
-          textTranslation: "I'm [Name], you?",
-          pronunciationGuide: 'Wǒ shì [Name], nǐ ne?',
+          textInTargetLang: '我是[名字]!',
+          textTranslation: "I'm [Name]!",
+          pronunciationGuide: 'Wǒ shì [míngzì]!',
           sentiment: 'engaging',
           baseScore: 88,
           isOptimal: true,
@@ -65,7 +65,7 @@ const elevatorScenarioTemplate = {
     },
     {
       sceneId: 'ai-elev-scene-2',
-      videoUrl: '/videos/networking/scene-2.mp4',
+      videoUrl: '/videos/elevator/Elevator-2.mp4',
       characterName: 'Colleague',
       characterDialogue: '你要去几楼？',
       dialogueTranslation: 'Which floor are you heading to?',
@@ -111,7 +111,7 @@ const elevatorScenarioTemplate = {
     },
     {
       sceneId: 'ai-elev-scene-3',
-      videoUrl: '/videos/networking/scene-3.mp4',
+      videoUrl: '/videos/elevator/Elevator-3.mp4',
       characterName: 'Colleague',
       characterDialogue: '好啦，这是我的楼层，下次见！',
       dialogueTranslation: 'Alright, this is my stop. See you next time!',
