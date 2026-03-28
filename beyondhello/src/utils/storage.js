@@ -12,6 +12,7 @@ const STORAGE_KEYS = {
 const initialUser = {
   name: '',
   email: '',
+  displayLanguage: 'en',
   targetLanguage: '',
   createdAt: null
 };
@@ -79,7 +80,7 @@ export function seedDemoDataIfEmpty() {
 
   const user = storage.getUser();
   if (!user.name) {
-    storage.setUser({ ...user, name: 'Alex', targetLanguage: 'zh-CN' });
+    storage.setUser({ ...user, name: 'Alex', displayLanguage: user.displayLanguage || 'en', targetLanguage: 'zh-CN' });
   }
 }
 
