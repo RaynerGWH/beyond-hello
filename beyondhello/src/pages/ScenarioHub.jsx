@@ -5,6 +5,87 @@ import { scenariosData } from '../data/scenarios';
 import { storage } from '../utils/storage';
 import './ScenarioHub.css';
 
+const DISPLAY_LANGUAGE_OPTIONS = [
+  { code: 'en', shortLabel: 'EN', supported: true },
+  { code: 'ms', shortLabel: 'MY', supported: true },
+  { code: 'zh-SG', shortLabel: 'CHN', supported: false },
+  { code: 'ta-SG', shortLabel: 'TAM', supported: false }
+];
+
+const LEARNING_LANGUAGE = { code: 'zh-CN', shortLabel: 'CHN' };
+
+const SCENARIO_HUB_COPY = {
+  en: {
+    navScenarios: 'Scenarios',
+    navDashboard: 'Dashboard',
+    navPlans: 'Plans',
+    navSettings: 'Settings',
+    navSupport: 'Support',
+    navPractice: 'Phrase Warm-Up',
+    learner: 'Learner',
+    tokens: 'Tokens',
+    lowTokens: 'Low tokens - top up in plans',
+    title: 'Choose your scenario',
+    subtitle: 'Select a mission to practice real-life language skills.',
+    displayLanguage: 'Display',
+    learningLanguage: 'Learning',
+    languageSummary: (displayCode, learningCode) => `${displayCode} learning ${learningCode}`,
+    languageAvailabilityLater: 'Available in later versions',
+    notReadyYet: 'Not ready yet?',
+    warmupSubtitle: 'Drill key phrases before jumping in.',
+    startWarmup: 'Start Phrase Warm-Up →',
+    missions: 'Missions',
+    generateScenario: 'Generate Your Own Scenario',
+    flexible: 'Flexible',
+    variableXp: 'Variable XP',
+    dailyQuest: 'Daily Quest — complete your first scenario today for',
+    viewAllMissions: 'View All Missions',
+    tokenLimitTitle: 'Token Limit Reached',
+    tokenLimitText: (remaining, limit) => `You are at ${remaining}/${limit} tokens. Upgrade your plan to unlock more usage.`,
+    later: 'Later',
+    viewPlans: 'View Plans'
+  },
+  ms: {
+    navScenarios: 'Senario',
+    navDashboard: 'Papan Pemuka',
+    navPlans: 'Pelan',
+    navSettings: 'Tetapan',
+    navSupport: 'Sokongan',
+    navPractice: 'Pemanasan Frasa',
+    learner: 'Pelajar',
+    tokens: 'Token',
+    lowTokens: 'Token rendah - tambah dalam pelan',
+    title: 'Pilih senario anda',
+    subtitle: 'Pilih misi untuk berlatih kemahiran bahasa dalam situasi sebenar.',
+    displayLanguage: 'Paparan',
+    learningLanguage: 'Belajar',
+    languageSummary: (displayCode, learningCode) => `${displayCode} learning ${learningCode}`,
+    languageAvailabilityLater: 'Tersedia dalam versi akan datang',
+    notReadyYet: 'Belum bersedia?',
+    warmupSubtitle: 'Latih frasa penting sebelum mula.',
+    startWarmup: 'Mula Pemanasan Frasa →',
+    missions: 'Misi',
+    generateScenario: 'Jana Senario Anda Sendiri',
+    flexible: 'Fleksibel',
+    variableXp: 'XP Berubah',
+    dailyQuest: 'Misi Harian — lengkapkan senario pertama anda hari ini untuk',
+    viewAllMissions: 'Lihat Semua Misi',
+    tokenLimitTitle: 'Had Token Dicapai',
+    tokenLimitText: (remaining, limit) => `Anda berada pada ${remaining}/${limit} token. Naik taraf pelan anda untuk penggunaan tambahan.`,
+    later: 'Nanti',
+    viewPlans: 'Lihat Pelan'
+  }
+};
+
+const SCENARIO_DISPLAY_TITLES = {
+  ms: {
+    networking: 'Acara Rangkaian Perniagaan',
+    'restaurant-order': 'Memesan Makanan di Restoran',
+    'ai-session-scenario': 'Perbualan Dalam Lif',
+    generateCard: 'Jana Senario Anda Sendiri'
+  }
+};
+
 function ScenarioHub() {
   const navigate = useNavigate();
   const [progress, setProgress] = useState(null);
@@ -12,6 +93,7 @@ function ScenarioHub() {
   const [temporaryScenario, setTemporaryScenario] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showTokenPopup, setShowTokenPopup] = useState(false);
+  const [languageAvailabilityMessage, setLanguageAvailabilityMessage] = useState('');
 
   useEffect(() => {
     const currentProgress = storage.getProgress();
@@ -83,10 +165,38 @@ function ScenarioHub() {
   const initials = user?.name
     ? user.name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase()
     : 'BH';
+  const displayLanguage = user?.displayLanguage || 'en';
+  const learningLanguage = user?.targetLanguage || LEARNING_LANGUAGE.code;
+  const copy = SCENARIO_HUB_COPY[displayLanguage] || SCENARIO_HUB_COPY.en;
+  const learningLanguageLabel = learningLanguage === LEARNING_LANGUAGE.code ? LEARNING_LANGUAGE.shortLabel : LEARNING_LANGUAGE.shortLabel;
   const tokenLimit = Math.max(progress?.tokenLimit ?? 20, 1);
   const tokensRemaining = Math.min(Math.max(progress?.tokensRemaining ?? 6, 0), tokenLimit);
   const tokenPercent = Math.round((tokensRemaining / tokenLimit) * 100);
   const isLowTokens = tokensRemaining <= 10;
+
+  const handleDisplayLanguageChange = (nextLanguage) => {
+    const selectedLanguage = DISPLAY_LANGUAGE_OPTIONS.find((option) => option.code === nextLanguage);
+
+    if (!selectedLanguage?.supported) {
+      setLanguageAvailabilityMessage(copy.languageAvailabilityLater);
+      return;
+    }
+
+    const nextUser = {
+      ...(user || storage.getUser()),
+      displayLanguage: nextLanguage,
+      targetLanguage: learningLanguage
+    };
+
+    storage.setUser(nextUser);
+    setUser(nextUser);
+    setLanguageAvailabilityMessage('');
+  };
+
+  const getScenarioDisplayTitle = (scenario) => {
+    const localizedTitle = SCENARIO_DISPLAY_TITLES[displayLanguage]?.[scenario.id];
+    return localizedTitle || scenario.title;
+  };
 
   return (
     <div className="hub-shell">
@@ -106,21 +216,21 @@ function ScenarioHub() {
             <svg className="nav-icon" viewBox="0 0 24 24" fill="currentColor">
               <path d="M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm10 0h8v8h-8z"/>
             </svg>
-            <span>Scenarios</span>
+            <span>{copy.navScenarios}</span>
           </div>
 
           <div className="nav-item" onClick={() => navigate('/dashboard')}>
             <svg className="nav-icon" viewBox="0 0 24 24" fill="currentColor">
               <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
             </svg>
-            <span>Dashboard</span>
+            <span>{copy.navDashboard}</span>
           </div>
 
           <div className="nav-item" onClick={() => navigate('/plans')}>
             <svg className="nav-icon" viewBox="0 0 24 24" fill="currentColor">
               <path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/>
             </svg>
-            <span>Plans</span>
+            <span>{copy.navPlans}</span>
           </div>
 
           <div className="nav-divider" />
@@ -130,7 +240,7 @@ function ScenarioHub() {
               <circle cx="12" cy="12" r="3"/>
               <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m5.08 5.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m5.08-5.08l4.24-4.24"/>
             </svg>
-            <span>Settings</span>
+            <span>{copy.navSettings}</span>
           </div>
 
           <div className="nav-item" onClick={() => navigate('/support')}>
@@ -138,7 +248,7 @@ function ScenarioHub() {
               <circle cx="12" cy="12" r="10"/>
               <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3m.08 4h.01"/>
             </svg>
-            <span>Support</span>
+            <span>{copy.navSupport}</span>
           </div>
 
           <div className="nav-divider" />
@@ -147,7 +257,7 @@ function ScenarioHub() {
             <svg className="nav-icon" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 3a9 9 0 0 1 9 9c0 4.97-4.03 9-9 9S3 16.97 3 12a9 9 0 0 1 9-9zm0 16c3.86 0 7-3.14 7-7s-3.14-7-7-7-7 3.14-7 7 3.14 7 7 7zm1-11h-2v5h2V8zm0 6h-2v2h2v-2z"/>
             </svg>
-            <span>Phrase Warm-Up</span>
+            <span>{copy.navPractice}</span>
           </div>
         </nav>
 
@@ -166,14 +276,14 @@ function ScenarioHub() {
         >
           <div className="user-initials-circle">{initials}</div>
           <div className="user-pill-info">
-            <span className="user-pill-name">{user?.name || 'Learner'}</span>
+            <span className="user-pill-name">{user?.name || copy.learner}</span>
             <span className="user-pill-xp">{progress?.totalXP || 0} XP</span>
           </div>
         </div>
 
         <div className="sidebar-token-widget" aria-label="Token usage">
           <div className="token-top-row">
-            <span className="token-label">Tokens</span>
+            <span className="token-label">{copy.tokens}</span>
             <span className="token-count">{tokensRemaining}/{tokenLimit}</span>
           </div>
           <div className="token-bar" role="progressbar" aria-valuemin={0} aria-valuemax={tokenLimit} aria-valuenow={tokensRemaining}>
@@ -189,7 +299,7 @@ function ScenarioHub() {
                 <path d="M12 9V13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
                 <circle cx="12" cy="16.5" r="1" fill="currentColor" />
               </svg>
-              <span>Low tokens - top up in plans</span>
+              <span>{copy.lowTokens}</span>
             </div>
           ) : null}
         </div>
@@ -200,8 +310,52 @@ function ScenarioHub() {
 
         {/* Page header */}
         <div className="hub-page-header">
-          <h1 className="hub-title">Choose your scenario</h1>
-          <p className="hub-subtitle">Select a mission to practice real-life language skills.</p>
+          <div className="hub-header-row">
+            <div>
+              <h1 className="hub-title">{copy.title}</h1>
+              <p className="hub-subtitle">{copy.subtitle}</p>
+            </div>
+
+            <div className="hub-language-switcher-card">
+              <div className="hub-language-switcher-copy">
+                <span className="hub-language-pair-summary">
+                  {copy.languageSummary((DISPLAY_LANGUAGE_OPTIONS.find((option) => option.code === displayLanguage) || DISPLAY_LANGUAGE_OPTIONS[0]).shortLabel, learningLanguageLabel)}
+                </span>
+              </div>
+
+              <div className="hub-language-switcher-controls">
+                <div className="hub-language-control-block">
+                  <span className="hub-language-control-label">{copy.displayLanguage}</span>
+                  <div className="hub-language-segmented-control" role="tablist" aria-label={copy.displayLanguage}>
+                    {DISPLAY_LANGUAGE_OPTIONS.map((option) => (
+                      <button
+                        key={option.code}
+                        type="button"
+                        className={`hub-language-segment-button ${displayLanguage === option.code ? 'hub-language-segment-button-active' : ''} ${option.supported ? '' : 'hub-language-segment-button-coming-soon'}`}
+                        onClick={() => handleDisplayLanguageChange(option.code)}
+                      >
+                        {option.shortLabel}
+                      </button>
+                    ))}
+                  </div>
+                  {languageAvailabilityMessage ? (
+                    <span className="hub-language-help-text">{languageAvailabilityMessage}</span>
+                  ) : null}
+                </div>
+
+                <div className="hub-language-control-block">
+                  <span className="hub-language-control-label">{copy.learningLanguage}</span>
+                  <button
+                    type="button"
+                    className="hub-language-static-pill hub-language-static-pill-button"
+                    onClick={() => navigate('/settings')}
+                  >
+                    {learningLanguageLabel}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Green warm-up strip */}
@@ -213,18 +367,18 @@ function ScenarioHub() {
               </svg>
             </div>
             <div className="strip-labels">
-              <span className="strip-label-main">Not ready yet?</span>
-              <span className="strip-label-sub">Drill key phrases before jumping in.</span>
+              <span className="strip-label-main">{copy.notReadyYet}</span>
+              <span className="strip-label-sub">{copy.warmupSubtitle}</span>
             </div>
           </div>
           <Link to="/practice" className="strip-cta">
-            Start Phrase Warm-Up →
+            {copy.startWarmup}
           </Link>
         </div>
 
         {/* Missions section */}
         <div className="missions-section">
-          <p className="section-label">Missions</p>
+          <p className="section-label">{copy.missions}</p>
 
           {/* Scenario cards grid */}
           <div className="scenarios-grid">
@@ -252,7 +406,7 @@ function ScenarioHub() {
 
                 {/* Card body */}
                 <div className="card-body">
-                  <h3 className="card-title">{scenario.title}</h3>
+                  <h3 className="card-title">{getScenarioDisplayTitle(scenario)}</h3>
                   <div className="card-meta-row">
                     <div className="card-duration">
                       <svg viewBox="0 0 24 24" fill="currentColor">
@@ -277,15 +431,15 @@ function ScenarioHub() {
                 <span className="card-diff-badge diff-custom">Custom</span>
               </div>
               <div className="card-body">
-                <h3 className="card-title">Generate Your Own Scenario</h3>
+                <h3 className="card-title">{SCENARIO_DISPLAY_TITLES[displayLanguage]?.generateCard || copy.generateScenario}</h3>
                 <div className="card-meta-row">
                   <div className="card-duration">
                     <svg viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.2 3.2.8-1.3-4.5-2.7V7z"/>
                     </svg>
-                    <span>Flexible</span>
+                    <span>{copy.flexible}</span>
                   </div>
-                  <span className="card-xp-chip card-xp-variable">Variable XP</span>
+                  <span className="card-xp-chip card-xp-variable">{copy.variableXp}</span>
                 </div>
               </div>
             </div>
@@ -327,14 +481,14 @@ function ScenarioHub() {
             <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
           </svg>
           <span className="quest-text">
-            Daily Quest — complete your first scenario today for <strong>+20 XP</strong>
+            {copy.dailyQuest} <strong>+20 XP</strong>
           </span>
         </div>
 
         {/* View All */}
         <div className="view-all-section">
           <button className="view-all-btn" onClick={() => {}}>
-            View All Missions
+            {copy.viewAllMissions}
           </button>
         </div>
 
@@ -351,17 +505,17 @@ function ScenarioHub() {
                 <path d="M12 9V13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
                 <circle cx="12" cy="16.5" r="1" fill="currentColor" />
               </svg>
-              <h3 className="token-alert-title">Token Limit Reached</h3>
+              <h3 className="token-alert-title">{copy.tokenLimitTitle}</h3>
             </div>
             <p className="token-alert-text">
-              You are at {tokensRemaining}/{tokenLimit} tokens. Upgrade your plan to unlock more usage.
+              {copy.tokenLimitText(tokensRemaining, tokenLimit)}
             </p>
             <div className="token-alert-actions">
               <button className="token-alert-btn token-alert-btn-secondary" onClick={() => setShowTokenPopup(false)}>
-                Later
+                {copy.later}
               </button>
               <button className="token-alert-btn token-alert-btn-primary" onClick={() => navigate('/plans')}>
-                View Plans
+                {copy.viewPlans}
               </button>
             </div>
           </div>

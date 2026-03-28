@@ -8,6 +8,75 @@ import './Dashboard.css';
 // XP cap to reach the NEXT level (indexed by currentLevel - 1)
 const LEVEL_XP_CAPS = [100, 200, 400, 700, 1000, 1500];
 
+const DASHBOARD_COPY = {
+  en: {
+    navScenarios: 'Scenarios',
+    navDashboard: 'Dashboard',
+    navPlans: 'Plans',
+    navSettings: 'Settings',
+    navSupport: 'Support',
+    navPractice: 'Phrase Warm-Up',
+    learner: 'Learner',
+    tokens: 'Tokens',
+    lowTokens: 'Low tokens - top up in plans',
+    title: (userName) => userName ? `Welcome back, ${userName}!` : 'Welcome back!',
+    subtitle: "Here's a summary of your language learning progress.",
+    displayLanguage: 'Display',
+    learningLanguage: 'Learning',
+    languageSummary: (displayCode, learningCode) => `${displayCode} learning ${learningCode}`,
+    completedScenarios: 'Completed Scenarios',
+    viewAll: 'View All',
+    noScenarios: 'No scenarios completed yet.',
+    startFirstScenario: 'Start your first scenario →',
+    speakingAccuracy: 'Speaking Accuracy',
+    accuracyEmpty: 'Complete a scenario to start tracking your accuracy.',
+    averageAccuracy: (value) => `Average Accuracy: ${value}%`,
+    streakTitle: (value) => `${value}-Day Streak`,
+    streakSubtitle: 'Keep it up!',
+    noStreakTitle: 'No streak yet',
+    noStreakSubtitle: 'Complete a scenario today to start!',
+    levelTitle: (value) => `Level ${value}`,
+    continueLearning: 'Continue Learning',
+    tokenLimitTitle: 'Token Limit Reached',
+    tokenLimitText: (remaining, limit) => `You are at ${remaining}/${limit} tokens. Upgrade your plan to unlock more usage.`,
+    later: 'Later',
+    viewPlans: 'View Plans'
+  },
+  ms: {
+    navScenarios: 'Senario',
+    navDashboard: 'Papan Pemuka',
+    navPlans: 'Pelan',
+    navSettings: 'Tetapan',
+    navSupport: 'Sokongan',
+    navPractice: 'Pemanasan Frasa',
+    learner: 'Pelajar',
+    tokens: 'Token',
+    lowTokens: 'Token rendah - tambah dalam pelan',
+    title: (userName) => userName ? `Selamat kembali, ${userName}!` : 'Selamat kembali!',
+    subtitle: 'Berikut ialah ringkasan kemajuan pembelajaran bahasa anda.',
+    displayLanguage: 'Paparan',
+    learningLanguage: 'Belajar',
+    languageSummary: (displayCode, learningCode) => `${displayCode} learning ${learningCode}`,
+    completedScenarios: 'Senario Selesai',
+    viewAll: 'Lihat Semua',
+    noScenarios: 'Belum ada senario yang selesai.',
+    startFirstScenario: 'Mulakan senario pertama anda →',
+    speakingAccuracy: 'Ketepatan Sebutan',
+    accuracyEmpty: 'Lengkapkan satu senario untuk mula menjejak ketepatan anda.',
+    averageAccuracy: (value) => `Purata Ketepatan: ${value}%`,
+    streakTitle: (value) => `Rentetan ${value} Hari`,
+    streakSubtitle: 'Teruskan!',
+    noStreakTitle: 'Belum ada rentetan',
+    noStreakSubtitle: 'Lengkapkan satu senario hari ini untuk bermula!',
+    levelTitle: (value) => `Tahap ${value}`,
+    continueLearning: 'Teruskan Belajar',
+    tokenLimitTitle: 'Had Token Dicapai',
+    tokenLimitText: (remaining, limit) => `Anda berada pada ${remaining}/${limit} token. Naik taraf pelan anda untuk penggunaan tambahan.`,
+    later: 'Nanti',
+    viewPlans: 'Lihat Pelan'
+  }
+};
+
 function Dashboard() {
   const navigate = useNavigate();
   const [progress, setProgress] = useState(null);
@@ -43,6 +112,9 @@ function Dashboard() {
 
   // ── Derived values ────────────────────────────────────────────────────────
   const userName = user?.name || '';
+  const displayLanguage = user?.displayLanguage || 'en';
+  const copy = DASHBOARD_COPY[displayLanguage] || DASHBOARD_COPY.en;
+  const locale = displayLanguage === 'ms' ? 'ms-MY' : 'en-US';
   const currentLevel = progress.currentLevel ?? 1;
   const currentXP = progress.totalXP ?? 0;
   const streak = progress.streak ?? 0;
@@ -59,7 +131,7 @@ function Dashboard() {
 
   // Accuracy history: { date, score } → { day label, value }
   const accuracyData = (progress.accuracyHistory ?? []).map(h => ({
-    day: new Date(h.date).toLocaleDateString('en-US', { weekday: 'narrow' }),
+    day: new Date(h.date).toLocaleDateString(locale, { weekday: 'narrow' }),
     value: h.score
   }));
 
@@ -94,21 +166,21 @@ function Dashboard() {
             <svg className="nav-icon" viewBox="0 0 24 24" fill="currentColor">
               <path d="M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm10 0h8v8h-8z"/>
             </svg>
-            <span>Scenarios</span>
+            <span>{copy.navScenarios}</span>
           </div>
 
           <div className="nav-item nav-item-active">
             <svg className="nav-icon" viewBox="0 0 24 24" fill="currentColor">
               <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
             </svg>
-            <span>Dashboard</span>
+            <span>{copy.navDashboard}</span>
           </div>
 
           <div className="nav-item" onClick={() => navigate('/plans')}>
             <svg className="nav-icon" viewBox="0 0 24 24" fill="currentColor">
               <path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/>
             </svg>
-            <span>Plans</span>
+            <span>{copy.navPlans}</span>
           </div>
 
           <div className="nav-divider" />
@@ -118,7 +190,7 @@ function Dashboard() {
               <circle cx="12" cy="12" r="3"/>
               <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m5.08 5.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m5.08-5.08l4.24-4.24"/>
             </svg>
-            <span>Settings</span>
+            <span>{copy.navSettings}</span>
           </div>
 
           <div className="nav-item" onClick={() => navigate('/support')}>
@@ -126,7 +198,7 @@ function Dashboard() {
               <circle cx="12" cy="12" r="10"/>
               <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3m.08 4h.01"/>
             </svg>
-            <span>Support</span>
+            <span>{copy.navSupport}</span>
           </div>
 
           <div className="nav-divider" />
@@ -135,7 +207,7 @@ function Dashboard() {
             <svg className="nav-icon" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 3a9 9 0 0 1 9 9c0 4.97-4.03 9-9 9S3 16.97 3 12a9 9 0 0 1 9-9zm0 16c3.86 0 7-3.14 7-7s-3.14-7-7-7-7 3.14-7 7 3.14 7 7 7zm1-11h-2v5h2V8zm0 6h-2v2h2v-2z"/>
             </svg>
-            <span>Phrase Warm-Up</span>
+            <span>{copy.navPractice}</span>
           </div>
         </nav>
 
@@ -153,14 +225,14 @@ function Dashboard() {
         >
           <div className="user-initials-circle">{initials}</div>
           <div className="user-pill-info">
-            <span className="user-pill-name">{userName || 'Learner'}</span>
+            <span className="user-pill-name">{userName || copy.learner}</span>
             <span className="user-pill-xp">{currentXP} XP</span>
           </div>
         </div>
 
         <div className="sidebar-token-widget" aria-label="Token usage">
           <div className="token-top-row">
-            <span className="token-label">Tokens</span>
+            <span className="token-label">{copy.tokens}</span>
             <span className="token-count">{tokensRemaining}/{tokenLimit}</span>
           </div>
           <div className="token-bar" role="progressbar" aria-valuemin={0} aria-valuemax={tokenLimit} aria-valuenow={tokensRemaining}>
@@ -176,7 +248,7 @@ function Dashboard() {
                 <path d="M12 9V13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
                 <circle cx="12" cy="16.5" r="1" fill="currentColor" />
               </svg>
-              <span>Low tokens - top up in plans</span>
+              <span>{copy.lowTokens}</span>
             </div>
           ) : null}
         </div>
@@ -186,10 +258,8 @@ function Dashboard() {
       <main className="dashboard-main">
 
         <div className="dashboard-header-section">
-          <h1 className="dashboard-title">
-            {userName ? `Welcome back, ${userName}!` : 'Welcome back!'}
-          </h1>
-          <p className="dashboard-subtitle">Here's a summary of your language learning progress.</p>
+          <h1 className="dashboard-title">{copy.title(userName)}</h1>
+          <p className="dashboard-subtitle">{copy.subtitle}</p>
         </div>
 
         {/* Top row */}
@@ -197,7 +267,7 @@ function Dashboard() {
 
           {/* Completed Scenarios */}
           <div className="dashboard-card scenarios-card">
-            <h2 className="card-title">Completed Scenarios</h2>
+            <h2 className="card-title">{copy.completedScenarios}</h2>
             {completedScenarios.length > 0 ? (
               <>
                 <div className="scenarios-list">
@@ -217,13 +287,13 @@ function Dashboard() {
                     </div>
                   ))}
                 </div>
-                <button className="view-all-btn" onClick={() => navigate('/hub')}>View All</button>
+                <button className="view-all-btn" onClick={() => navigate('/hub')}>{copy.viewAll}</button>
               </>
             ) : (
               <div className="empty-state">
-                <p className="empty-state-text">No scenarios completed yet.</p>
+                <p className="empty-state-text">{copy.noScenarios}</p>
                 <button className="empty-state-cta" onClick={() => navigate('/hub')}>
-                  Start your first scenario →
+                  {copy.startFirstScenario}
                 </button>
               </div>
             )}
@@ -231,7 +301,7 @@ function Dashboard() {
 
           {/* Speaking Accuracy */}
           <div className="dashboard-card accuracy-card">
-            <h2 className="card-title">Speaking Accuracy</h2>
+            <h2 className="card-title">{copy.speakingAccuracy}</h2>
             {accuracyData.length > 0 ? (
               <div className="accuracy-chart">
                 <div className="chart-area">
@@ -257,11 +327,11 @@ function Dashboard() {
                     <span key={index} className="day-label">{point.day}</span>
                   ))}
                 </div>
-                <div className="average-accuracy">Average Accuracy: {averageAccuracy}%</div>
+                <div className="average-accuracy">{copy.averageAccuracy(averageAccuracy)}</div>
               </div>
             ) : (
               <div className="empty-state">
-                <p className="empty-state-text">Complete a scenario to start tracking your accuracy.</p>
+                <p className="empty-state-text">{copy.accuracyEmpty}</p>
               </div>
             )}
           </div>
@@ -276,13 +346,13 @@ function Dashboard() {
             <div className="streak-info">
               {streak > 0 ? (
                 <>
-                  <div className="streak-title">{streak}-Day Streak</div>
-                  <div className="streak-subtitle">Keep it up!</div>
+                  <div className="streak-title">{copy.streakTitle(streak)}</div>
+                  <div className="streak-subtitle">{copy.streakSubtitle}</div>
                 </>
               ) : (
                 <>
-                  <div className="streak-title">No streak yet</div>
-                  <div className="streak-subtitle">Complete a scenario today to start!</div>
+                  <div className="streak-title">{copy.noStreakTitle}</div>
+                  <div className="streak-subtitle">{copy.noStreakSubtitle}</div>
                 </>
               )}
             </div>
@@ -292,7 +362,7 @@ function Dashboard() {
           <div className="dashboard-card level-card">
             <div className="level-icon">⭐</div>
             <div className="level-info">
-              <div className="level-title">Level {currentLevel}</div>
+              <div className="level-title">{copy.levelTitle(currentLevel)}</div>
               <div className="level-progress-bar">
                 <div
                   className="level-progress-fill"
@@ -307,7 +377,7 @@ function Dashboard() {
         {/* CTA */}
         <div className="dashboard-actions">
           <button className="continue-learning-btn" onClick={() => navigate('/hub')}>
-            Continue Learning
+            {copy.continueLearning}
           </button>
         </div>
 
@@ -322,17 +392,17 @@ function Dashboard() {
                 <path d="M12 9V13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
                 <circle cx="12" cy="16.5" r="1" fill="currentColor" />
               </svg>
-              <h3 className="token-alert-title">Token Limit Reached</h3>
+              <h3 className="token-alert-title">{copy.tokenLimitTitle}</h3>
             </div>
             <p className="token-alert-text">
-              You are at {tokensRemaining}/{tokenLimit} tokens. Upgrade your plan to unlock more usage.
+              {copy.tokenLimitText(tokensRemaining, tokenLimit)}
             </p>
             <div className="token-alert-actions">
               <button className="token-alert-btn token-alert-btn-secondary" onClick={() => setShowTokenPopup(false)}>
-                Later
+                {copy.later}
               </button>
               <button className="token-alert-btn token-alert-btn-primary" onClick={() => navigate('/plans')}>
-                View Plans
+                {copy.viewPlans}
               </button>
             </div>
           </div>
