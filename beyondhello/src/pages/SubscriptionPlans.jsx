@@ -1,109 +1,163 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { trackEvent } from '../utils/analytics';
 import './SubscriptionPlans.css';
 
-const plans = [
+const PLANS = [
   {
     id: 'free',
     name: 'Free',
-    price: '$0',
-    period: '/month',
-    subtitle: 'Start speaking daily with zero commitment.',
+    userType: 'Free Users',
+    monthly: { price: '$0', period: '/mo' },
+    yearly:  { price: '$0', period: '/mo' },
+    yearlyNote: null,
     features: [
-      '5 to 10 mins daily practice',
-      'Core pre-built scenarios',
-      '20 AI tokens each day',
-      'Basic progress insights'
+      'Pre-generated scenarios (last patch)',
+      '3 custom scenarios / month',
+      '480p compressed video',
+      'Pass/Fail pronunciation scoring',
     ],
-    cta: 'Start Free'
+    cta: 'Get Started',
   },
   {
     id: 'pro',
     name: 'Pro',
-    price: '$9.99',
-    period: '/month',
-    subtitle: 'Best value for consistent learners.',
+    userType: 'Core Users',
+    monthly: { price: '$15', period: '/mo' },
+    yearly:  { price: '$12', period: '/mo' },
+    yearlyNote: 'Save $36 / yr',
     features: [
-      'Unlimited pre-built scenarios',
-      'Create basic custom AI scenarios',
-      '500 tokens per month',
-      'Fluency + basic pronunciation feedback',
-      'Streaks, rewards, and smart tracking'
+      'Latest pre-generated scenarios',
+      '20 custom scenarios / month',
+      '720p / 1080p video',
+      'Scoring & feedback',
+      'Credit top-ups enabled',
     ],
-    cta: 'Go Pro',
-    highlighted: true,
-    badge: 'Most Popular'
+    cta: 'Get Pro',
+    recommended: true,
   },
   {
-    id: 'premium',
-    name: 'Premium',
-    price: '$19.99',
-    period: '/month',
-    subtitle: 'Full simulation mode for serious growth.',
+    id: 'max',
+    name: 'Max',
+    userType: 'Power Users',
+    monthly: { price: '$40', period: '/mo' },
+    yearly:  { price: '$32', period: '/mo' },
+    yearlyNote: 'Save $96 / yr',
     features: [
-      'Unlimited pre-built scenarios',
-      'Advanced AI simulations (interviews, meetings, real life)',
-      '2000 tokens per month',
-      'Detailed pronunciation + conversation coaching',
-      'Adaptive learning with replayable sessions'
+      'Latest pre-generated scenarios',
+      '100 custom scenarios / month',
+      '1080p priority rendering',
+      'Scoring & feedback',
+      'Credit top-ups enabled',
     ],
-    cta: 'Unlock Premium'
-  }
+    cta: 'Get Max',
+  },
+  {
+    id: 'credits',
+    name: 'Credits',
+    userType: 'Heavy Usage',
+    monthly: { price: 'Usage', period: '' },
+    yearly:  { price: 'Usage', period: '' },
+    yearlyNote: null,
+    features: [
+      '1 credit = 1 scenario',
+      'Includes video + STT + scoring',
+      'Pay per usage',
+      'No subscription required',
+    ],
+    cta: 'Buy Credits',
+  },
 ];
 
 function SubscriptionPlans() {
   const navigate = useNavigate();
+  const [billing, setBilling] = useState('yearly');
 
   const handlePlanClick = (planId) => {
-    trackEvent('plan_selected', { plan: planId });
+    trackEvent('plan_selected', { plan: planId, billing });
   };
 
   return (
     <div className="plans-page">
-      <header className="plans-header">
-        <button className="plans-back-btn" onClick={() => navigate(-1)}>
-          <svg className="plans-back-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M15 6L9 12L15 18" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <span>Back</span>
+      <button className="plans-back-btn" onClick={() => navigate(-1)}>
+        <svg className="plans-back-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M15 6L9 12L15 18" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        <span>Back</span>
+      </button>
+
+      <h1 className="plans-title">Pricing</h1>
+
+      <div className="plans-toggle" role="group" aria-label="Billing period">
+        <button
+          className={`plans-toggle-btn ${billing === 'monthly' ? 'plans-toggle-active' : ''}`}
+          onClick={() => setBilling('monthly')}
+        >
+          Monthly
         </button>
-        <h1 className="plans-title">Pick your speaking plan</h1>
-        <p className="plans-subtitle">
-          Choose your pace. Upgrade anytime as your confidence grows.
+        <button
+          className={`plans-toggle-btn plans-toggle-btn-yearly ${billing === 'yearly' ? 'plans-toggle-active plans-toggle-active-yearly' : ''}`}
+          onClick={() => setBilling('yearly')}
+        >
+          Yearly
+          <span className="plans-toggle-save-chip">20% off</span>
+        </button>
+      </div>
+
+      {billing === 'yearly' && (
+        <p className="plans-yearly-banner">
+          🎉 You're on annual billing — 2 months free vs monthly
         </p>
-      </header>
+      )}
 
       <section className="plans-grid" aria-label="Subscription tiers">
-        {plans.map((plan) => (
-          <article
-            key={plan.id}
-            className={`plan-card ${plan.highlighted ? 'plan-card-highlighted' : ''}`}
-          >
-            {plan.badge ? <span className="plan-badge">{plan.badge}</span> : null}
-            <h2 className="plan-name">{plan.name}</h2>
-            <p className="plan-subtitle">{plan.subtitle}</p>
-            <div className="plan-price-row">
-              <span className="plan-price">{plan.price}</span>
-              <span className="plan-period">{plan.period}</span>
-            </div>
-
-            <ul className="plan-features">
-              {plan.features.map((feature) => (
-                <li key={feature} className="plan-feature-item">
-                  {feature}
-                </li>
-              ))}
-            </ul>
-
-            <button
-              className={`plan-cta ${plan.highlighted ? 'plan-cta-highlighted' : ''}`}
-              onClick={() => handlePlanClick(plan.id)}
+        {PLANS.map((plan) => {
+          const { price, period } = billing === 'yearly' ? plan.yearly : plan.monthly;
+          const monthlyPrice = plan.monthly.price;
+          const showStrike = billing === 'yearly' && plan.yearlyNote;
+          return (
+            <article
+              key={plan.id}
+              className={`plan-card ${plan.recommended ? 'plan-card-recommended' : ''}`}
             >
-              {plan.cta}
-            </button>
-          </article>
-        ))}
+              <div className="plan-card-top">
+                <div className="plan-name-row">
+                  <span className="plan-name">{plan.name}</span>
+                  {plan.recommended && (
+                    <span className="plan-recommended-badge">Recommended</span>
+                  )}
+                </div>
+                <div className="plan-price-row">
+                  {showStrike && (
+                    <span className="plan-price-strike">{monthlyPrice}</span>
+                  )}
+                  <span className="plan-price">{price}</span>
+                  {period && <span className="plan-period">{period}</span>}
+                </div>
+                {showStrike && (
+                  <span className="plan-savings-chip">{plan.yearlyNote}</span>
+                )}
+                <span className="plan-user-type">{plan.userType}</span>
+              </div>
+
+              <ul className="plan-features">
+                {plan.features.map((feature) => (
+                  <li key={feature} className="plan-feature-item">
+                    <span className="plan-check" aria-hidden="true">✓</span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+
+              <button
+                className={`plan-cta ${plan.recommended ? 'plan-cta-recommended' : ''}`}
+                onClick={() => handlePlanClick(plan.id)}
+              >
+                {plan.cta}
+              </button>
+            </article>
+          );
+        })}
       </section>
     </div>
   );
