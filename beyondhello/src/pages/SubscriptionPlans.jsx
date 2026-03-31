@@ -106,7 +106,7 @@ function SubscriptionPlans() {
 
       {billing === 'yearly' && (
         <p className="plans-yearly-banner">
-          🎉 You're on annual billing — 2 months free vs monthly
+          🎉 Save up to $96 with annual billing
         </p>
       )}
 
