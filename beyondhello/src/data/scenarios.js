@@ -155,9 +155,9 @@ export const scenariosData = [
           },
           {
             id: 'network-1-b',
-            textInTargetLang: '您好！我做AI的',
-            textTranslation: 'Hello! I work in AI',
-            pronunciationGuide: 'nín hǎo! wǒ zuò AI de',
+            textInTargetLang: '您好！我做人工智能行业！',
+            textTranslation: 'Hello! I work in the artificial intelligence industry!',
+            pronunciationGuide: 'nín hǎo! wǒ zuò réngōng zhìnéng hángyè!',
             sentiment: 'confident',
             cheatSheet: { phrase: '我是工程师', pinyin: 'wǒ shì gōngchéngshī', translation: 'I\'m an engineer' },
             nextSceneId: 'networking-scene-2',
