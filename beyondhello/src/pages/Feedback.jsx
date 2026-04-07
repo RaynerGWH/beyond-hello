@@ -69,6 +69,13 @@ function Feedback() {
   return (
     <div className="feedback-page">
 
+      {/* HOME button - fixed top-left */}
+      <button className="feedback-home-btn" onClick={() => navigate('/hub')} aria-label="Back to Scenarios">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+      </button>
+
       {/* Header */}
       <div className="feedback-header">
         <h1 className="feedback-title">Scenario Complete!</h1>

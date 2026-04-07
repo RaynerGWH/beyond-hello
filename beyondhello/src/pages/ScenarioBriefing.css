@@ -3,6 +3,44 @@
 .scenario-briefing-page {
   min-height: 100vh;
   background: #FAFAFA;
+  position: relative;
+}
+
+/* HOME button - fixed top-left */
+.briefing-home-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1.5px solid #E5E7EB;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.briefing-home-btn svg {
+  width: 22px;
+  height: 22px;
+  color: #6B7280;
+  transition: color 0.2s ease;
+}
+
+.briefing-home-btn:hover {
+  background: #FFFFFF;
+  border-color: #3B82F6;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.briefing-home-btn:hover svg {
+  color: #3B82F6;
 }
 
 /* ── Container ──────────────────────────────────────────────────────────── */
@@ -11,25 +49,6 @@
   max-width: 760px;
   margin: 0 auto;
   padding: 36px 24px 80px 24px;
-}
-
-/* Back button — top-left */
-.briefing-back-btn {
-  background: none;
-  border: none;
-  font-size: 14px;
-  color: #6B7280;
-  cursor: pointer;
-  padding: 0;
-  margin-bottom: 20px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  transition: color 0.15s;
-}
-
-.briefing-back-btn:hover {
-  color: #111827;
 }
 
 .briefing-page-title {

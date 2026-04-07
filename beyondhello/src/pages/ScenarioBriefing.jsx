@@ -40,10 +40,15 @@ function ScenarioBriefing() {
 
   return (
     <div className="scenario-briefing-page">
-      <div className="briefing-container">
 
-        {/* Back button — top-left */}
-        <button className="briefing-back-btn" onClick={handleBack}>← Back</button>
+      {/* HOME button - fixed top-left */}
+      <button className="briefing-home-btn" onClick={handleBack} aria-label="Back to Scenarios">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+      </button>
+
+      <div className="briefing-container">
 
         <h1 className="briefing-page-title">Mission Briefing</h1>
 
